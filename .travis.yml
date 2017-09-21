@@ -8,19 +8,19 @@ before_install:
 script: |
   docker run --tty --rm --volume $PWD:/work dpollet/texlive:pillar bash -c "\
     wget --quiet --output-document=- 'https://raw.githubusercontent.com/pillar-markup/pillar/master/download.sh' | bash \
-    && make spiralbook "
+    && make book "
 
 deploy:
 - provider: bintray
   file: .bintray.json
   on:
-    repo: SquareBracketAssociates/Booklet-Smacc
+    repo: SquareBracketAssociates/Booklet-PharoWithStyle
   skip_cleanup: true
   user: ducasse
   key:
-    secure: VygifH8UHzScr2XlTdDFaxO4zVN8pk6TN4dx5tqMCehG14Ath1kk2ItUSo0ha/uz/I3FHZHVUhSydhCMRJUjK1FeFlDobWcOqJ6UEOwoI1GXrs7uNB1v2Htbi4wdnvaC7Oj3Go7cCENUNPqAXeGGWPHPEnX35+0AeXssZPEyv88f6cSAVd4mxCYM6rvxknhyYooodLhFBjZsgdO5ZYKbHU8iiylQNsh3pjvRvZzMeRED3nHMlbHhZXqKJzn+wuiq+loWqV3AFBmxoRuxjU8PU7f+LV8oYvamW6rU3hAPs5SFKqD7aqbAEH6EK3/stjSJGaHz4TzQq0y0Y2PGyLNLJHsgovRhSDKvSzc1iDsNBoe5HeN32TeqS4Kjd2EQrN1n+wMlPHr2Ed5EzSRYfONXtW0HlvYOt5ojSlKIMgAZsBo6hGwrZ330bduhBlNMOgMnYvVh1893dLIQ1F02+TCKIq5I7IO+UafE/MJj3z8i0rcBkMo7Tw8C4hPeIulP4Xfci86wJzG0uQ63FFRwOxMSxYd8qtjJU8jV8swJotfcwgEAwYUcSu2sRfOur0BObW8jqR1Ba3JGAQ0hfQyO0JKalP0MPdQ9QAcMToyoQ13TdtSK+AlhCUNcZTB2a5oXTUYBkYPKmhB5BJIxM7hfCUzYK8vjTxKS1QjbfEehS7jCMKU=
+    secure: aB64nvazqS2Le4M80v3v4dSngAJU0UaCbinV8Jrxzd2WKbW5BxLgZSVwEzNpvcj9jyNl6XVU0ol5bIxrMVo52x2IT67anJAbSoNK3eMWfJ5BarWky4tn+8zMor9T3zj6AQrSNGiHXgKhyKtQme3B9DE3LK82csYrJyCZMYVdLRzC6+OEoLeKd96Qj9KPa4YCkwNOnpKVWq95TykNPlmzN3OCI+ADp0jwPinZGl7ZvaoavcawBgY9g0G+DzydLxVaXIgqNIGH0uP1VfOvPraXgUAqbkgmWLDN7eqFwyIOibJhzBhpXRqYVSLAlhKT18BmePdOH5ViiILe1IJz0LCk7ceN0gM9+LPAW3jCxnCgHCO4jjedrXU4i2qz1vlhgwJwAx0DuFKirX2QtFuF5pyQceQT6HHNwaJFABQJBSfb7vaDUgqCGVVwO4fi+tmnnOVmyKAE6H+PW3HFnv+IVLMIUG3Y0Ti1FLGJK097iUmZvLD1CuRLy5dLkGWFCtj+hfu3q3D+xpMVpnemCZbEPz//Vbc8bS3YxbTLgEOXA8dwZ8PNS3Wouv7HexEQQRuJkx1Ehj2InI0K9tvj4apH83ehTHZTOrQ5VkcLejleir2kJKv2LsnSboyCDdXVb8Yh5MJCKMKjWuBl0QBaHXnXClBYLk4h/a5b1J3FwOt0f/71QA8=
 - provider: releases
-  file: build/smacc.spiral.pdf
+  file: build/withstylebook.pdf
   on:
     tags: true
   skip_cleanup: true

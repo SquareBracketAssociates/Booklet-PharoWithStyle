@@ -1,13 +1,13 @@
 {
     "package": {
-        "name": "booklet-smacc",
+        "name": "booklet-withStyle",
         "repo": "wip",
         "subject": "squarebracketassociates",
-        "desc": "Smacc",
+        "desc": "Infrstructure",
         "licenses": ["MIT"],
-        "website_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc",
-        "issue_tracker_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc/issues",
-        "vcs_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc.git",
+        "website_url": "https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle",
+        "issue_tracker_url": "https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle/issues",
+        "vcs_url": "https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle.git",
         "labels": ["work-in-progress"]
     },
 
@@ -18,8 +18,8 @@
 
     "files": [
         {
-            "includePattern": "build/(smacc).spiral.pdf",
-            "uploadPattern": "$1-wip.pdf",
+            "includePattern": "build/withstylebook.pdf",
+            "uploadPattern": "withstyle-wip.pdf",
             "matrixParams": { "override": 1 }
         }
     ],
