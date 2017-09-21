@@ -1,0 +1,27 @@
+{
+    "package": {
+        "name": "booklet-smacc",
+        "repo": "wip",
+        "subject": "squarebracketassociates",
+        "desc": "Smacc",
+        "licenses": ["MIT"],
+        "website_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc",
+        "issue_tracker_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc/issues",
+        "vcs_url": "https://github.com/SquareBracketAssociates/Booklet-Smacc.git",
+        "labels": ["work-in-progress"]
+    },
+
+    "version": {
+        "name": "latest",
+        "desc": "Latest successful build"
+    },
+
+    "files": [
+        {
+            "includePattern": "build/(smacc).spiral.pdf",
+            "uploadPattern": "$1-wip.pdf",
+            "matrixParams": { "override": 1 }
+        }
+    ],
+    "publish": true
+}

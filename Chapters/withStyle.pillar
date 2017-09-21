@@ -1,0 +1,297 @@
+{ "title": "Pharo with Style" } 
+
+We are revisiting the general guideline enounced in the great little book called Smalltalk with Style. 
+
+!! General naming conventions
+
+Names are important. We will never repeat it enough. 
+A good name is often driven by a domain. These conventions are not cast in stone but they set the fundation of a common culture.
+Avoid underscores and favor camelcase.
+
+!!! Guileline 1: Descriptive names
+
+Choose descriptive names that capture domain entity unambiguously.
+
+!!!! Examples
+
+[[[
+timeOfDay
+not tod
+]]]
+
+[[[
+milliseconds
+not mil
+]]]
+
+[[[
+editMenu
+not eMenu
+]]]
+
+
+
+!!! Guileline 2:  Pay attention to meaning
+
+Non english native speaker often misplaced word qualifier. In english the qualifier is often before the word it qualifies. 
+
+@@todo find a real example
+[[[
+blueCar
+]]]
+
+[[[
+carBlue
+]]]
+
+
+[[[
+userAssociation
+]]]
+is an association of users.
+
+Compare the three following variables:
+
+[[[
+sizeToRead
+sizeJustRead
+readSize
+]]]
+
+From that perspective favor words with unique pronunciation.
+About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
+
+
+
+!!! Guileline 3:  Favor simple direct meaning 
+
+Some native english writers use often more precise but less common terms. 
+Consider that your software may be read by people from different culture so use 
+simple common terms. 
+
+
+!!! Guileline 4:  Follow domain 
+
+Follow domain and culture of the project. Do not invent your own because you think it is better. 
+Favor regularity over preciseness.
+
+[[[
+GnatXmlNode
+not GNAT_XML_Object
+]]]
+
+When representing the XML ada abstract syntax tree in Pharo, we should not follow their naming convention. The name should convey that the class is a abstract syntax tree node hence ==GnatXmlNode== is much better that ==GnatXmlObject==. 
+
+In Moose an importer is an object creating FAMIX entities (classes methods....) from the datastructure representing a language usually an Abstract Syntax Tree. 
+Therefore ==GNATInstaller== which creates entities from AST should be renamed ==GnatImporter==
+and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==
+
+!!! Guileline 5:  Shared variables starts with uppercase 
+
+Begin class names, global variables, pool variables and class variables with an uppercase letter. If the word is compound, then begin use camel case for the rest.
+
+
+[[[
+Point	"class"
+Transcript 	"global variable"
+PackageGlobalOrganizer	"class variables"
+]]]
+
+
+
+
+!!! Guileline 6:  Private variables starts with lowercase 
+
+Beging instance variables, temporary variables, method parameterr and method selectors with a lower case. If the word is compound, then begin use camel case for the rest.
+
+[[[
+address
+classExtensionSelectors
+classTags
+]]]
+
+
+
+!!! Guideline: Class names
+
+
+
+
+
+!! Selectors
+Method names in Pharo are called selectors. There are used in messages and are the main vehicule to convey adequate meaning. The correct use of words and design of selectors is important. 
+
+
+!!! Guideline: selectors as little sentences
+Choose method names so that someone reading the message can read the expression as if it were a sentence. 
+
+[[[
+FileDescriptor seekTo: word from: self position
+and not
+FileDescriptor lseek: word at: self position
+]]]
+
+Write test first and make sure that your test scenario read well. 
+
+!!! Guideline: imperative verbs for actions
+
+Use imperative verbs for message which perform an action.
+
+
+[[[
+transform
+	selectors do: [:each | self pushDown: each].
+	selectors do: [:each | class removeMethod: each]
+]]]
+
+[[[
+aReadStream peek
+and not aReadStream word
+]]]
+
+[[[
+skipSeparators
+]]]
+
+Pay attention that some word can be interpreted as interrogative while you want to give them an imperative meaning. For example compare
+
+[[[
+optimized
+]]]
+
+and
+
+[[[
+triggerOptimization
+]]]
+
+!!! Guideline: Indicate flow
+
+When state, process is going from one object to another one, indicate the direction using meaningful names.
+
+For example ==flattenProperties:== is not a good name because it does not convey where the properties will be flattened.
+[[[
+aConfiguration flattenProperties: aDictionary
+]]]
+
+Better names such ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there is no ambiquities.
+
+[[[
+aConfiguration flattenPropertiesFrom: aDictionary
+aConfiguration flattenPropertiesInto: aDictionary
+]]]
+
+
+!!!  Guideline: Use interrogative form for testing
+Use an interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
+
+[[[
+isAtLineEnd
+]]]
+and not 
+[[[
+atLineEnd
+]]]
+
+!!!  Guideline: Accessors 
+
+
+For accessors: 
+
+[[[
+tiles
+	^ tiles 
+]]]
+or 
+
+[[[
+tiles
+	^ tiles ifNil: [ tiles := OrderedCollection new ]
+]]]
+
+but not 
+[[[
+getTiles
+	^ tiles
+]]]
+
+For Setters
+[[[
+tiles: aCollection
+	tiles := aCollection 
+]]]
+
+
+!!! Guideline: Follow conventions and idioms
+
+When designing new objects, you may mimic some practices that the system use already with for example dictionaries, sets,...
+
+""Example.""
+Since a stylesheet acts as a dictionary of properties it is much better to use
+==at:== instead of ==get:== especially when the message to set a value to a property is ==at:put:== and not ==set:==.
+
+[[[
+stylesheet at: #fontColor
+]]]
+and not 
+[[[
+stylesheet get: #fontColor
+]]]
+
+
+
+!! Instance initialization
+
+!!! Guideline: Automatic object initialization 
+
+
+[[[
+Game >> initialize
+	super initialize.
+	turn := 0.
+]]]
+
+
+!!! Guideline: No automatic initialize
+
+When you do not want to get the automatic initialization to happen you should use the message ==basicNew== on the class side and create your own ==initializeSomething:== method. 
+
+
+[[[
+Game class >> tilesNumber: aNumber
+	^ self basicNew initializeNumber: aNumber ; yourself
+]]]
+
+[[[
+Game >> initializeNumber: aNumber
+	tiles := Array new: aNumber
+]]]
+
+!! Powerful coding idioms
+
+!!! Guideline: Do not query twice for the same objects
+
+The message ==ifNotNil:== expects a block 
+
+[[[
+self doThat ifNotNil: [ :that | self doSomethingWith: that ]
+]]]
+
+[[[
+| that |
+that := self doThat.
+that ifNotNil: [self doSomethingWith: that]
+]]]
+
+Similarly have a look at the messages containing the ==ifPresent:== variation.
+[[[
+	aCol at: key ifPresent: [ :present | self doSomethingWith: present]
+]]]
+
+!! Code formatting
+
+!!! Guideline:
+
+!! Potential traps
+
+
