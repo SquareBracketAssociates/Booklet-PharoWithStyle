@@ -242,10 +242,31 @@ stylesheet get: #fontColor
 
 !!! Guideline: Distinguish class vs. instance selectors
 
-When defining a class method, we may name it the same way than an accessor of the class. Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. The senders will report both the instance and class usage. Better enriched the class method with a distinct word.
+When defining a class method, we may name it the same way than an accessor of the class. Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. The senders will report both the instance and class usage. You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. So better enriched the class method with a distinct word.
+
+
 
 ""Example.""
-In Pillar, annotations have parameters. To create an instance is better to name the method ==withParameter:==. 
+In Pillar, annotations have parameters and the accessor method ==parameters:==. Now some version defined also the instance creation method with the same name.
+
+The following code that it was difficult to understand fast the code. Reading the code of the parser, it is not clear whether array second is a class or an instance.
+
+[[[
+annotation
+	^ super annotation
+		==>
+			[ :array | array second parameters: (array third ifNil: [ SmallDictionary new ]) ]
+]]]
+
+To create an instance is better to name the method ==withParameter:==. This way we can immediatelly spot that the second element is a class. 
+
+[[[
+annotation
+	^ super annotation
+		==>
+			[ :array | array second withParameters: (array third ifNil: [ SmallDictionary new ]) ]
+]]]
+
 
 [[[
 PRAbstractAnnotation class >> withParameters: aCollection
@@ -253,7 +274,7 @@ PRAbstractAnnotation class >> withParameters: aCollection
 	parameters := self checkKeysOf: aCollection.
 	^ self new
 		hadAllKeys: aCollection = parameters;
-		parameters: (PRMagritteDictionaryReader writeDictionary: parameters for: self);
+		parameters: parameters;
 		yourself
 ]]]
 
@@ -265,7 +286,7 @@ PRAbstractAnnotation class >> parameters: aCollection
 	parameters := self checkKeysOf: aCollection.
 	^ self new
 		hadAllKeys: aCollection = parameters;
-		parameters: (PRMagritteDictionaryReader writeDictionary: parameters for: self);
+		parameters: parameters;
 		yourself
 ]]]
 	
