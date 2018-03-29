@@ -240,6 +240,35 @@ stylesheet get: #fontColor
 
 
 
+!!! Guideline: Distinguish class vs. instance selectors
+
+When defining a class method, we may name it the same way than an accessor of the class. Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. The senders will report both the instance and class usage. Better enriched the class method with a distinct word.
+
+""Example.""
+In Pillar, annotations have parameters. To create an instance is better to name the method ==withParameter:==. 
+
+[[[
+PRAbstractAnnotation class >> withParameters: aCollection
+	| parameters |
+	parameters := self checkKeysOf: aCollection.
+	^ self new
+		hadAllKeys: aCollection = parameters;
+		parameters: (PRMagritteDictionaryReader writeDictionary: parameters for: self);
+		yourself
+]]]
+
+is better than
+
+[[[
+PRAbstractAnnotation class >> parameters: aCollection
+	| parameters |
+	parameters := self checkKeysOf: aCollection.
+	^ self new
+		hadAllKeys: aCollection = parameters;
+		parameters: (PRMagritteDictionaryReader writeDictionary: parameters for: self);
+		yourself
+]]]
+	
 !! Instance initialization
 
 !!! Guideline: Automatic object initialization 
