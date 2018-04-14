@@ -1,9 +1,9 @@
 {
     "package": {
-        "name": "booklet-withStyle",
+        "name": "booklet-withstyle",
         "repo": "wip",
         "subject": "squarebracketassociates",
-        "desc": "Infrstructure",
+        "desc": "How to code well in Pharo",
         "licenses": ["MIT"],
         "website_url": "https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle",
         "issue_tracker_url": "https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle/issues",
@@ -18,8 +18,8 @@
 
     "files": [
         {
-            "includePattern": "build/withstylebook.pdf",
-            "uploadPattern": "withstyle-wip.pdf",
+            "includePattern": "_result/pdf/book.pdf",
+            "uploadPattern": "withStyle-wip.pdf",
             "matrixParams": { "override": 1 }
         }
     ],

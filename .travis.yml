@@ -1,14 +1,28 @@
-sudo: required
-services:
-- docker
+language: smalltalk
+sudo: false
 
-before_install:
-- docker pull dpollet/texlive:pillar
+os:
+  - linux
 
-script: |
-  docker run --tty --rm --volume $PWD:/work dpollet/texlive:pillar bash -c "\
-    wget --quiet --output-document=- 'https://raw.githubusercontent.com/pillar-markup/pillar/master/download.sh' | bash \
-    && make book "
+smalltalk:
+  - Pharo-6.1
+
+# Unit tests run the normal pillar tests
+# Integration tests test that pillar itself can interact with generated files, pdf generation, etc.
+# System tests test that we can install and use pillar as a black box
+env:
+  matrix:
+  - JOB=test TYPE=System ARCHETYPE=book OUTPUT=pdf
+
+install:
+  # Pillar installation
+  - git clone https://github.com/pillar-markup/pillar.git -b newpipeline  # Clone pillar
+  - cd pillar && ./scripts/build.sh && cd ..                              # Run pillar build script. Pillar will be built in `pwd`/build!
+  - . pillar/scripts/ci/ensure_latex.sh                                   # Install latex
+  - ./pillar/scripts/ci/ensure_book_dependencies.sh                       # Install latex dependencies required by pillar
+  
+script:
+  - ./pillar/build/pillar build pdf
 
 deploy:
 - provider: bintray
@@ -19,10 +33,4 @@ deploy:
   user: ducasse
   key:
     secure: aB64nvazqS2Le4M80v3v4dSngAJU0UaCbinV8Jrxzd2WKbW5BxLgZSVwEzNpvcj9jyNl6XVU0ol5bIxrMVo52x2IT67anJAbSoNK3eMWfJ5BarWky4tn+8zMor9T3zj6AQrSNGiHXgKhyKtQme3B9DE3LK82csYrJyCZMYVdLRzC6+OEoLeKd96Qj9KPa4YCkwNOnpKVWq95TykNPlmzN3OCI+ADp0jwPinZGl7ZvaoavcawBgY9g0G+DzydLxVaXIgqNIGH0uP1VfOvPraXgUAqbkgmWLDN7eqFwyIOibJhzBhpXRqYVSLAlhKT18BmePdOH5ViiILe1IJz0LCk7ceN0gM9+LPAW3jCxnCgHCO4jjedrXU4i2qz1vlhgwJwAx0DuFKirX2QtFuF5pyQceQT6HHNwaJFABQJBSfb7vaDUgqCGVVwO4fi+tmnnOVmyKAE6H+PW3HFnv+IVLMIUG3Y0Ti1FLGJK097iUmZvLD1CuRLy5dLkGWFCtj+hfu3q3D+xpMVpnemCZbEPz//Vbc8bS3YxbTLgEOXA8dwZ8PNS3Wouv7HexEQQRuJkx1Ehj2InI0K9tvj4apH83ehTHZTOrQ5VkcLejleir2kJKv2LsnSboyCDdXVb8Yh5MJCKMKjWuBl0QBaHXnXClBYLk4h/a5b1J3FwOt0f/71QA8=
-- provider: releases
-  file: build/withstylebook.pdf
-  on:
-    tags: true
-  skip_cleanup: true
-  api_key:
-    secure: pRfu3fr35BzqQDi1ul0SubPSwO8zcyIidqLRZPz3XIrH4qoy1Zgnq785dmB7ziNQqH+VJyh7askSFY3JLxL0d4P0eUgj2ZDIOhJsUQQ/ihevOBWbxlMOoEPjQfzA11l8WrNCQ566KrcYiISRi7bCg698kPTWSRwOmmvqXOJe5zGkuUbVmMNUV2oxaNV4JC8kVyVWHYy0nNMLEX/hzRZRh1+8K34/ds+fZ7irLrbDWMbKGHCyuLCSqv+zJJdu99nWLTclrCxFzK4DEHaMlFiO7wkUpyQLwZ38EDnb3E7iv045jSqCx3XB+DMRG1Da2/9BIXl0mho5ELdEvfGVAbjI2no5FWd0H1cs4/banAePCFnM7ZscJBaPWgVajB7EzrcADJUoxpmU6+6n1aIC3CnjscfAHqSAKGv8CO/Jh+Uirc8ATRpSqa73f2Nnj9tRCqwCOnFOCEzu0w5l3Ppz2Qpif04P+QbebZehSVaBJ4W01R2i8Rac3IuZDhZVaek1X24HFxUOd/rvHpbhz8eeANdnsWCTkAm+0sD+iKsWKICRMxFZfCK/SPldAcjXZsOsEMTqfx7ZWyCc7GeesQWcmW+z3shziyQd9tdeArJWLwacly3hH3WeyuUD5JyPF9klvDBtHgTVajdU4yp+3oXsrtTmetnBz+RESxQGdLgZRlQBQog=
+s
