@@ -16,7 +16,7 @@ env:
 
 install:
   # Pillar installation
-  - git clone https://github.com/pillar-markup/pillar.git -b newpipeline  # Clone pillar
+  - git clone https://github.com/pillar-markup/pillar.git  # Clone pillar
   - cd pillar && ./scripts/build.sh && cd ..                              # Run pillar build script. Pillar will be built in `pwd`/build!
   - . pillar/scripts/ci/ensure_latex.sh                                   # Install latex
   - ./pillar/scripts/ci/ensure_book_dependencies.sh                       # Install latex dependencies required by pillar
