@@ -1,2 +1,2 @@
 
-${inputFile:value=Chapters/withStyle.pillar}$
+${inputFile:path=Chapters/withStyle.pillar}$
