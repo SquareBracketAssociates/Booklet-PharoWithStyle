@@ -12,9 +12,8 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Names are important. We will never repeat it enough. 
 A good name is often driven by a domain. 
 
-!!! Guileline: Follow conventions
 
-!!!! Avoid underscores and favor camelcase.
+!!! Guideline: Avoid underscores and favor camelcase.
 
 [[[
 timeOfDay
@@ -31,7 +30,7 @@ When creating private low level methods binding to external C-libraries you may 
 In such a case, limit your use to carefully thought cases.
 
 
-!!!! Use CamelCase
+!!! Guideline: Use CamelCase
 
 ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different. 
 
@@ -60,7 +59,7 @@ superclass
 Not superClass
 ]]]
 
-!!! Guileline: Descriptive names
+!!! Guideline: Descriptive names
 
 Choose descriptive names that capture domain entity unambiguously.
 
@@ -80,7 +79,7 @@ not eMenu
 ]]]
 
 
-!!! Guileline:  Pay attention to meaning
+!!! Guideline:  Pay attention to meaning
 
 Non english native speaker often misplaced word qualifier. In english the qualifier is often before the word it qualifies. 
 
@@ -113,14 +112,14 @@ About ==readSize==: does this mean that the size was just read (red) or it is th
 
 
 
-!!! Guileline :  Favor simple direct meaning 
+!!! Guideline :  Favor simple direct meaning 
 
 Some native english writers use often more precise but less common terms. 
 Consider that your software may be read by people from different culture so use 
 simple, mainstream, and common terms.
 
 
-!!! Guileline :  Follow domain 
+!!! Guideline :  Follow domain 
 
 Follow domain and culture of the project. Do not invent your own because you think it is better. 
 Favor regularity over preciseness.
@@ -139,7 +138,7 @@ and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader=
 
 
 
-!!! Guileline:  Shared variables starts with uppercase 
+!!! Guideline:  Shared variables starts with uppercase 
 
 Begin class names, global variables, pool variables and class variables with an uppercase letter. If the word is compound, then begin use camel case for the rest.
 
@@ -228,7 +227,7 @@ CmdMessage
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
 
 
-!!! Guidline: Favor semantic variables
+!!! Guideline: Favor semantic variables
 
 A semantic name is less restrictive than a type name. When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. We recommend that semantically meaningful names be used wherever possible.
 
@@ -512,7 +511,7 @@ pathString
 
 !!! Guideline: Good comments
 
-
+fill me
 
 
 
@@ -533,7 +532,7 @@ createShell
 
 !!! Guideline: Include executable comments
 
-
+fill me
 
 
 !!! Guideline: Follow conventions and idioms
@@ -650,7 +649,6 @@ Now if you favor a fluid interface with many parameters, using ==withParameters:
 
 !!! Guideline: Automatic object initialization 
 
-
 [[[
 Game >> initialize
 	super initialize.
@@ -678,9 +676,9 @@ Game >> initializeNumber: aNumber
 You should  not use ==new== instead of ==basicNew== as this would result in the designated constructor of the superclass being called twice. For example:
 [[[
 Person >> initializeWithFoo: aNumber bar: aString
-		self initialize.
-		foo := aNumber.
-		bar := aString
+	self initialize.
+	foo := aNumber.
+	bar := aString
 ]]]
 
 [[[
@@ -689,6 +687,8 @@ Person class >> foo: aNumber bar: aString
 		initializeWithFoo: aNumber bar: aString;
 		yourself
 ]]]
+
+
 
 !! Understanding Class and instance variable
 
@@ -815,7 +815,7 @@ TestSubCounter next2.
 
 !! Powerful coding idioms
 
-!!! Guideline: Do not query twice for the same objects
+!!! Guideline: Do not query twice for the same object
 
 The message ==ifNotNil:== expects a block 
 
@@ -836,8 +836,11 @@ Similarly have a look at the messages containing the ==ifPresent:== variation.
 
 !! Code formatting
 
+fill me
+
 !!! Guideline:
+fill me
 
 !! Potential traps
 
-
+will see
