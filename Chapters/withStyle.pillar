@@ -1,12 +1,29 @@
-{ "title": "Pharo with Style" } 
+Programming is a lot more than just writing algorithms or programs. Programming is all about communication. Communication with others: the other programmers that we will participate to your development effort but also with yourselves. Indeed finding good names is a really important task because using the right name often opens the door to new space when your design can bloom and expand. 
 
-We are revisiting the general guideline enounced in the great little book called Smalltalk with Style. 
+The purpose of a programming style guide such as this book is to provide a simple vehicle for addressing the needs of a good communication. The goal is to make source code clear, easy to read, and easy to understand and extend. 
+
+These conventions are not cast in stone but they set the fundation of a common culture. Culture is important when programming.
+
+We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
+
 
 !! General naming conventions
 
 Names are important. We will never repeat it enough. 
-A good name is often driven by a domain. These conventions are not cast in stone but they set the fundation of a common culture.
+A good name is often driven by a domain. 
+
+!!! Guileline 1: Follow conventions
+
 Avoid underscores and favor camelcase.
+
+[[[
+timeOfDay
+not timeofday
+not time_of_day
+]]]
+
+When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries. 
+In such a case, limit your use to carefully thought cases.
 
 !!! Guileline 1: Descriptive names
 
@@ -30,18 +47,18 @@ not eMenu
 ]]]
 
 
-
 !!! Guileline 2:  Pay attention to meaning
 
 Non english native speaker often misplaced word qualifier. In english the qualifier is often before the word it qualifies. 
 
-@@todo find a real example
 [[[
 blueCar
+not carBlue
 ]]]
 
 [[[
-carBlue
+DateParser
+Not ParserForDate
 ]]]
 
 
@@ -114,8 +131,34 @@ classTags
 
 !!! Guideline: Class names
 
+Suffix with the root to convey the kind of object we are talking about. 
+
+Below without the Morph suffix the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
+
+[[[
+ClyBrowserButtonMorph
+Not ClyBrowserButton
+]]]
 
 
+[[[
+ClyQueryViewMorph
+Not ClyQueryView
+]]]
+
+
+Here not mentioning the Presenter suffix makes the reader unclear about the fact that it is a Presenter object by opposition to a view object.
+[[[
+ApplicationWithToolBarPresenter
+Not ApplicationWithToolbar
+]]]
+
+Here ==DynamicWidgetChange== does not conver the fact that this is not a ''domain'' object representing a change but a Presenter object in the Model View Presenter triad.
+
+[[[
+DynamicWidgetChangePresenter
+Not DynamicWidgetChange
+]]]
 
 
 !! Selectors
