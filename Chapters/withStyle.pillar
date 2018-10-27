@@ -211,7 +211,7 @@ Not DynamicWidgetChange
 ]]]
 
 
-!!! Guideline: Avoid collision
+!!! Guideline: Avoid name collision
 
 To avoid name space collisions, add a prefix indicative of the project to the name of the class.
 
@@ -228,7 +228,7 @@ CmdMessage
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
 
 
-!!! Guidline: Favor Semantic Variables
+!!! Guidline: Favor semantic variables
 
 A semantic name is less restrictive than a type name. When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. We recommend that semantically meaningful names be used wherever possible.
 
@@ -245,28 +245,63 @@ newSizeOfArray := numberOfAdults size max: numberOfChildren size
 Finding a semantic name is not always as obvious as in the above example. There are cases in which choosing a descriptive semantic name is difficult.
 
 
-!!! Guideline: Use Typed Variables for 
+!!! Guideline: Use typed variables to indicate API
+
+
+Suppose a String, a Symbol, and nil are valid. A developer may be tempted to use the name ==aStringOrSymbolOrNiI==; however, most developers choose ==aString== or ==anObject==. ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String, a Symbol, or nil."
+
+
+Below aDictionary conveys that the argument should have the same API than a Dictionary (at:,at:put:)
+
+[[[
+properties: aDictionary
+Not properties: aCollection
+]]]
+
+[[[
+properties: aPuttable
+Not properties: aCollection
+]]]
 
 
 
+!!! Guideline: Get the best from semantic and type variables
 
+A good practice is to use a mixture of both semantic and typed variable names. Method parameter names are usually named after their type. Instance, class, and temporary variables usually use a semantic name. In some cases, a combination of both can be given in the names.
 
-!!! Guideline: Get the best from Semantic and Type variables
+[[[
+ifTrue: trueBlock if False: falseBlock
+Not ifTrue: block1 ifFalse: block2
+Not ifTrue: action1 ifFalse: action2
+]]]
+
+The following are other examples of good names.
 
 [[[
 inject: initialValue into: aBinaryBlock 
 copyFrom: start to: stop
 findFirst: aBlock ifNone: errorBlock 
 paddedTo: newLength with: anObject 
-ifTrue: trueBlock if False: falseBlock
 ]]]
 
 
-!!! Guideline: Use Semantics for State Variable
+!!! Guideline: Use semantics for state variable
 
-State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. A combination of semantic and type information is also used.
+State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. A combination of semantic and type information can be really powerful too. 
 
-!!! Guideline: Use Predicate for Boolean
+
+[[[
+In class PhoneBook 
+
+phoneNumber 
+Not number
+
+name
+Not labelForPerson
+]]]
+
+
+!!! Guideline: Use predicate for Boolean
 
 Use predicate clauses or adjectives for Boolean objects or states. Do not use predicate clauses for non-Boolean states.
 
@@ -274,11 +309,29 @@ Use predicate clauses or adjectives for Boolean objects or states. Do not use pr
 alarmEnabled
 ]]]
 
+!!! Guideline: Use common nouns and phrases 
+
+Use common nouns and phrases for objects that are not Boolean.
+
+[[[
+"In class Vehicle..."
+	numberOfTires 
+	numberOfDoors
+
+"In class AlarmClock..."
+	time 
+	alarmTime
+	
+"In class TypeSetter..."
+	page
+	font outputDevice
+]]]
+
 !! Selectors
 Method names in Pharo are called selectors. There are used in messages and are the main vehicule to convey adequate meaning. The correct use of words and design of selectors is important. 
 
 
-!!! Guideline: selectors as little sentences
+!!! Guideline: Choose selectors to form little sentences
 Choose method names so that someone reading the message can read the expression as if it were a sentence. 
 
 [[[
@@ -288,7 +341,7 @@ Not FileDescriptor lseek: word at: self position
 
 Write test first and make sure that your test scenario read well. 
 
-!!! Guideline: imperative verbs for actions
+!!! Guideline: Use imperative verbs for actions
 
 Use imperative verbs for message which perform an action.
 
@@ -325,11 +378,12 @@ and
 triggerOptimization
 ]]]
 
-!!! Guideline: Indicate flow
+!!! Guideline: Indicate flow with preposition
 
-When state, process is going from one object to another one, indicate the direction using meaningful names.
+When state process is going from one object to another one, indicate the direction using meaningful names.
 
 For example ==flattenProperties:== is not a good name because it does not convey where the properties will be flattened.
+
 [[[
 aConfiguration flattenProperties: aDictionary
 ]]]
@@ -339,6 +393,25 @@ Better names such ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are 
 [[[
 aConfiguration flattenPropertiesFrom: aDictionary
 aConfiguration flattenPropertiesInto: aDictionary
+]]]
+
+
+[[[
+changeField: anlnteger to: anObject
+]]]
+[[[
+ReadWriteStream on: aCollection. 
+Not ReadWriteStream for: aCollection.
+]]]
+
+[[[
+File openOn: stream 
+Not File with: stream
+]]]
+
+[[[
+display: anObject on: aMedium 
+Not display: anObject using: aMedium
 ]]]
 
 
@@ -355,33 +428,112 @@ aVehicle hasFourWheels
 Not aVehicle fourWheels
 ]]]
 
+
+!!! Guideline: Avoid using parameter and variable name type
+A void the parameter type or name in the method name if you are using typed parameter names.
+
+[[[
+fileSystem at: aKey put: aFile
+Not fileSystem atKey: aKey putFiIe: aFile
+]]]
+
+
+[[[
+"for semantic-based parameter names"	
+fileSystem atKey: index putFile: pathName
+]]]
+
+[[[
+"useful when your class has several #atput: methods"
+fileSystem definitionAt: aKey put: definition
+]]]
+[[[
+aFace changeTo: expression
+Not aFace changeExpressionTo: expression
+]]]
+
 !!!  Guideline: Accessors 
 
+There are different schools about the use of accessors or not. If you use accessors, use them consistently. 
+Name them also consistently:
 
-For accessors: 
-
+For getter
 [[[
 tiles
 	^ tiles 
 ]]]
-or 
+
+For lazy initialization:
 
 [[[
 tiles
 	^ tiles ifNil: [ tiles := OrderedCollection new ]
 ]]]
 
-but not 
+Do not use get in accessor selectors 
 [[[
 getTiles
 	^ tiles
 ]]]
 
 For Setters
+
 [[[
 tiles: aCollection
 	tiles := aCollection 
 ]]]
+
+Put real accessors in the accessing protocols. When you have accessors doing extra work 
+place them in a separate protocols to stress their difference. 
+
+!!! Guideline: Use basic or raw to access low-level
+
+When two methods are needed for the same state variable, for example one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
+
+[[[
+method: aCompiledMethod
+	self basicMethod: aCompiledMethod.
+	self signal: MethodChanged
+	
+basicMethod: aCompiledMethod
+	method := aCompiledMethod
+]]]
+
+When you have a getter that returns an object and a getter than return a different representation of the same object add a suffix
+
+[[[
+path
+	^ path
+
+pathString
+	^ self path asString
+]]]
+
+
+!!! Guideline: Good comments
+
+
+
+
+
+!!! Guideline: Use active voice and short sentence
+
+[[[
+"Active voice"
+createShell
+	"Create the receiver's shell. Hook the focus callback."
+]]]
+
+[[[
+Not "Passive voice"
+createShell
+	"The receiver's shell is created. The focus callback is hooked."
+]]]
+
+
+!!! Guideline: Include executable comments
+
+
 
 
 !!! Guideline: Follow conventions and idioms
@@ -467,6 +619,29 @@ PRAbstractAnnotation class >> parameters: aCollection
 ]]]
 	
 Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 !! Instance initialization
