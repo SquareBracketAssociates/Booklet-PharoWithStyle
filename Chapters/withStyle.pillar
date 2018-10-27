@@ -12,9 +12,9 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Names are important. We will never repeat it enough. 
 A good name is often driven by a domain. 
 
-!!! Guileline 1: Follow conventions
+!!! Guileline: Follow conventions
 
-Avoid underscores and favor camelcase.
+!!!! Avoid underscores and favor camelcase.
 
 [[[
 timeOfDay
@@ -22,14 +22,47 @@ not timeofday
 not time_of_day
 ]]]
 
+[[[
+GnatXmlNode
+not GNAT_XML_Object
+]]]
+
 When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries. 
 In such a case, limit your use to carefully thought cases.
 
-!!! Guileline 1: Descriptive names
+
+!!!! Use CamelCase
+
+==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different. 
+
+[[[
+|MaxLimit maxLimit|
+MaxLimit := 10.
+maxLimit := 20.
+MaxLimit
+>>> 10
+]]]
+
+Still Pharo favors camelCase so use it systematically for words.
+
+[[[
+maxLimit
+MaxLimit
+Not maxlimit
+Not MAXLIMIT
+]]]
+
+
+@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
+
+[[[
+superclass
+Not superClass
+]]]
+
+!!! Guileline: Descriptive names
 
 Choose descriptive names that capture domain entity unambiguously.
-
-!!!! Examples
 
 [[[
 timeOfDay
@@ -47,7 +80,7 @@ not eMenu
 ]]]
 
 
-!!! Guileline 2:  Pay attention to meaning
+!!! Guileline:  Pay attention to meaning
 
 Non english native speaker often misplaced word qualifier. In english the qualifier is often before the word it qualifies. 
 
@@ -80,14 +113,14 @@ About ==readSize==: does this mean that the size was just read (red) or it is th
 
 
 
-!!! Guileline 3:  Favor simple direct meaning 
+!!! Guileline :  Favor simple direct meaning 
 
 Some native english writers use often more precise but less common terms. 
 Consider that your software may be read by people from different culture so use 
-simple common terms. 
+simple, mainstream, and common terms.
 
 
-!!! Guileline 4:  Follow domain 
+!!! Guileline :  Follow domain 
 
 Follow domain and culture of the project. Do not invent your own because you think it is better. 
 Favor regularity over preciseness.
@@ -103,7 +136,10 @@ In Moose an importer is an object creating FAMIX entities (classes methods....) 
 Therefore ==GNATInstaller== which creates entities from AST should be renamed ==GnatImporter==
 and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==
 
-!!! Guileline 5:  Shared variables starts with uppercase 
+
+
+
+!!! Guileline:  Shared variables starts with uppercase 
 
 Begin class names, global variables, pool variables and class variables with an uppercase letter. If the word is compound, then begin use camel case for the rest.
 
@@ -117,9 +153,9 @@ PackageGlobalOrganizer	"class variables"
 
 
 
-!!! Guileline 6:  Private variables starts with lowercase 
+!!! Guideline:  Private variables starts with lowercase 
 
-Beging instance variables, temporary variables, method parameterr and method selectors with a lower case. If the word is compound, then begin use camel case for the rest.
+Begin instance variables, temporary variables, method parameterr and method selectors with a lower case. If the word is compound, then use camel case for the rest.
 
 [[[
 address
@@ -128,8 +164,22 @@ classTags
 ]]]
 
 
+!!! Guideline: Unique pronunciation
 
-!!! Guideline: Class names
+Choose names that have a unique pronunciation.
+
+
+
+[[[
+sizeToRead 
+sizeJustRead
+Not readSize
+]]]
+Does this mean that the size was just read (red) or is it the size to read (reed)?
+
+
+
+!!! Guideline: Class names should exhibit their parent
 
 Suffix with the root to convey the kind of object we are talking about. 
 
@@ -161,6 +211,69 @@ Not DynamicWidgetChange
 ]]]
 
 
+!!! Guideline: Avoid collision
+
+To avoid name space collisions, add a prefix indicative of the project to the name of the class.
+
+[[[
+PRDocument
+CmdMessage
+]]]
+
+@@note You may find that Pharo is lacking a namespace. May be or may be not. Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
+
+
+!! Variable Names
+
+When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
+
+
+!!! Guidline: Favor Semantic Variables
+
+A semantic name is less restrictive than a type name. When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. We recommend that semantically meaningful names be used wherever possible.
+
+In the example below, the typed variable does not indicate how it will be used whereas the semantic variable does.
+
+[[[
+"Typed variable"
+anInteger := numberOfAdults size max: numberOfChildren size
+
+"Semantic variable"
+newSizeOfArray := numberOfAdults size max: numberOfChildren size
+]]]
+
+Finding a semantic name is not always as obvious as in the above example. There are cases in which choosing a descriptive semantic name is difficult.
+
+
+!!! Guideline: Use Typed Variables for 
+
+
+
+
+
+!!! Guideline: Get the best from Semantic and Type variables
+
+[[[
+inject: initialValue into: aBinaryBlock 
+copyFrom: start to: stop
+findFirst: aBlock ifNone: errorBlock 
+paddedTo: newLength with: anObject 
+ifTrue: trueBlock if False: falseBlock
+]]]
+
+
+!!! Guideline: Use Semantics for State Variable
+
+State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. A combination of semantic and type information is also used.
+
+!!! Guideline: Use Predicate for Boolean
+
+Use predicate clauses or adjectives for Boolean objects or states. Do not use predicate clauses for non-Boolean states.
+
+[[[
+alarmEnabled
+]]]
+
 !! Selectors
 Method names in Pharo are called selectors. There are used in messages and are the main vehicule to convey adequate meaning. The correct use of words and design of selectors is important. 
 
@@ -170,8 +283,7 @@ Choose method names so that someone reading the message can read the expression 
 
 [[[
 FileDescriptor seekTo: word from: self position
-and not
-FileDescriptor lseek: word at: self position
+Not FileDescriptor lseek: word at: self position
 ]]]
 
 Write test first and make sure that your test scenario read well. 
@@ -190,6 +302,11 @@ transform
 [[[
 aReadStream peek
 and not aReadStream word
+]]]
+
+[[[
+aFace lookSurprised 
+Not aFace surprised
 ]]]
 
 [[[
@@ -230,10 +347,12 @@ Use an interrogating the state of an object, use a selector beginning with a ver
 
 [[[
 isAtLineEnd
+Not atLineEnd
 ]]]
-and not 
+
 [[[
-atLineEnd
+aVehicle hasFourWheels
+Not aVehicle fourWheels
 ]]]
 
 !!!  Guideline: Accessors 
@@ -282,14 +401,28 @@ stylesheet get: #fontColor
 ]]]
 
 
+[[[
+aCollection groupedBy: [:each | each odd]
+Not aCollection groupBy: [:each | each odd]
+]]]
+
+[[[
+aCollection at: #toto put: 33
+Not aCollection addKey: #toto put: 33
+Not aCollection  
+]]]
+
+[[[
+series at: #k3 put: 'x'.
+Not series atKey: #k3 put: 'x'.
+]]]
 
 !!! Guideline: Distinguish class vs. instance selectors
 
 When defining a class method, we may name it the same way than an accessor of the class. Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. The senders will report both the instance and class usage. You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. So better enriched the class method with a distinct word.
 
 
-
-""Example.""
+!!!! Example
 In Pillar, annotations have parameters and the accessor method ==parameters:==. Now some version defined also the instance creation method with the same name.
 
 The following code that it was difficult to understand fast the code. Reading the code of the parser, it is not clear whether array second is a class or an instance.
@@ -333,6 +466,9 @@ PRAbstractAnnotation class >> parameters: aCollection
 		yourself
 ]]]
 	
+Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
+
+
 !! Instance initialization
 
 
