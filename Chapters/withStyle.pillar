@@ -6,6 +6,10 @@ These conventions are not cast in stone but they set the fundation of a common c
 
 We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
 
+Feedback and suggestions are welcome. 
+
+S. Ducasse
+
 
 !! General naming conventions
 
@@ -749,6 +753,77 @@ Implementation Points
 When a behavior that is unusual, performing unexpected actions or using an ununexpected algorithms, it is important to comment it. 
 In ganeral comment should make irregular and unusual aspects clearer. 
 You may want to include implementation-dependent, or platform specific idiosynchrasies. 
+
+
+!! About Code Formatting
+
+!!! Guideline: Be consistent
+
+One important guideline when writing code is to follow conventions and in addition to be consistent. Apply systematically a formatting style. Keep the violations to convention to the minimum.
+
+
+!!! Guideline: Use the general method template
+
+[[[
+message selector and argument names
+	"A comment fol lowing the guidelines."
+	
+	| temporary variables |
+	statements
+]]]
+
+- Tab the comments
+- Add an extra line to stress the beginning of method body.
+- Use tabs to separate the method body from the left margin.
+
+
+!!! Guideline: Put spaces around variables
+
+[[[
+| fieldName |
+fieldName := (anArray at: 2) asSymbol.
+]]]
+
+Not
+
+[[[
+|fieldName|
+fieldName:=(anArray at: 2) asSymbol.
+]]]
+
+
+!!! Guideline: Align properly
+
+[[[
+	self phoneBook add: 
+		(Person new
+			name: 'Robin';
+			city: 'Ottawa'; 
+			country: 'Canada').
+]]]
+
+Not 
+
+[[[
+	self phoneBook add: 
+		(Person new
+		name: 'Robin'; 
+		city: 'Ottawa'; 
+		country: 'Canada').
+]]]
+
+
+
+
+
+
+
+!!! More to come 
+
+
+
+
+
 
 
 
