@@ -1031,4 +1031,73 @@ fill me
 
 !! Potential traps
 
-will see
+!!! Guideline: receiver of ifTrue:ifFalse: is not a block
+
+Do not use a block as receiver of a ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:== or ==ifFalse:ifTrue:== messages.
+
+The following expressions are not good. 
+[[[
+[lastNode =0] value 
+	ifTrue:[ lastNode := curNode ]
+	ifFalse:[ lastNode next: curNode ]
+]]]
+
+[[[
+[lastNode =0] 
+	ifTrue:[ lastNode := curNode ]
+	ifFalse:[ lastNode next: curNode ]
+]]]
+
+The correct is the following
+[[[
+lastNode = 0 
+	ifTrue:[ lastNode := curNode ]
+	ifFalse:[ lastNode next: curNode ]
+]]]
+
+!!! Guideline: receiver of whileTrue: is a block
+
+The following line is incorrect:
+[[[
+(number < limit) whileTrue: [ do something ]
+]]]
+
+The following line is correct:
+
+[[[
+[ number < limit ] whileTrue: [ do something ]
+]]]
+
+
+!!! Guideline: Use a Block when you do not know execution time
+
+Often newcomers get confused about when to use ==( )== and ==[ ]==.
+A good way to understand is that we should use ==[ ]== when we do know whether an expression will be executed (may be multiple times).
+
+!!!! ifTrue:ifFalse:
+
+The conditional is always executed, while each of the arguments is a block because we do not know which ones will be executed.
+[[[
+lastNode = 0 
+	ifTrue:[ lastNode := curNode ]
+	ifFalse:[ lastNode next: curNode ]
+]]]
+
+!!!! timesRepeat:
+
+==timesRepeat:=='s argument is a block because we do not know how many times it will be executed.
+[[[
+n timesRepeat: [ lastNode := curNode next ]
+]]]
+
+!!!! do:/collect:
+
+The argument of iterators such as ==do:==, ==collect:==,... is a block because we do not know how many times (if any) the block will 
+be executed.
+
+[[[
+aCol do: [ :node | ...]
+]]]
+
+
+ 
