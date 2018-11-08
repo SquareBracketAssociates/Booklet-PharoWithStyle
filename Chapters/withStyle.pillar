@@ -1031,6 +1031,27 @@ fill me
 
 !! Potential traps
 
+!!! Guideline: Use parentheses to disambiguate keyword messages
+
+[[[
+testDefineASimpleClass
+
+	| uUMLClass |
+	uUMLClass := UMLClass named: 'ComixSerie'.
+	uUMLClass instVar: 'name'.
+	self assert: uUMLClass variables includes: 'name'
+]]]
+
+[[[
+testDefineASimpleClass
+
+	| uUMLClass |
+	uUMLClass := UMLClass named: 'ComixSerie'.
+	uUMLClass instVar: 'name'.
+	self assert: (uUMLClass variables includes: 'name')
+]]]
+
+
 !!! Guideline: receiver of ifTrue:ifFalse: is not a block
 
 Do not use a block as receiver of a ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:== or ==ifFalse:ifTrue:== messages.
