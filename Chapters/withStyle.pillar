@@ -16,6 +16,15 @@ S. Ducasse
 Names are important. We will never repeat it enough.
 A good name is often driven by a domain.
 
+!!! Guideline:  Favor simple direct meaning 
+
+Some native english writers use often more precise but less common terms. 
+Consider that your software may be read by people from different culture so use 
+simple, mainstream, and common terms.
+Avoid hidden or implied meaning that can only be understood by a limited group of people 
+Make information explicit.
+
+
 !!! Guideline: Avoid underscores and favor camelcase.
 
 Prefer
@@ -145,15 +154,28 @@ readSize
 From that perspective favor words with unique pronunciation.
 About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
 
+!!! Guideline: method selectors start with lowercase
+
+Prefer
+[[[type=prefer
+getMethodsNamesFromAClass: aClass
+	| methodsNames |
+	methodsNames := aClass selectors.
+	methodsNames do: [ :each | names add: each ]
+]]]
+
+over
+[[[type=not
+GetMethodsNamesFromAClass: aClass
+	| methodsNames |
+	methodsNames := aClass selectors.
+	methodsNames do: [ :each | names add: each ]
+]]]
+
+Here the method selector is not good. 
+It should be ==gatherSelectorsFrom:== or something similar.
 
 
-!!! Guideline:  Favor simple direct meaning 
-
-Some native english writers use often more precise but less common terms. 
-Consider that your software may be read by people from different culture so use 
-simple, mainstream, and common terms.
-Avoid hidden or implied meaning that can only be understood by a limited group of people 
-Make information explicit.
 
 !!! Guideline: Follow domain 
 
@@ -277,42 +299,65 @@ CmdMessage
 Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
 
 
-!! Variable Names
 
-When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
+
+!! About Variable Names
+
+When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
+There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
 
 !!! Guideline: Favor semantic variables
 
-A semantic name is less restrictive than a type name. When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. We recommend that semantically meaningful names be used wherever possible.
+A semantic name is less restrictive than a type name. 
+When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. 
+We recommend to use semantically meaningful names wherever possible.
 
 In the example below, the typed variable does not indicate how it will be used whereas the semantic variable does.
 
-[[[
-"Typed variable"
-anInteger := numberOfAdults size max: numberOfChildren size
-
+Prefer
+[[[type=prefer
 "Semantic variable"
 newSizeOfArray := numberOfAdults size max: numberOfChildren size
 ]]]
 
-Finding a semantic name is not always as obvious as in the above example. There are cases in which choosing a descriptive semantic name is difficult.
+over 
+[[[type=not
+"Typed variable"
+anInteger := numberOfAdults size max: numberOfChildren size
+]]]
+
+Finding a semantic name is not always as obvious as in the above example. 
+There are cases in which choosing a descriptive semantic name is difficult.
 
 
 !!! Guideline: Use typed variables to indicate API
 
+Suppose a String, a Symbol, and nil are valid.
+A developer may be tempted to use the name ==aStringOrSymbolOrNiI==;
+however, most developers choose ==aString== or ==anObject==.
+==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
 
-Suppose a String, a Symbol, and nil are valid. A developer may be tempted to use the name ==aStringOrSymbolOrNiI==; however, most developers choose ==aString== or ==anObject==. ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String, a Symbol, or nil."
+Below ==aDictionary== conveys that the argument should have the same API than a Dictionary (==at:==,==at:put:==)
 
-
-Below aDictionary conveys that the argument should have the same API than a Dictionary (at:,at:put:)
-
-[[[
+Prefer
+[[[type=prefer
 properties: aDictionary
+]]]
+
+over
+[[[type=not
 Not properties: aCollection
 ]]]
 
-[[[
+You may also want to stress a specific API. 
+
+Prefer 
+[[[type=prefer
 properties: aPuttable
+]]]
+
+over
+[[[type=not
 Not properties: aCollection
 ]]]
 
@@ -320,12 +365,16 @@ Not properties: aCollection
 
 !!! Guideline: Get the best from semantic and type variables
 
-A good practice is to use a mixture of both semantic and typed variable names. Method parameter names are usually named after their type. Instance, class, and temporary variables usually use a semantic name. In some cases, a combination of both can be given in the names.
+A good practice is to use a mixture of both semantic and typed variable names. 
+Method parameter names are usually named after their type. 
+Instance, class, and temporary variables usually use a semantic name. 
+In some cases, a combination of both can be given in the names.
 
 Prefer
 [[[type=prefer
 ifTrue: trueBlock if False: falseBlock
 ]]]
+
 over
 [[[type=not
 Not ifTrue: block1 ifFalse: block2
@@ -344,25 +393,28 @@ paddedTo: newLength with: anObject
 
 !!! Guideline: Use semantics for state variable
 
-State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. A combination of semantic and type information can be really powerful too. 
+State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. 
+A combination of semantic and type information can be really powerful too. 
 
-
-[[[
-In class PhoneBook 
-
+Prefer
+[[[type=prefer
+"In class PhoneBook"
 phoneNumber 
-Not number
-
 name
+]]]
+
+over
+[[[type=not
+Not number
 Not labelForPerson
 ]]]
 
 
 !!! Guideline: Use predicate for Boolean
+Use predicate clauses or adjectives for Boolean objects or states.
+Do not use predicate clauses for non-Boolean states.
 
-Use predicate clauses or adjectives for Boolean objects or states. Do not use predicate clauses for non-Boolean states.
-
-[[[
+[[[type=prefer
 alarmEnabled
 ]]]
 
@@ -378,52 +430,67 @@ Use common nouns and phrases for objects that are not Boolean.
 "In class AlarmClock..."
 	time 
 	alarmTime
-	
+
 "In class TypeSetter..."
 	page
-	font outputDevice
+	font 
+	outputDevice
 ]]]
 
 !! Selectors
-Method names in Pharo are called selectors. There are used in messages and are the main vehicule to convey adequate meaning. The correct use of words and design of selectors is important. 
+Method names in Pharo are called selectors. 
+There are used in messages and are the main vehicule to convey adequate meaning. 
+The correct use of words and design of selectors is important. 
 
 
 !!! Guideline: Choose selectors to form little sentences
 Choose method names so that someone reading the message can read the expression as if it were a sentence. 
 
-[[[
+Prefer
+[[[type=prefer
 FileDescriptor seekTo: word from: self position
+]]]
+
+[[[type=not
 Not FileDescriptor lseek: word at: self position
 ]]]
 
-Write test first and make sure that your test scenario read well. 
+Write test first and make sure that your test scenario reads well. 
 
 !!! Guideline: Use imperative verbs for actions
 
 Use imperative verbs for message which perform an action.
 
-
-[[[
+[[[type=prefer
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeMethod: each]
 ]]]
 
-[[[
+Prefer
+[[[type=prefer
 aReadStream peek
-and not aReadStream word
+]]]
+over
+[[[type=not
+Not aReadStream word
 ]]]
 
+Prefer
 [[[
 aFace lookSurprised 
+]]]
+over
+[[[type=not
 Not aFace surprised
 ]]]
 
-[[[
+[[[type=prefer
 skipSeparators
 ]]]
 
-Pay attention that some word can be interpreted as interrogative while you want to give them an imperative meaning. For example compare
+Pay attention that some word can be interpreted as interrogative while you want to give them an imperative meaning. 
+For example compare
 
 [[[
 optimized
@@ -441,33 +508,46 @@ When state process is going from one object to another one, indicate the directi
 
 For example ==flattenProperties:== is not a good name because it does not convey where the properties will be flattened.
 
-[[[
+[[[type=not
 aConfiguration flattenProperties: aDictionary
 ]]]
 
-Better names such ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there is no ambiquities.
+Better names such as ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there is no ambiquities.
 
-[[[
+[[[type=prefer
 aConfiguration flattenPropertiesFrom: aDictionary
 aConfiguration flattenPropertiesInto: aDictionary
 ]]]
 
-
-[[[
+Here are more examples
+[[[type=prefer
 changeField: anlnteger to: anObject
 ]]]
-[[[
-ReadWriteStream on: aCollection. 
+
+Prefer
+[[[type=prefer
+ReadWriteStream on: aCollection.
+]]]
+over
+[[[type=not
 Not ReadWriteStream for: aCollection.
 ]]]
 
+Prefer
 [[[
-File openOn: stream 
+File openOn: stream
+]]]
+over
+[[[type=not
 Not File with: stream
 ]]]
 
-[[[
-display: anObject on: aMedium 
+Prefer
+[[[type=prefer
+display: anObject on: aMedium
+]]]
+over
+[[[type=not
 Not display: anObject using: aMedium
 ]]]
 
@@ -475,22 +555,32 @@ Not display: anObject using: aMedium
 !!!  Guideline: Use interrogative form for testing
 Use an interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
 
-[[[
+Prefer
+[[[type=prefer
 isAtLineEnd
+]]]
+over
+[[[type=not
 Not atLineEnd
 ]]]
 
-[[[
+[[[type=prefer
 aVehicle hasFourWheels
+]]]
+over
+[[[type=not
 Not aVehicle fourWheels
 ]]]
 
 
 !!! Guideline: Avoid using parameter and variable name type
-A void the parameter type or name in the method name if you are using typed parameter names.
+Avoid the parameter type or name in the method name if you are using typed parameter names.
 
-[[[
-fileSystem at: aKey put: aFile
+Prefer
+[[[type=prefer
+fileSystem at: aKey put: aFile]]]
+over
+[[[type=not
 Not fileSystem atKey: aKey putFiIe: aFile
 ]]]
 
@@ -504,44 +594,50 @@ fileSystem atKey: index putFile: pathName
 "useful when your class has several #atput: methods"
 fileSystem definitionAt: aKey put: definition
 ]]]
-[[[
+
+Prefer
+[[[type=prefer
 aFace changeTo: expression
+]]]
+over
+[[[type=not
 Not aFace changeExpressionTo: expression
 ]]]
 
 !!!  Guideline: Accessors 
 
-There are different schools about the use of accessors or not. If you use accessors, use them consistently. 
+There are different schools about the use of accessors or not. 
+If you use accessors, use them consistently. 
 Name them also consistently:
 
-For getter
-[[[
+For getter, prefer 
+[[[type=prefer
 tiles
-	^ tiles 
+	^ tiles
 ]]]
+over 
+[[[type=not
+getTiles
+	^ tiles
+]]]
+Do not use get in accessor selectors!
+
 
 For lazy initialization:
-
-[[[
+[[[type=prefer
 tiles
 	^ tiles ifNil: [ tiles := OrderedCollection new ]
 ]]]
 
-Do not use get in accessor selectors 
-[[[
-getTiles
-	^ tiles
-]]]
 
 For Setters
-
-[[[
+[[[type=prefer
 tiles: aCollection
 	tiles := aCollection 
 ]]]
 
-Put real accessors in the accessing protocols. When you have accessors doing extra work 
-place them in a separate protocols to stress their difference. 
+Put real accessors in the accessing protocols. 
+When you have accessors doing extra work place them in a separate protocols to stress their difference.
 
 !!! Guideline: Use basic or raw to access low-level
 
@@ -567,51 +663,66 @@ pathString
 ]]]
 
 !!! Guideline: Follow conventions and idioms
-
 When designing new objects, you may mimic some practices that the system use already with for example dictionaries, sets,...
 
 ""Example.""
 Since a stylesheet acts as a dictionary of properties it is much better to use
 ==at:== instead of ==get:== especially when the message to set a value to a property is ==at:put:== and not ==set:==.
 
-[[[
+Prefer
+[[[type=prefer
 stylesheet at: #fontColor
 ]]]
-and not 
-[[[
+over
+[[[type=not
 stylesheet get: #fontColor
 ]]]
 
-
+Prefer
 [[[
-aCollection groupedBy: [:each | each odd]
-Not aCollection groupBy: [:each | each odd]
+aCollection groupedBy: [ :each | each odd ]
+]]]
+over
+[[[type=not
+Not aCollection groupBy: [ :each | each odd ]
 ]]]
 
-[[[
-aCollection at: #toto put: 33
-Not aCollection addKey: #toto put: 33
-Not aCollection  
-]]]
-
+Prefer
 [[[
 series at: #k3 put: 'x'.
-Not series atKey: #k3 put: 'x'.
+]]]
+over
+[[[type=not
+Not series atKey: #k3 put: 'x'
 ]]]
 
+Prefer
+[[[
+aCollection at: #toto
+]]]
+over
+[[[
+Not aCollection atKey: #toto
+]]]
 
 
 !!! Guideline: Distinguish class vs. instance selectors
 
-When defining a class method, we may name it the same way than an accessor of the class. Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. The senders will report both the instance and class usage. You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. So better enriched the class method with a distinct word.
+When defining a class method, we may name it the same way than an accessor of the class. 
+Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. 
+The senders will report both the instance and class usage. 
+You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. 
+So better enriched the class method with a distinct word.
 
 
 !!!! Example
-In Pillar, annotations have parameters and the accessor method ==parameters:==. Now some version defined also the instance creation method with the same name.
+In Pillar, annotations have parameters and the accessor method ==parameters:==. 
+Now some version defined also the instance creation method with the same name.
 
-The following code that it was difficult to understand fast the code. Reading the code of the parser, it is not clear whether array second is a class or an instance.
+In the following code  it is difficult to understand fast the code:
+Reading the code of the parser, it is not clear whether array second is a class or an instance.
 
-[[[
+[[[type=not
 annotation
 	^ super annotation
 		==>
@@ -620,7 +731,7 @@ annotation
 
 To create an instance is better to name the method ==withParameter:==. This way we can immediatelly spot that the second element is a class. 
 
-[[[
+[[[type=prefer
 annotation
 	^ super annotation
 		==>
@@ -630,6 +741,7 @@ annotation
 
 [[[
 PRAbstractAnnotation class >> withParameters: aCollection
+
 	| parameters |
 	parameters := self checkKeysOf: aCollection.
 	^ self new
@@ -653,17 +765,15 @@ PRAbstractAnnotation class >> parameters: aCollection
 Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
 
 
-
 !! Comments
+Comments are important. 
+Comments say to the reader, yes you are a smart guy and you guessed right this is what we are doing. 
 
-Comments are important. Comments say to the reader, yes you are a smart guy and you guessed right this is what we are doing. 
-
-Do not believe people that say that methods do not need comments. Obviously they are meaning that 
-# obvious methods such as accessors do not need comments, 
-# a good comment is not describing in english how the code execute, 
-# it is better to split long methods into smaller one with a single responsibility, 
-# but a good comment is always welcomed because it reinforces the understanding of the reader
-
+Do not believe people that say that methods do not need comments. Obviously they are meaning that:
+# obvious methods such as accessors do not need comments,
+# a good comment is not describing in english how the code execute,
+# it is better to split long methods into smaller one with a single responsibility,
+# but a good comment is always welcomed because it reinforces the understanding of the reader.
 
 A comment should be adapted to the level of granularity (i.e., package, class, method) to which is apply. 
 
@@ -671,7 +781,8 @@ A comment should be adapted to the level of granularity (i.e., package, class, m
 
 Method comments should contain sufficient information for a user to know exactly ""how to use"" the method, ""what"" the method does including any side effects, and ""what it answers"" without having to look at the source code. Imagine that the source code is not available.
 
-The main method comment is not about its implementation. Do not rephrase the implementation. 
+The main method comment is not about its implementation. 
+Do not rephrase the implementation. 
 The second level comments can include information about the implementation. 
 Insert a new line to separate method comments from method body.
 
@@ -700,8 +811,7 @@ day
 	^ day
 ]]]
 
-!!! Guideline: Avoid relying on a comment to explain what could be reflected in the code.
-
+!!! Guideline: Avoid relying on a comment to explain what could be reflected in the code
 
 Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
 
@@ -742,7 +852,9 @@ createShell
 
 !!! Guideline: Include executable comments
 
-Pharo offers executable example in comment using the message ==>>>==. Executable example in comments are super cool because as the reader you can execute the code and understand the parameters. In addition the documentation is always synchronised because the tools can check that the example are correct. 
+Pharo offers executable examples in comment using the message ==>>>==. 
+Executable examples in comments are super cool because as the reader you can execute the code and understand the parameters. 
+In addition the documentation is always synchronised because the tools can check that the example are correct. 
 
 [[[
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock
@@ -770,10 +882,11 @@ Object >> split: aSequenceableCollection
 ]]]
 
 !!! Guideline: Use CRC driven class comments
-A class is not in isolation but implement responsibilities (mainly one) and collaborate with other entities. Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators. 
-Class Responsibility Collaboration (CRC) pattern is powerful to comment classes. Use it for commenting class. 
+A class is not in isolation but implement responsibilities (mainly one) and collaborate with other entities.
+Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators.
+Class Responsibility Collaboration (CRC) pattern is powerful to comment classes. Use it for commenting class.
 
-Knowing the instance variables is the least importance! 
+Knowing the instance variables is the least importance!
 Follow the template given by Pharo and show hereafter.
 
 [[[
@@ -810,6 +923,9 @@ You may want to include implementation-dependent, or platform specific idiosynch
 
 
 !! About Code Formatting
+
+Code formatting improves code comprehension.
+Again follow the convention.
 
 !!! Guideline: Be consistent
 
@@ -858,6 +974,7 @@ names := Set new
 Prefer 
 [[[
 initialize
+
 	super initialize.
 	symbols := Bag new.
 	names := Set new
@@ -895,7 +1012,7 @@ performCrawling: aName
 Put space to help reader reads code and identify clearly variable, arguments, assignment, block delimiters and return.
 
 Prefer
-[[[
+[[[type=prefer
 stemSymbolFrom: aName
 
 	| stemmer symbol |
@@ -905,7 +1022,7 @@ stemSymbolFrom: aName
 ]]]
 
 Over 
-[[[
+[[[type=not
 stemSymbolFrom:aName
 
 	|stemmer symbol|
@@ -916,7 +1033,7 @@ stemSymbolFrom:aName
 
 Parentheses do not need spaces since they show that an expression fits together but favor space for ==[== and ==]==.
 
-[[[
+[[[type=prefer
 drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
 
 	(self canDrawDecoratorsOn: aCanvas) ifFalse: [ ^ self ].
@@ -927,22 +1044,24 @@ drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
 
 !!! Guideline: Align properly
 
-[[[
-	self phoneBook add: 
-		(Person new
-			name: 'Robin';
-			city: 'Ottawa'; 
-			country: 'Canada').
-]]]
+Make sure that your indentation reinforce the identification of block of functionality. 
 
-Not 
-
-[[[
-	self phoneBook add: 
-		(Person new
-		name: 'Robin'; 
+Prefer
+[[[type=prefer
+self phoneBook add: 
+	(Person new
+		name: 'Robin';
 		city: 'Ottawa'; 
 		country: 'Canada').
+]]]
+
+Over 
+[[[type=not
+self phoneBook add: 
+	(Person new
+	name: 'Robin'; 
+	city: 'Ottawa'; 
+	country: 'Canada').
 ]]]
 
 
@@ -952,7 +1071,7 @@ Avoid extra spaces everywhere. Use one space to separate instructions. Avoid ext
 Avoid extra space at the beginning and use tab to indent. 
 
 Prefer
-[[[
+[[[type=prefer
 stemSymbolFrom: aName
 
 	| stemmer symbol |
@@ -963,12 +1082,11 @@ stemSymbolFrom: aName
 
 over 
 
-[[[
+[[[type=not
 stemSymbolFrom: aName
-
 	|stemmer symbol|
-    stemmer:=SymbolStemmer new.
-   symbol:=stemmer performCrawling: aName.
+      stemmer:=SymbolStemmer new. 
+  symbol:=stemmer performCrawling: aName.
    ^symbol
 ]]]
 
@@ -1008,14 +1126,19 @@ paragraph
 ]]]
 
 
+
+
+
+
+
 !! Powerful coding idioms
 Some coding idioms will make your a lot clearer. 
 Knowing them is also good because you will code faster.
 
-
 !!! Guideline: Do not query twice for the same object
 
-The message ==ifNotNil:== expects a block with one argument. This argument is the object that is not nil. 
+The message ==ifNotNil:== expects a block with one argument. 
+This argument is the object that is not nil.
 
 [[[
 self doThat ifNotNil: [ :that | self doSomethingWith: that ]
@@ -1031,6 +1154,12 @@ Similarly have a look at the messages containing the ==ifPresent:== variation.
 [[[
 aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 ]]]
+
+
+
+
+
+
 
 
 !! Potential traps
@@ -1081,7 +1210,7 @@ The following expressions does not work
 ]]]
 
 The correct is the following
-[[[type=perfer
+[[[type=prefer
 lastNode = 0 
 	ifTrue:[ lastNode := curNode ]
 	ifFalse:[ lastNode next: curNode ]
@@ -1089,14 +1218,15 @@ lastNode = 0
 
 !!! Guideline: receiver of whileTrue: is a block
 
+The receiver of the message ==whileTrue:== is a block, its argument too. 
+
 The following line is incorrect:
 [[[type=not
 (number < limit) whileTrue: [ do something ]
 ]]]
 
 The following line is correct:
-
-[[[type=perfer
+[[[type=prefer
 [ number < limit ] whileTrue: [ do something ]
 ]]]
 
@@ -1111,25 +1241,20 @@ A good way to understand is that we should use ==[ ]== when we do know whether a
 The conditional is always executed, while each of the arguments is a block because we do not know which ones will be executed.
 [[[
 lastNode = 0 
-	ifTrue:[ lastNode := curNode ]
-	ifFalse:[ lastNode next: curNode ]
+	ifTrue: [ lastNode := curNode ]
+	ifFalse: [ lastNode next: curNode ]
 ]]]
 
 !!!! timesRepeat:
-
 ==timesRepeat:=='s argument is a block because we do not know how many times it will be executed.
 [[[
 n timesRepeat: [ lastNode := curNode next ]
 ]]]
 
 !!!! do:/collect:
-
 The argument of iterators such as ==do:==, ==collect:==,... is a block because we do not know how many times (if any) the block will 
 be executed.
 
 [[[
 aCol do: [ :node | ...]
 ]]]
-
-
- 

@@ -1,7 +1,4 @@
-
 !! Instance initialization
-
-
 
 !!! Guideline: Automatic object initialization 
 
@@ -167,31 +164,3 @@ TestSubCounter next2.
 TestSubCounter next2.
 TestSubCounter next2.
 ]]]
-
-
-
-
-!! Powerful coding idioms
-
-!!! Guideline: Do not query twice for the same object
-
-The message ==ifNotNil:== expects a block 
-
-[[[
-self doThat ifNotNil: [ :that | self doSomethingWith: that ]
-]]]
-
-[[[
-| that |
-that := self doThat.
-that ifNotNil: [self doSomethingWith: that]
-]]]
-
-Similarly have a look at the messages containing the ==ifPresent:== variation.
-[[[
-	aCol at: key ifPresent: [ :present | self doSomethingWith: present]
-]]]
-
-
-
- 
