@@ -1,0 +1,197 @@
+
+!! Instance initialization
+
+
+
+!!! Guideline: Automatic object initialization 
+
+
+
+[[[
+Game >> initialize
+	super initialize.
+	turn := 0.
+]]]
+
+
+!!! Guideline: No automatic initialize
+
+When you do not want to get the automatic initialization to happen you should use the message ==basicNew== on the class side and create your own ==initializeSomething:== method. 
+
+
+[[[
+Game class >> tilesNumber: aNumber
+	^ self basicNew initializeNumber: aNumber ; yourself
+]]]
+
+[[[
+Game >> initializeNumber: aNumber
+	tiles := Array new: aNumber
+]]]
+
+!!! More advanced schema
+
+You should  not use ==new== instead of ==basicNew== as this would result in the designated constructor of the superclass being called twice. For example:
+[[[
+Person >> initializeWithFoo: aNumber bar: aString
+	self initialize.
+	foo := aNumber.
+	bar := aString
+]]]
+
+[[[
+Person class >> foo: aNumber bar: aString
+	^ self basicNew
+		initializeWithFoo: aNumber bar: aString;
+		yourself
+]]]
+
+
+
+!! Understanding Class and instance variable
+@@note Not sure that I want to have this session
+
+- instance-variable: A variable that holds the private state of an object.  In Pharo, these can only be accessed by instance-methods. 
+
+- class-variable: An attribute of a class that is shared by that class,  its subclasses, and  all  instances  of  those  classes.  Can  be  accessed  by  both  instance-methods and class-methods. 
+
+- class-instance-variable:  An attribute  of a class that  is not shared outside that specific class. Only the definition is inherited by subclasses, not the value.   Each subclass has its own private value.  Accessible only by class-methods. 
+
+Example: 
+We will experiment with three different variables
+- ivCounter - instance variable counter 
+- CVCounter - class variable counter 
+- CIVCounter - class instance variable counter 
+
+[[[
+Object subclass: #UnderstandCounter 
+    instanceVariableNames: 'ivCounter iName' 
+    classVariableNames: 'CVCounter' 
+    package: 'MyExamples' 
+]]]
+[[[
+UnderstandCounter class  "accessed by clicking the <Class> button" 
+    instanceVariableNames: 'CIVCounter' 
+
+]]]
+[[[
+UnderstandCounter subclass: #UnderstandSubCounter 
+    instanceVariableNames: '' 
+    classVariableNames: '' 
+    package: 'MyExamples' 
+]]]  
+
+[[[
+UnderstandCounter >> next 
+    ivCounter ifNil: [ ivCounter := 0 ]. 
+    CVCounter ifNil: [ CVCounter := 0 ]. 
+    ivCounter := ivCounter + 1. 
+    CVCounter := CVCounter + 1. 
+]]]
+
+[[[
+UnderstandCounter >> printOn: aStream 
+    super printOn: aStream. 
+    aStream nextPutAll: ' ['. 
+    aStream 
+        print: iName.
+    aStream nextPutAll: '] ( '.
+    aStream
+        nextPutAll: ' ivCounter=';
+        print: ivCounter.
+    aStream
+        nextPutAll: ', CIVCounter=n/a'.
+    aStream
+        nextPutAll: ', CVCounter=';
+        print: CVCounter.
+    aStream nextPutAll: ' )'.
+]]]
+
+
+[[[
+UnderstandCounter class >> next2
+    CIVCounter ifNil: [ CIVCounter := 0 ].
+    CVCounter ifNil: [ CVCounter := 0 ].
+
+    CIVCounter := CIVCounter + 1.
+    CVCounter := CVCounter + 1.
+]]]  
+
+[[[
+UnderstandCounter class >> printOn: aStream 
+    super printOn: aStream.
+    aStream nextPutAll: ' ( '.
+    aStream
+        nextPutAll: 'ivCounter=n/a'.
+    aStream
+        nextPutAll: ', CIVCounter=';
+        print: CIVCounter.
+    aStream
+        nextPutAll: ', CVCounter=';
+        print: CVCounter.
+    aStream nextPutAll: ' )'.
+]]]  
+
+[[[  
+UnderstandCounter class >> reset 
+    CVCounter := nil.
+    CIVCounter := nil.
+]]]  
+
+Then from Workspace evaluate these...
+[[[
+tc1 := UnderstandCounter new.
+tc2 := UnderstandCounter new.
+
+tsc1 := TestSubCounter new.
+tsc2 := TestSubCounter new.
+
+TestCounter reset.
+TestSubCounter reset.
+
+tc1 next.
+tc2 next.
+tc1 next.
+tc2 next.
+
+tsc1 next.
+tsc2 next.
+tsc1 next.
+tsc2 next.
+
+TestCounter next2.
+TestCounter next2.
+TestCounter next2.
+
+TestSubCounter next2.
+TestSubCounter next2.
+TestSubCounter next2.
+]]]
+
+
+
+
+!! Powerful coding idioms
+
+!!! Guideline: Do not query twice for the same object
+
+The message ==ifNotNil:== expects a block 
+
+[[[
+self doThat ifNotNil: [ :that | self doSomethingWith: that ]
+]]]
+
+[[[
+| that |
+that := self doThat.
+that ifNotNil: [self doSomethingWith: that]
+]]]
+
+Similarly have a look at the messages containing the ==ifPresent:== variation.
+[[[
+	aCol at: key ifPresent: [ :present | self doSomethingWith: present]
+]]]
+
+
+
+ 
