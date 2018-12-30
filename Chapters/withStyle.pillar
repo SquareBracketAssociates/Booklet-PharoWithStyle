@@ -764,17 +764,30 @@ One important guideline when writing code is to follow conventions and in additi
 
 !!! Guideline: Use the general method template
 
+- Separate method signature and comments from method body with an empty line. 
+- Add an extra tab to the comments.
+- Add an extra line to stress the beginning of method body.
+- Use a tab to separate the method body from the left margin.
+
 [[[
 message selector and argument names
-	"A comment fol lowing the guidelines."
+	"A comment following the guidelines."
 	
 	| temporary variables |
 	statements
 ]]]
 
-- Tab the comments
-- Add an extra line to stress the beginning of method body.
-- Use tabs to separate the method body from the left margin.
+For example:
+
+[[[
+addLast: newObject
+	"Add newObject to the end of the receiver. Answer newObject."
+
+	lastIndex = array size ifTrue: [self makeRoomAtLast].
+	lastIndex := lastIndex + 1.
+	array at: lastIndex put: newObject.
+	^ newObject
+]]]
 
 
 !!! Guideline: Indent method body
