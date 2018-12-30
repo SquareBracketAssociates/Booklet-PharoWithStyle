@@ -1,4 +1,4 @@
-Programming is a lot more than just writing algorithms or programs. Programming is all about communication. Communication with others: the other programmers that we will participate to your development effort but also with yourselves. Indeed finding good names is a really important task because using the right name often opens the door to new space when your design can bloom and expand. 
+Programming is a lot more than just writing algorithms or programs. Programming is all about communication. Communication with others: the other programmers that we will participate to your development effort but also with yourselves. Indeed finding good names is a really important task because using the right name often opens the door to new spaces where your design can bloom and expand. 
 
 The purpose of a programming style guide such as this book is to provide a simple vehicle for addressing the needs of a good communication. The goal is to make source code clear, easy to read, and easy to understand and extend. 
 
@@ -6,40 +6,47 @@ These conventions are not cast in stone but they set the fundation of a common c
 
 We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
 
-Feedback and suggestions are welcome. 
+Feedback and suggestions are welcome at stephane.ducasse@inria.fr
 
 S. Ducasse
 
 
 !! General naming conventions
 
-Names are important. We will never repeat it enough. 
-A good name is often driven by a domain. 
-
+Names are important. We will never repeat it enough.
+A good name is often driven by a domain.
 
 !!! Guideline: Avoid underscores and favor camelcase.
 
-[[[
+Prefer
+[[[type=prefer
 timeOfDay
-not timeofday
-not time_of_day
 ]]]
 
-[[[
+over 
+[[[type=not
+Not timeofday
+Not time_of_day
+]]]
+
+Prefer
+[[[type=prefer
 GnatXmlNode
-not GNAT_XML_Object
+]]]
+over 
+[[[type=not
+Not GNAT_XML_Object
 ]]]
 
-When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries. 
+When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
-
 
 !!! Guideline: Use CamelCase
 
-==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different. 
+Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
 
 [[[
-|MaxLimit maxLimit|
+| MaxLimit maxLimit |
 MaxLimit := 10.
 maxLimit := 20.
 MaxLimit
@@ -48,9 +55,13 @@ MaxLimit
 
 Still Pharo favors camelCase so use it systematically for words.
 
-[[[
+Prefer
+[[[type=prefer
 maxLimit
 MaxLimit
+]]]
+over
+[[[type=not
 Not maxlimit
 Not MAXLIMIT
 ]]]
@@ -58,51 +69,71 @@ Not MAXLIMIT
 
 @@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
 
-[[[
+Prefer
+[[[type=prefer
 superclass
+]]]
+over
+[[[type=not
 Not superClass
 ]]]
 
-!!! Guideline: Descriptive names
+!!! Guideline: Use descriptive names
 
 Choose descriptive names that capture domain entity unambiguously.
 
-[[[
+Prefer
+[[[type=prefer
 timeOfDay
-not tod
+]]]
+over 
+[[[type=not
+Not tod
 ]]]
 
-[[[
+Prefer
+[[[type=prefer
 milliseconds
+]]]
+over
+[[[type=not
 not mil
 ]]]
 
-[[[
+Prefer
+[[[type=prefer
 editMenu
+]]]
+over
+[[[type=not
 not eMenu
 ]]]
 
 
-!!! Guideline:  Pay attention to meaning
+!!! Guideline: Pay attention to meaning
 
-Non english native speaker often misplaced word qualifier. In english the qualifier is often before the word it qualifies. 
+Non english native speaker often misplaced word qualifier. 
+In english the qualifier is often before the word it qualifies.
 
-[[[
-blueCar
-not carBlue
-]]]
-
-[[[
+Prefer
+[[[type=prefer
 DateParser
+]]]
+over
+[[[type=not
 Not ParserForDate
 ]]]
 
-
-[[[
+Prefer
+[[[type=prefer
 userAssociation
 ]]]
-is an association of users.
+(an association of users)
 
+over
+[[[type=not
+Not associationUser
+]]]
 Compare the three following variables:
 
 [[[
@@ -116,49 +147,52 @@ About ==readSize==: does this mean that the size was just read (red) or it is th
 
 
 
-!!! Guideline :  Favor simple direct meaning 
+!!! Guideline:  Favor simple direct meaning 
 
 Some native english writers use often more precise but less common terms. 
 Consider that your software may be read by people from different culture so use 
 simple, mainstream, and common terms.
+Avoid hidden or implied meaning that can only be understood by a limited group of people 
+Make information explicit.
 
-
-!!! Guideline :  Follow domain 
+!!! Guideline: Follow domain 
 
 Follow domain and culture of the project. Do not invent your own because you think it is better. 
 Favor regularity over preciseness.
 
-[[[
+Prefer
+[[[type=prefer
 GnatXmlNode
+]]]
+
+over 
+[[[type=not
 not GNAT_XML_Object
 ]]]
 
-When representing the XML ada abstract syntax tree in Pharo, we should not follow their naming convention. The name should convey that the class is a abstract syntax tree node hence ==GnatXmlNode== is much better that ==GnatXmlObject==. 
+When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming convention. 
+The name should convey that the class is a abstract syntax tree node hence ==GnatXmlNode== is much better that ==GnatXmlObject==. 
 
-In Moose an importer is an object creating FAMIX entities (classes methods....) from the datastructure representing a language usually an Abstract Syntax Tree. 
+In Moose, an importer is an object creating FAMIX entities (classes methods....) from the datastructure representing a language usually an Abstract Syntax Tree. 
 Therefore ==GNATInstaller== which creates entities from AST should be renamed ==GnatImporter==
-and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==
-
-
+and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==.
 
 
 !!! Guideline:  Shared variables starts with uppercase 
 
-Begin class names, global variables, pool variables and class variables with an uppercase letter. If the word is compound, then begin use camel case for the rest.
-
+Begin class names, global variables, pool variables and class variables with an uppercase letter.
+If the word is compound, then begin use camel case for the rest.
 
 [[[
-Point	"class"
+Point	"Class"
 Transcript 	"global variable"
 PackageGlobalOrganizer	"class variables"
 ]]]
 
-
-
-
 !!! Guideline:  Private variables starts with lowercase 
 
-Begin instance variables, temporary variables, method parameterr and method selectors with a lower case. If the word is compound, then use camel case for the rest.
+Begin instance variables, temporary variables, method parameterr and method selectors with a lower case. 
+If the word is compound, then use camel case for the rest.
 
 [[[
 address
@@ -171,13 +205,16 @@ classTags
 
 Choose names that have a unique pronunciation.
 
-
-
-[[[
+Prefer
+[[[type=prefer
 sizeToRead 
 sizeJustRead
+]]]
+
+[[[type=not
 Not readSize
 ]]]
+
 Does this mean that the size was just read (red) or is it the size to read (reed)?
 
 
@@ -188,28 +225,41 @@ Suffix with the root to convey the kind of object we are talking about.
 
 Below without the Morph suffix the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
 
-[[[
+Prefer
+[[[type=prefer
 ClyBrowserButtonMorph
+]]]
+over 
+[[[type=not
 Not ClyBrowserButton
 ]]]
 
-
-[[[
+Prefer
+[[[type=prefer
 ClyQueryViewMorph
+]]]
+over
+[[[type=not
 Not ClyQueryView
 ]]]
 
-
 Here not mentioning the Presenter suffix makes the reader unclear about the fact that it is a Presenter object by opposition to a view object.
-[[[
+Prefer
+[[[type=prefer
 ApplicationWithToolBarPresenter
+]]]
+over
+[[[type=not
 Not ApplicationWithToolbar
 ]]]
 
 Here ==DynamicWidgetChange== does not conver the fact that this is not a ''domain'' object representing a change but a Presenter object in the Model View Presenter triad.
 
-[[[
+[[[type=prefer
 DynamicWidgetChangePresenter
+]]]
+over
+[[[type=not
 Not DynamicWidgetChange
 ]]]
 
@@ -223,13 +273,13 @@ PRDocument
 CmdMessage
 ]]]
 
-@@note You may find that Pharo is lacking a namespace. May be or may be not. Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
+@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
+Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
 
 
 !! Variable Names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
-
 
 !!! Guideline: Favor semantic variables
 
@@ -272,8 +322,12 @@ Not properties: aCollection
 
 A good practice is to use a mixture of both semantic and typed variable names. Method parameter names are usually named after their type. Instance, class, and temporary variables usually use a semantic name. In some cases, a combination of both can be given in the names.
 
-[[[
+Prefer
+[[[type=prefer
 ifTrue: trueBlock if False: falseBlock
+]]]
+over
+[[[type=not
 Not ifTrue: block1 ifFalse: block2
 Not ifTrue: action1 ifFalse: action2
 ]]]
