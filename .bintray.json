@@ -18,7 +18,7 @@
 
     "files": [
         {
-            "includePattern": "_result/pdf/book.pdf",
+            "includePattern": "_result/pdf/withstylebook.pdf",
             "uploadPattern": "withStyle-wip.pdf",
             "matrixParams": { "override": 1 }
         }
