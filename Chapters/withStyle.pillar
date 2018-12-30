@@ -1024,10 +1024,137 @@ Similarly have a look at the messages containing the ==ifPresent:== variation.
 
 !! Code formatting
 
-fill me
 
-!!! Guideline:
-fill me
+!!! Guideline: Indent method body
+
+Use indentation to convey structure! Do not glue everything on the left margin.
+
+[[[
+initialize
+super initialize.
+symbols := Bag new.
+names := Set new
+]]]
+
+Prefer 
+[[[
+initialize
+	super initialize.
+	symbols := Bag new.
+	names := Set new
+]]]
+
+!!! Guideline: Separate signature and comments from method body
+
+
+Prefer
+[[[
+performCrawling: aName
+	"Takes the last word in uppercase as a symbol and eventually add it to the bag symbols"
+
+	name := aName copy.
+	self getUpperCase.
+	self stemSymbolFrom: aName.
+	self toUpperCase.
+	^ symbol
+]]]
+
+over
+
+[[[
+performCrawling: aName
+	"Takes the last word in uppercase as a symbol and eventually add it to the bag symbols"
+	name := aName copy.
+	self getUpperCase.
+	self stemSymbolFrom: aName.
+	self toUpperCase.
+	^ symbol
+]]]
+
+
+
+!!! Guideline: Use space to show assignment
+
+[[[
+stemSymbolFrom: aName
+
+	|stemmer symbol|
+	stemmer:=SymbolStemmer new.
+	symbol:=stemmer performCrawling: aName.
+	^ symbol
+]]]
+
+Prefer
+[[[
+stemSymbolFrom: aName
+
+	| stemmer symbol |
+	stemmer := SymbolStemmer new.
+	symbol := stemmer performCrawling: aName.
+	^ symbol
+]]]
+
+!!! Guideline: Use tab not space to indent
+
+Avoid extra spaces everywhere. Use one space to separate instructions. Avoid extra space at the end of the line. 
+Avoid extra space at the beginning and use tab to indent. 
+
+Prefer
+[[[
+stemSymbolFrom: aName
+
+	| stemmer symbol |
+	stemmer := SymbolStemmer new.
+	symbol := stemmer performCrawling: aName.
+	^ symbol
+]]]
+
+over 
+
+[[[
+stemSymbolFrom: aName
+
+	|stemmer symbol|
+    stemmer:=SymbolStemmer new.
+   symbol:=stemmer performCrawling:aName.
+   ^symbol
+]]]
+
+
+!!! Guideline: Do not break line randomly
+
+White lines attract the eyes and force the reader to ask himself why the code is separated that way.
+Only separate method signature and comment from method body with a new line.
+
+Prefer
+[[[
+paragraph
+	"this method is here to find the paragraph in the chain, instead of relying on implementing #doesNotUnderstand: !!!"
+
+	| p |
+	p := next.
+	[ p isNotNil and: [ p isKindOf: RubParagraph ] ]
+		whileFalse: [ p := p next ].
+	^p
+]]]
+
+Over
+[[[
+paragraph
+	"this method is here to find the paragraph in the chain, instead of relying on implementing #doesNotUnderstand: !!!"
+
+	| p |
+	
+	p := next.
+	
+	[ p  isNotNil and: [ p isKindOf: RubParagraph ] ] whileFalse: [ 
+		p := p next.
+	].
+
+	^p
+
+]]]
+
 
 !! Potential traps
 
