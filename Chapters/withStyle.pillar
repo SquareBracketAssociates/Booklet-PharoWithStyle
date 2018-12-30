@@ -7,8 +7,9 @@ These conventions are not cast in stone but they set the fundation of a common c
 We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr
+PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-S. Ducasse
+S. Ducasse - 30 December 2018.
 
 
 !! General naming conventions
