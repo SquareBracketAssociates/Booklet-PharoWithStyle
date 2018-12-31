@@ -735,7 +735,7 @@ So better enriched the class method with a distinct word.
 In Pillar, annotations have parameters and the accessor method ==parameters:==. 
 Now some version defined also the instance creation method with the same name.
 
-In the following code  it is difficult to understand fast the code:
+In the following code  it is difficult to easily understand the code:
 Reading the code of the parser, it is not clear whether array second is a class or an instance.
 
 [[[type=not
@@ -783,15 +783,14 @@ Now if you favor a fluid interface with many parameters, using ==withParameters:
 
 !! Comments
 Comments are important. 
-Comments say to the reader, yes you are a smart guy and you guessed right this is what we are doing. 
-
+Comments tell the reader that he's a smart guy and that he correctly guessed your intentions or your code.
 Do not believe people that say that methods do not need comments. Obviously they are meaning that:
 # obvious methods such as accessors do not need comments,
-# a good comment is not describing in english how the code execute,
+# a good comment is not describing in English how the code execute,
 # it is better to split long methods into smaller one with a single responsibility,
-# but a good comment is always welcomed because it reinforces the understanding of the reader.
+# but a good comment is always welcome because it reinforces the understanding of the reader.
 
-A comment should be adapted to the level of granularity (i.e., package, class, method) to which is apply. 
+A comment should be adapted to the level of granularity (i.e., package, class, method) to which it applies.
 
 !!! Guideline: Method comments
 
@@ -934,7 +933,7 @@ Implementation Points
 !!! Guideline: Comment the unusual
 
 When a behavior that is unusual, performing unexpected actions or using an ununexpected algorithms, it is important to comment it. 
-In ganeral comment should make irregular and unusual aspects clearer. 
+In general comments should make irregular and unusual aspects clearer. 
 You may want to include implementation-dependent, or platform specific idiosynchrasies. 
 
 
@@ -945,7 +944,9 @@ Again follow the convention.
 
 !!! Guideline: Be consistent
 
-One important guideline when writing code is to follow conventions and in addition to be consistent. Apply systematically a formatting style. Keep the violations to convention to the minimum.
+One important guideline when writing code is to follow conventions and in addition to be consistent.
+Systematically apply a formatting style.
+Keep the violations to convention to the minimum.
 
 
 !!! Guideline: Use the general method template
@@ -1025,7 +1026,7 @@ performCrawling: aName
 
 !!! Guideline: Use space to give breath to code
 
-Put space to help reader reads code and identify clearly variable, arguments, assignment, block delimiters and return.
+Put space to make it easier to read code and clearly identify variables, arguments, assignments, block delimiters and returns.
 
 Prefer
 [[[type=prefer
@@ -1148,7 +1149,7 @@ paragraph
 
 
 !! Powerful coding idioms
-Some coding idioms will make your a lot clearer. 
+Some coding idioms will make your code a lot clearer. 
 Knowing them is also good because you will code faster.
 
 !!! Guideline: Do not query twice for the same object
@@ -1172,15 +1173,9 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 ]]]
 
 
-
-
-
-
-
-
 !! Potential traps
 
-Understanding possible mistakes is a nice way to avoid them or to identify faster errors made in your code.
+Understanding possible mistakes is a nice way to avoid them or to quickly identify errors made in your code.
 Here are some common mistakes.
 
 
@@ -1274,3 +1269,12 @@ be executed.
 [[[
 aCol do: [ :node | ...]
 ]]]
+
+!! Conclusion
+
+Remember that you write code once and read it thousand times.
+Take the time to give good names.
+However finding good names is not an easy task, but you can use refactorings to improve the situation.
+This goes in pair with tests. 
+You write a test once and it gets executed million times. 
+Therefore write test to exercise the names you use and change them until they help you telling stories that can be understood.
