@@ -335,7 +335,7 @@ There are cases in which choosing a descriptive semantic name is difficult.
 !!! Guideline: Use typed variables to indicate API
 
 Suppose a String, a Symbol, and nil are valid.
-A developer may be tempted to use the name ==aStringOrSymbolOrNiI==;
+A developer may be tempted to use the name ==aStringOrSymbolOrNil==;
 however, most developers choose ==aString== or ==anObject==.
 ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
 
@@ -374,7 +374,7 @@ In some cases, a combination of both can be given in the names.
 
 Prefer
 [[[type=prefer
-ifTrue: trueBlock if False: falseBlock
+ifTrue: trueBlock ifFalse: falseBlock
 ]]]
 
 over
