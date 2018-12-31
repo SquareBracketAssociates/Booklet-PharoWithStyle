@@ -20,13 +20,13 @@ S. Ducasse - 30 December 2018.
 !! General naming conventions
 
 Names are important. We will never repeat it enough.
-A good name is often driven by a domain.
+A good name is often driven by a problem domain.
 
 !!! Guideline:  Favor simple direct meaning 
 
-Some native english writers use often more precise but less common terms.
-Consider that your software may be read by people from different cultures so use simple, mainstream, and common terms.
-Avoid hidden or implied meaning that can only be understood by a limited group of people. 
+Some native English writers use often more precise but less common terms.
+Consider that your software may be read by people from different cultures. So use simple, mainstream, and common terms.
+Avoid hidden or implied meanings that can only be understood by a limited group of people. 
 Make information explicit.
 
 
@@ -52,7 +52,7 @@ over
 Not GNAT_XML_Object
 ]]]
 
-When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries.
+When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to make it easier to follow the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
 !!! Guideline: Use camel case
@@ -67,10 +67,10 @@ MaxLimit
 >>> 10
 ]]]
 
-Still Pharo favors camel case so use it systematically for words.
+Still, Pharo favors camel case, so use it systematically for words.
 Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
 
-For instance and local variables and parameters, use
+For local variables, parameters, and instance variables, use
 [[[type=prefer
 maxLimit
 ]]]
@@ -105,7 +105,7 @@ Not superClass
 
 !!! Guideline: Use descriptive names
 
-Choose descriptive names that capture domain entity unambiguously.
+Choose descriptive names that capture domain entities unambiguously.
 
 Prefer
 [[[type=prefer
@@ -137,7 +137,7 @@ not eMenu
 
 !!! Guideline: Pay attention to meaning
 
-Non English native speaker often misplace word qualifier. 
+Non-English native speakers often misplace word qualifiers. 
 In English the qualifier is often before the word it qualifies.
 
 Prefer
@@ -167,7 +167,7 @@ sizeJustRead
 readSize
 ]]]
 
-From that perspective favor words with unique pronunciation.
+In this situation, avoid homographs (https://en.wiktionary.org/wiki/homograph). That is, words that are written the same way but can have different meanings or pronunciations. For example, ''Did you read that book? ... Yes, I read it yesterday.''
 About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
 
 !!! Guideline: Method selectors start with lowercase
@@ -188,15 +188,15 @@ GetMethodsNamesFromAClass: aClass
 	methodsNames do: [ :each | names add: each ]
 ]]]
 
-Here the method selector is not good. 
+Also, in this example the method selector is not good because method names are called selectors in Pharo. 
 It should be ==gatherSelectorsFrom:== or something similar.
 
 
 
 !!! Guideline: Follow domain 
 
-Follow domain and culture of the project. Do not invent your own because you think it is better. 
-Favor regularity over preciseness.
+Follow the domain concepts and culture of the project. Do not invent your own terms because you think they are better. 
+Favor regularity (consistency) over preciseness.
 
 Prefer
 [[[type=prefer
@@ -208,18 +208,18 @@ over
 not GNAT_XML_Object
 ]]]
 
-When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming convention. 
-The name should convey that the class is a abstract syntax tree node hence ==GnatXmlNode== is much better that ==GnatXmlObject==. 
+When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming conventions. 
+The name should convey that the class is an abstract syntax tree node. Hence ==GnatXmlNode== is much better than ==GnatXmlObject==. 
 
-In Moose, an importer is an object creating FAMIX entities (classes methods....) from the datastructure representing a language usually an Abstract Syntax Tree. 
-Therefore ==GNATInstaller== which creates entities from AST should be renamed ==GnatImporter==
-and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==.
+In Moose, an importer is an object creating FAMIX entities (classes, methods, etc.) from the data structure representing a language, usually an Abstract Syntax Tree (AST). 
+Therefore ==GNATInstaller==, which creates entities from an AST, should be renamed ==GnatImporter==
+and ==GNATImporter==, which loads an AST in memory, should be renamed ==GnatASTLoader==.
 
 
-!!! Guideline:  Shared variables starts with uppercase 
+!!! Guideline:  Shared variables start with uppercase 
 
-Begin class names, global variables, pool variables and class variables with an uppercase letter.
-If the word is compound, then begin use camel case for the rest.
+Begin class names, global variables, pool variables, and class variables with an uppercase letter.
+If the word is compound, then use camel case for the rest.
 
 [[[
 Point	"Class"
@@ -227,9 +227,9 @@ Transcript 	"global variable"
 PackageGlobalOrganizer	"class variables"
 ]]]
 
-!!! Guideline:  Private variables starts with lowercase 
+!!! Guideline:  Private variables start with lowercase 
 
-Begin instance variables, temporary variables, method parameters and method selectors with a lower case. 
+Begin instance variables, temporary variables, method parameters, and method selectors with lower case. 
 If the word is compound, then use camel case for the rest.
 
 [[[
@@ -239,9 +239,9 @@ classTags
 ]]]
 
 
-!!! Guideline: Unique pronunciation
+!!! Guideline: Unique meaning and pronunciation (avoid homographs)
 
-Choose names that have a unique pronunciation.
+Choose names that have a unique meaningn(avoid homographs).
 
 Prefer
 [[[type=prefer
@@ -257,11 +257,11 @@ Does this mean that the size was just read (red) or is it the size to read (reed
 
 
 
-!!! Guideline: Class names should exhibit their parent
+!!! Guideline: Class names should indicate the class' parent
 
-Suffix with the root to convey the kind of object we are talking about. 
+Suffix class names with the root class to convey the kind of object we are talking about. 
 
-Below without the Morph suffix the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
+For example, without the Morph suffix, the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
 
 Prefer
 [[[type=prefer
@@ -281,7 +281,7 @@ over
 Not ClyQueryView
 ]]]
 
-Here not mentioning the Presenter suffix makes the reader unclear about the fact that it is a Presenter object by opposition to a view object.
+In the following, not mentioning the Presenter suffix makes it unclear to the reader that it is a Presenter object as opposed to a View object.
 Prefer
 [[[type=prefer
 ApplicationWithToolBarPresenter
@@ -291,7 +291,7 @@ over
 Not ApplicationWithToolbar
 ]]]
 
-Here ==DynamicWidgetChange== does not conver the fact that this is not a ''domain'' object representing a change but a Presenter object in the Model View Presenter triad.
+In the next example, ==DynamicWidgetChange== does not convey that this is not a ''domain'' object representing a change, but a Presenter object in the Model-View-Presenter triad:
 
 [[[type=prefer
 DynamicWidgetChangePresenter
@@ -302,7 +302,7 @@ Not DynamicWidgetChange
 ]]]
 
 
-!!! Guideline: Avoid name collision
+!!! Guideline: Avoid name collisions
 
 To avoid name space collisions, add a prefix indicative of the project to the name of the class.
 
@@ -312,7 +312,7 @@ CmdMessage
 ]]]
 
 @@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
-Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
+Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
 
 
 
@@ -320,13 +320,13 @@ Note however that even in presence of namespace you will have to pay attention t
 !! About variable names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
-There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
+There are good arguments for both styles. Let us see what are the guidelines that can help us find the right balance.
 
 !!! Guideline: Favor semantic variables
 
 A semantic name is less restrictive than a type name. 
-When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. 
-We recommend to use semantically meaningful names wherever possible.
+When modifying code, it is possible that a variable may change type. But unless one redefines the method, the semantics of it will not change. 
+We recommend using semantically meaningful names wherever possible.
 
 In the example below, the typed variable does not indicate how it will be used whereas the semantic variable does.
 
@@ -342,18 +342,18 @@ over
 anInteger := numberOfAdults size max: numberOfChildren size
 ]]]
 
-Finding a semantic name is not always as obvious as in the above example. 
+Finding a semantic name is not always as obvious as demonstrated above. 
 There are cases in which choosing a descriptive semantic name is difficult.
 
 
 !!! Guideline: Use typed variables to indicate API
 
-Suppose a String, a Symbol, and nil are valid.
+Suppose a String, a Symbol, and nil are valid for a parameter.
 A developer may be tempted to use the name ==aStringOrSymbolOrNil==;
 however, most developers choose ==aString== or ==anObject==.
 ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
 
-Below ==aDictionary== conveys that the argument should have the same API than a Dictionary (==at:==,==at:put:==)
+Below ==aDictionary== conveys that the argument should have the same API as a Dictionary (==at:==,==at:put:==)
 
 Prefer
 [[[type=prefer
@@ -365,7 +365,7 @@ over
 Not properties: aCollection
 ]]]
 
-You may also want to stress a specific API. 
+You may also want to stress specific types in an API. 
 
 Prefer 
 [[[type=prefer
@@ -407,10 +407,10 @@ paddedTo: newLength with: anObject
 ]]]
 
 
-!!! Guideline: Use semantics for state variable
+!!! Guideline: Use semantics for state variables
 
 State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. 
-A combination of semantic and type information can be really powerful too. 
+A combination of semantic and type information can be really powerful, too. 
 
 Prefer
 [[[type=prefer
@@ -427,6 +427,7 @@ Not labelForPerson
 
 
 !!! Guideline: Use predicate for Boolean
+
 Use predicate clauses or adjectives for Boolean objects or states.
 Do not use predicate clauses for non-Boolean states.
 
@@ -455,11 +456,11 @@ Use common nouns and phrases for objects that are not Boolean.
 
 !! Selectors
 Method names in Pharo are called selectors. 
-There are used in messages and are the main vehicule to convey adequate meaning. 
+They are used in messages and are the main vehicle to convey adequate meaning. 
 The correct use of words and design of selectors is important. 
 
 
-!!! Guideline: Choose selectors to form little sentences
+!!! Guideline: Choose selectors to form short sentences
 Choose method names so that someone reading the message can read the expression as if it were a sentence. 
 
 Prefer
@@ -471,7 +472,7 @@ FileDescriptor seekTo: word from: self position
 Not FileDescriptor lseek: word at: self position
 ]]]
 
-Write test first and make sure that your test scenario reads well. 
+Write the test first, and make sure that your test scenario reads well. 
 
 !!! Guideline: Use imperative verbs for actions
 
@@ -505,8 +506,8 @@ Not aFace surprised
 skipSeparators
 ]]]
 
-Pay attention that some word can be interpreted as interrogative while you want to give them an imperative meaning. 
-For example compare
+Pay attention that some words can be interpreted as interrogative, whereas you want to give them an imperative meaning. 
+For example, compare:
 
 [[[
 optimized
@@ -520,7 +521,7 @@ triggerOptimization
 
 !!! Guideline: Indicate flow with preposition
 
-When state process is going from one object to another one, indicate the direction using meaningful names.
+When a process state is going from one object to another, indicate the direction using meaningful names.
 
 For example ==flattenProperties:== is not a good name because it does not convey where the properties will be flattened.
 
@@ -528,7 +529,7 @@ For example ==flattenProperties:== is not a good name because it does not convey
 aConfiguration flattenProperties: aDictionary
 ]]]
 
-Better names such as ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there is no ambiquities.
+Better names such as ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there are no ambiguities.
 
 [[[type=prefer
 aConfiguration flattenPropertiesFrom: aDictionary
@@ -537,7 +538,7 @@ aConfiguration flattenPropertiesInto: aDictionary
 
 Here are more examples
 [[[type=prefer
-changeField: anlnteger to: anObject
+changeField: anInteger to: anObject
 ]]]
 
 Prefer
@@ -569,7 +570,7 @@ Not display: anObject using: aMedium
 
 
 !!!  Guideline: Use interrogative form for testing
-Use an interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
+When interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
 
 Prefer
 [[[type=prefer
@@ -607,7 +608,7 @@ fileSystem atKey: index putFile: pathName
 ]]]
 
 [[[
-"useful when your class has several #atput: methods"
+"useful when your class has several #at:put: methods"
 fileSystem definitionAt: aKey put: definition
 ]]]
 
@@ -622,9 +623,9 @@ Not aFace changeExpressionTo: expression
 
 !!!  Guideline: Accessors 
 
-There are different schools about the use of accessors or not. 
+There are different schools about whether to use accessors. 
 If you use accessors, use them consistently. 
-Name them also consistently:
+Also, name them consistently:
 
 For getter, prefer 
 [[[type=prefer
@@ -657,7 +658,9 @@ When you have accessors doing extra work place them in a separate protocols to s
 
 !!! Guideline: Use basic or raw to access low-level
 
-When two methods are needed for the same state variable, for example one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
+When two methods are needed for the same state variable, e.g., one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
+
+@@note CPF: isn't raising an event kind of a side-effect of an accessor in this case? I think of design principles of command-query separation, but I'm still new to Pharo (please forgive me if this is off the mark).
 
 [[[
 method: aCompiledMethod
@@ -679,11 +682,11 @@ pathString
 ]]]
 
 !!! Guideline: Follow conventions and idioms
-When designing new objects, you may mimic some practices that the system use already with for example dictionaries, sets,...
+When designing new objects, you may mimic some practices that the system uses already with, for example dictionaries, sets, etc.
 
 ""Example.""
-Since a stylesheet acts as a dictionary of properties it is much better to use
-==at:== instead of ==get:== especially when the message to set a value to a property is ==at:put:== and not ==set:==.
+Since a style sheet acts as a dictionary of properties it is much better to use
+==at:== instead of ==get:==, especially when the message to set a value to a property is ==at:put:== and not ==set:==.
 
 Prefer
 [[[type=prefer
@@ -724,18 +727,18 @@ Not aCollection atKey: #toto
 
 !!! Guideline: Distinguish class vs. instance selectors
 
-When defining a class method, we may name it the same way than an accessor of the class. 
-Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. 
+When defining a class method, we may name it the same way as an accessor of the class. 
+Such practice hampers code readability in the sense that it is difficult to identify rapidly class methods. 
 The senders will report both the instance and class usage. 
-You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. 
-So better enriched the class method with a distinct word.
+You may think that you will identify the message because the receiver is a class or an instance, but there are many situations were this is not the case. 
+So it's better to enrich the class method with a distinct word.
 
 
 !!!! Example
 In Pillar, annotations have parameters and the accessor method ==parameters:==. 
-Now some version defined also the instance creation method with the same name.
+Now, in some version an instance creation method was defined with the same name.
 
-In the following code  it is difficult to easily understand the code:
+In the following code it is difficult to easily understand.
 Reading the code of the parser, it is not clear whether array second is a class or an instance.
 
 [[[type=not
@@ -745,7 +748,7 @@ annotation
 			[ :array | array second parameters: (array third ifNil: [ SmallDictionary new ]) ]
 ]]]
 
-To create an instance is better to name the method ==withParameter:==. This way we can immediatelly spot that the second element is a class. 
+To create an instance, it is better to name the method ==withParameter:==. This way we can immediately spot that the second element is a class. 
 
 [[[type=prefer
 annotation
@@ -780,14 +783,15 @@ PRAbstractAnnotation class >> parameters: aCollection
 	
 Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
 
+@@todo CPF: Any guidelines for protocol naming?
 
 !! Comments
 Comments are important. 
-Comments tell the reader that he's a smart guy and that he correctly guessed your intentions or your code.
-Do not believe people that say that methods do not need comments. Obviously they are meaning that:
+Comments tell readers that they're smart people and that they correctly guessed your intentions or your code.
+Do not believe people that say that methods do not need comments. Obviously here's what they mean:
 # obvious methods such as accessors do not need comments,
-# a good comment is not describing in English how the code execute,
-# it is better to split long methods into smaller one with a single responsibility,
+# a good comment is not describing in English how the code executes,
+# it is better to split long methods into smaller ones with a single responsibility,
 # but a good comment is always welcome because it reinforces the understanding of the reader.
 
 A comment should be adapted to the level of granularity (i.e., package, class, method) to which it applies.
@@ -799,7 +803,7 @@ Method comments should contain sufficient information for a user to know exactly
 The main method comment is not about its implementation. 
 Do not rephrase the implementation. 
 The second level comments can include information about the implementation. 
-Insert a new line to separate method comments from method body.
+Insert a new line to separate method comments from the method body.
 
 [[[
 Collection >> asCommaString
@@ -816,7 +820,7 @@ The comments of a  method should typically include:
 # complex or tricky implementation details
 # example usage, if applicable, as a separate comment
 
-Finally accessors do not need comments, the only comment that accessor could have is the purpose of the instance variable.
+Finally accessors do not need comments; the only comment that accessor could have is the purpose of the instance variable.
 
 [[[
 day
@@ -830,7 +834,7 @@ day
 
 Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
 
-Do not comment obvious facts that is expressed simply as plain code.
+Do not comment an obvious fact that is expressed simply as plain code.
 	
 [[[
 | result |
@@ -849,7 +853,7 @@ result := self employees
 
 !!! Guideline: Use active voice and short sentences
 
-When writing comments, use active voice and avoid long and circumvoluted sentences.
+When writing comments, use active voice and avoid long and convoluted sentences.
 A method comment should state what the method does, its arguments, its effects and output.
 
 [[[
@@ -869,7 +873,7 @@ createShell
 
 Pharo offers executable examples in comment using the message ==>>>==. 
 Executable examples in comments are super cool because as the reader you can execute the code and understand the parameters. 
-In addition the documentation is always synchronised because the tools can check that the example are correct. 
+In addition, the documentation is always synchronized because the tools can check that the example is correct. 
 
 [[[
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock
@@ -896,13 +900,13 @@ Object >> split: aSequenceableCollection
 	^ result
 ]]]
 
-!!! Guideline: Use CRC driven class comments
-A class is not in isolation but implement responsibilities (mainly one) and collaborate with other entities.
+!!! Guideline: Use CRC-driven class comments
+A class is not in isolation, but implements responsibilities (mainly one) and collaborates with other entities.
 Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators.
-Class Responsibility Collaboration (CRC) pattern is powerful to comment classes. Use it for commenting class.
+The Class Responsibility Collaboration (CRC) pattern is powerful to design but also to comment classes. Use it for commenting class.
 
 Knowing the instance variables is the least importance!
-Follow the template given by Pharo and show hereafter.
+Follow the template given by Pharo that is shown below.
 
 [[[
 Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
@@ -932,9 +936,9 @@ Implementation Points
 
 !!! Guideline: Comment the unusual
 
-When a behavior that is unusual, performing unexpected actions or using an ununexpected algorithms, it is important to comment it. 
+When a behavior is unusual, performing unexpected actions or using an unexpected algorithms, it is important to comment it. 
 In general comments should make irregular and unusual aspects clearer. 
-You may want to include implementation-dependent, or platform specific idiosynchrasies. 
+You may want to include implementation-dependent, or platform-specific idiosyncrasies. 
 
 
 
@@ -947,14 +951,14 @@ Again follow the convention.
 
 One important guideline when writing code is to follow conventions and in addition to be consistent.
 Systematically apply a formatting style.
-Keep the violations to convention to the minimum.
+Keep the violations to convention to a minimum.
 
 
 !!! Guideline: Use the general method template
 
 - Separate method signature and comments from method body with an empty line. 
 - Add an extra tab to the comments.
-- Add an extra line to stress the beginning of method body.
+- Add an extra line to stress the beginning of the method body.
 - Use a tab to separate the method body from the left margin.
 
 [[[
@@ -1027,7 +1031,7 @@ performCrawling: aName
 
 !!! Guideline: Use space to give breath to code
 
-Put space to make it easier to read code and clearly identify variables, arguments, assignments, block delimiters and returns.
+Put horizontal space to make it easier to read code and clearly identify variables, arguments, assignments, block delimiters and returns.
 
 Prefer
 [[[type=prefer
@@ -1049,7 +1053,7 @@ stemSymbolFrom:aName
 	^symbol
 ]]]
 
-Parentheses do not need spaces since they show that an expression fits together but favor space for ==[== and ==]==.
+Parentheses do not need spaces since they show that an expression fits together. But favor space for ==[== and ==]==.
 
 [[[type=prefer
 drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
@@ -1062,7 +1066,7 @@ drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
 
 !!! Guideline: Align properly
 
-Make sure that your indentation reinforce the identification of block of functionality. 
+Make sure that your indentation reinforces the identification of blocks of functionality. 
 
 Prefer
 [[[type=prefer
@@ -1083,10 +1087,10 @@ self phoneBook add:
 ]]]
 
 
-!!! Guideline: Use tab not space to indent and use space to help reading
+!!! Guideline: Use tabs not spaces to indent and use spaces to help reading
 
-Avoid extra spaces everywhere. Use one space to separate instructions. Avoid extra space at the end of the line. 
-Avoid extra space at the beginning and use tab to indent. 
+Avoid extra spaces everywhere. Use one space to separate instructions. Avoid extra spaces at the end of the line. 
+Avoid extra spaces at the beginning and use tabs to indent. 
 
 Prefer
 [[[type=prefer
@@ -1109,7 +1113,7 @@ stemSymbolFrom: aName
 ]]]
 
 
-!!! Guideline: Do not break line randomly
+!!! Guideline: Do not break lines randomly
 
 White lines attract the eyes and force the reader to ask himself why the code is separated that way.
 Only separate method signature and comment from method body with a new line.
@@ -1158,17 +1162,19 @@ Knowing them is also good because you will code faster.
 The message ==ifNotNil:== expects a block with one argument. 
 This argument is the object that is not nil.
 
+For example,
 [[[
 self doThat ifNotNil: [ :that | self doSomethingWith: that ]
 ]]]
 
+is better than 
 [[[
 | that |
 that := self doThat.
 that ifNotNil: [self doSomethingWith: that]
 ]]]
 
-Similarly have a look at the messages containing the ==ifPresent:== variation.
+Similarly have a look at the messages containing the ==ifPresent:== variations.
 [[[
 aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 ]]]
@@ -1176,7 +1182,7 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 
 !! Potential traps
 
-Understanding possible mistakes is a nice way to avoid them or to quickly identify errors made in your code.
+Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code.
 Here are some common mistakes.
 
 
@@ -1230,7 +1236,7 @@ lastNode = 0
 
 !!! Guideline: receiver of whileTrue: is a block
 
-The receiver of the message ==whileTrue:== is a block, its argument too. 
+The receiver of the message ==whileTrue:== is a block, and its argument is, too. 
 
 The following line is incorrect:
 [[[type=not
@@ -1273,9 +1279,9 @@ aCol do: [ :node | ...]
 
 !! Conclusion
 
-Remember that you write code once and read it thousand times.
+Remember that you write code once and will read it a thousand times.
 Take the time to give good names.
-However finding good names is not an easy task, but you can use refactorings to improve the situation.
+However, finding good names is not an easy task, but you can use refactorings to improve things easily.
 This goes in pair with tests. 
-You write a test once and it gets executed million times. 
-Therefore write test to exercise the names you use and change them until they help you telling stories that can be understood.
+You write a test once and it gets executed a million times. 
+Therefore, write tests to exercise the names you use and change them until they help you telling stories that can be understood.
