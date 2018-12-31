@@ -1,12 +1,16 @@
-Programming is a lot more than just writing algorithms or programs. Programming is all about communication. Communication with others: the other programmers that we will participate to your development effort but also with yourselves. Indeed finding good names is a really important task because using the right name often opens the door to new spaces where your design can bloom and expand. 
+Programming is a lot more than just writing algorithms or programs.
+Programming is all about communication. 
+Communication with others: the other programmers that will participate to your development effort but also with yourself. 
+Indeed finding good names is a really important task because using the right name often opens the door to new spaces where your design can bloom and expand. 
 
-The purpose of a programming style guide such as this book is to provide a simple vehicle for addressing the needs of a good communication. The goal is to make source code clear, easy to read, and easy to understand and extend. 
+The purpose of a programming style guide such as this book is to provide a simple vehicle for addressing the needs of a good communication. 
+The goal is to make source code clear, easy to read, and easy to understand and extend. 
 
-These conventions are not cast in stone but they set the fundation of a common culture. Culture is important when programming.
+These conventions are not cast in stone but they set the foundation of a common culture. Culture is important when programming.
 
 We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
 
-Feedback and suggestions are welcome at stephane.ducasse@inria.fr
+Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
 Special thank to Benoit St Jean and Masashi Fujita for their feedback.
@@ -20,14 +24,13 @@ A good name is often driven by a domain.
 
 !!! Guideline:  Favor simple direct meaning 
 
-Some native english writers use often more precise but less common terms. 
-Consider that your software may be read by people from different culture so use 
-simple, mainstream, and common terms.
-Avoid hidden or implied meaning that can only be understood by a limited group of people 
+Some native english writers use often more precise but less common terms.
+Consider that your software may be read by people from different cultures so use simple, mainstream, and common terms.
+Avoid hidden or implied meaning that can only be understood by a limited group of people. 
 Make information explicit.
 
 
-!!! Guideline: Avoid underscores and favor camelcase.
+!!! Guideline: Avoid underscores and favor camel case
 
 Prefer
 [[[type=prefer
@@ -52,7 +55,7 @@ Not GNAT_XML_Object
 When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
-!!! Guideline: Use CamelCase
+!!! Guideline: Use camel case
 
 Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
 
@@ -64,19 +67,30 @@ MaxLimit
 >>> 10
 ]]]
 
-Still Pharo favors camelCase so use it systematically for words.
+Still Pharo favors camel case so use it systematically for words.
+Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
 
-Prefer
+For instance and local variables and parameters, use
 [[[type=prefer
 maxLimit
-MaxLimit
 ]]]
-over
+instead of
 [[[type=not
 Not maxlimit
 Not MAXLIMIT
 ]]]
 
+
+For classes, or shared variables, use 
+[[[type=prefer
+OrderedCollection
+MaxLimit
+]]]
+instead of 
+[[[type=not
+Not ORDEREDCOLLECTION
+Not MAXLIMIT
+]]]
 
 @@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
 
@@ -123,8 +137,8 @@ not eMenu
 
 !!! Guideline: Pay attention to meaning
 
-Non english native speaker often misplaced word qualifier. 
-In english the qualifier is often before the word it qualifies.
+Non English native speaker often misplace word qualifier. 
+In English the qualifier is often before the word it qualifies.
 
 Prefer
 [[[type=prefer
@@ -156,7 +170,7 @@ readSize
 From that perspective favor words with unique pronunciation.
 About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
 
-!!! Guideline: method selectors start with lowercase
+!!! Guideline: Method selectors start with lowercase
 
 Prefer
 [[[type=prefer
@@ -215,7 +229,7 @@ PackageGlobalOrganizer	"class variables"
 
 !!! Guideline:  Private variables starts with lowercase 
 
-Begin instance variables, temporary variables, method parameterr and method selectors with a lower case. 
+Begin instance variables, temporary variables, method parameters and method selectors with a lower case. 
 If the word is compound, then use camel case for the rest.
 
 [[[
