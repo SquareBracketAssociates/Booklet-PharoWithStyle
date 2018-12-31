@@ -317,7 +317,7 @@ Note however that even in presence of namespace you will have to pay attention t
 
 
 
-!! About Variable Names
+!! About variable names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
 There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
@@ -826,7 +826,7 @@ day
 	^ day
 ]]]
 
-!!! Guideline: Avoid relying on a comment to explain what could be reflected in the code
+!!! Guideline: Avoid relying on a comment to explain what can be reflected in code
 
 Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
 
@@ -937,7 +937,8 @@ In general comments should make irregular and unusual aspects clearer.
 You may want to include implementation-dependent, or platform specific idiosynchrasies. 
 
 
-!! About Code Formatting
+
+!! About code formatting
 
 Code formatting improves code comprehension.
 Again follow the convention.
