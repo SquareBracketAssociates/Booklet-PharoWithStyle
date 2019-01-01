@@ -13,7 +13,7 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Benoit St Jean and Masashi Fujita for their feedback.
+Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita for their feedback.
 S. Ducasse - 30 December 2018.
 
 
@@ -24,9 +24,9 @@ A good name is often driven by a domain.
 
 !!! Guideline:  Favor simple direct meaning 
 
-Some native english writers use often more precise but less common terms.
-Consider that your software may be read by people from different cultures so use simple, mainstream, and common terms.
-Avoid hidden or implied meaning that can only be understood by a limited group of people. 
+Some native English writers use often more precise but less common terms.
+Consider that your software may be read by people from different cultures. So use simple, mainstream, and common terms.
+Avoid hidden or implied meanings that can only be understood by a limited group of people. 
 Make information explicit.
 
 
@@ -52,7 +52,7 @@ over
 Not GNAT_XML_Object
 ]]]
 
-When creating private low level methods binding to external C-libraries you may wanto use underscores to follow C conventions to ease tracing back the communication between libraries.
+When creating private low-level methods that bind to external C-libraries, you may wan to use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
 !!! Guideline: Use camel case
@@ -67,10 +67,10 @@ MaxLimit
 >>> 10
 ]]]
 
-Still Pharo favors camel case so use it systematically for words.
+Still, Pharo favors camel case, so use it systematically for words.
 Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
 
-For instance and local variables and parameters, use
+For local variables, method parameters and instance variables, use
 [[[type=prefer
 maxLimit
 ]]]
@@ -105,7 +105,7 @@ Not superClass
 
 !!! Guideline: Use descriptive names
 
-Choose descriptive names that capture domain entity unambiguously.
+Choose descriptive names that capture domain entities unambiguously.
 
 Prefer
 [[[type=prefer
@@ -137,7 +137,7 @@ not eMenu
 
 !!! Guideline: Pay attention to meaning
 
-Non English native speaker often misplace word qualifier. 
+Non-English native speakers often misplace word qualifiers. 
 In English the qualifier is often before the word it qualifies.
 
 Prefer
@@ -167,8 +167,12 @@ sizeJustRead
 readSize
 ]]]
 
-From that perspective favor words with unique pronunciation.
+
+In this situation, avoid homographs (*https://en.wiktionary.org/wiki/homograph*). 
+That is, words that are written the same way but can have different meanings or pronunciations. 
+For example, ''Did you read that book? ... Yes, I read it yesterday.''
 About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
+Favor words with unique pronunciation.
 
 !!! Guideline: Method selectors start with lowercase
 
@@ -188,15 +192,17 @@ GetMethodsNamesFromAClass: aClass
 	methodsNames do: [ :each | names add: each ]
 ]]]
 
-Here the method selector is not good. 
+Also, in this example the method selector is not good because method names are called selectors in Pharo.
+In addition in English ==methodsNames== should be written ==methodNames==.
 It should be ==gatherSelectorsFrom:== or something similar.
 
 
 
 !!! Guideline: Follow domain 
 
-Follow domain and culture of the project. Do not invent your own because you think it is better. 
-Favor regularity over preciseness.
+Follow the domain concepts and culture of the project. 
+Do not invent your own terms because you think they are better. 
+Favor regularity (consistency) over preciseness.
 
 Prefer
 [[[type=prefer
@@ -208,18 +214,19 @@ over
 not GNAT_XML_Object
 ]]]
 
-When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming convention. 
-The name should convey that the class is a abstract syntax tree node hence ==GnatXmlNode== is much better that ==GnatXmlObject==. 
+When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming conventions. 
+The name should convey that the class is an abstract syntax tree node.
+Hence ==GnatXmlNode== is much better than ==GnatXmlObject==.
 
-In Moose, an importer is an object creating FAMIX entities (classes methods....) from the datastructure representing a language usually an Abstract Syntax Tree. 
-Therefore ==GNATInstaller== which creates entities from AST should be renamed ==GnatImporter==
-and ==GNATImporter== which load AST in memory should be renamed ==GnatASTLoader==.
+Another example is the following:  In Moose, an importer is an object creating FAMIX entities (classes, methods, etc.) from the data structure representing a language element, usually an Abstract Syntax Tree (AST). 
+Therefore ==GNATInstaller==, which creates entities from an AST, should be renamed ==GnatImporter==
+and ==GNATImporter==, which loads an AST in memory should be renamed ==GnatASTLoader==.
 
 
-!!! Guideline:  Shared variables starts with uppercase 
+!!! Guideline:  Shared variables start with uppercase 
 
-Begin class names, global variables, pool variables and class variables with an uppercase letter.
-If the word is compound, then begin use camel case for the rest.
+Begin class names, global variables, pool variables, and class variables with an uppercase letter.
+If the word is compound, then use use camel case for the rest.
 
 [[[
 Point	"Class"
@@ -227,9 +234,9 @@ Transcript 	"global variable"
 PackageGlobalOrganizer	"class variables"
 ]]]
 
-!!! Guideline:  Private variables starts with lowercase 
+!!! Guideline:  Private variables start with lowercase 
 
-Begin instance variables, temporary variables, method parameters and method selectors with a lower case. 
+Begin instance variables, temporary variables, method parameters, and method selectors with lower case. 
 If the word is compound, then use camel case for the rest.
 
 [[[
@@ -239,9 +246,10 @@ classTags
 ]]]
 
 
-!!! Guideline: Unique pronunciation
+!!! Guideline: Favor unique meaning and pronunciation
 
-Choose names that have a unique pronunciation.
+Choose names that have a unique meaning.
+Avoid homographs.
 
 Prefer
 [[[type=prefer
@@ -257,7 +265,7 @@ Does this mean that the size was just read (red) or is it the size to read (reed
 
 
 
-!!! Guideline: Class names should exhibit their parent
+!!! Guideline: Class names should indicate the class' parent
 
 Suffix with the root to convey the kind of object we are talking about. 
 
