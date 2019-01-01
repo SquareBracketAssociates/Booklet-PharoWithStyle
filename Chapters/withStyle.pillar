@@ -737,18 +737,17 @@ Not aCollection atKey: #toto
 
 !!! Guideline: Distinguish class vs. instance selectors
 
-When defining a class method, we may name it the same way as an accessor of the class. 
-Such practice hampers code readability in the sense that identifying rapidly class methods is then difficult. 
+When defining a class method, we may name it the same way as an accessor of the class.
+Such practice hampers code readability in the sense that it is difficult to identify rapidly class methods. 
 The senders will report both the instance and class usage. 
 You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. 
-So better enriched the class method with a distinct word.
+So it's better to enrich the class method with a distinct word.
 
 
 !!!! Example
 In Pillar, annotations have parameters and the accessor method ==parameters:==. 
-Now some version defined also the instance creation method with the same name.
+Now, in some version, an instance creation method with the same name than the accessor method.
 
-In the following code  it is difficult to easily understand the code:
 Reading the code of the parser, it is not clear whether array second is a class or an instance.
 
 [[[type=not
@@ -758,7 +757,8 @@ annotation
 			[ :array | array second parameters: (array third ifNil: [ SmallDictionary new ]) ]
 ]]]
 
-To create an instance is better to name the method ==withParameter:==. This way we can immediatelly spot that the second element is a class. 
+To create an instance, it is better to name the method ==withParameter:==. 
+This way we can immediately spot that the second element is a class. 
 
 [[[type=prefer
 annotation
@@ -794,13 +794,23 @@ PRAbstractAnnotation class >> parameters: aCollection
 Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
 
 
+!!! Guidelines: Follow existing protocols
+
+Protocols are ways to sort methods.
+It is important to place your methods in adequate protocols since it will ease future exploration of your class.
+
+Pharo provides auto categorisation of protocol for the common methods.
+So use it as much as possible.
+When you override your specific methods, place them in similar protocols.
+
+
 !! Comments
 Comments are important. 
-Comments tell the reader that he's a smart guy and that he correctly guessed your intentions or your code.
-Do not believe people that say that methods do not need comments. Obviously they are meaning that:
+Comments tell readers that they are smart guys and that they correctly guessed your intentions or your code.
+Do not believe people that say that methods do not need comments. Obviously here is what they mean:
 # obvious methods such as accessors do not need comments,
-# a good comment is not describing in English how the code execute,
-# it is better to split long methods into smaller one with a single responsibility,
+# a good comment is not describing in English how the code executes,
+# it is better to split long methods into smaller ones with a single responsibility,
 # but a good comment is always welcome because it reinforces the understanding of the reader.
 
 A comment should be adapted to the level of granularity (i.e., package, class, method) to which it applies.
@@ -812,7 +822,7 @@ Method comments should contain sufficient information for a user to know exactly
 The main method comment is not about its implementation. 
 Do not rephrase the implementation. 
 The second level comments can include information about the implementation. 
-Insert a new line to separate method comments from method body.
+Insert a new line to separate method comments from the method body.
 
 [[[
 Collection >> asCommaString
@@ -829,7 +839,7 @@ The comments of a  method should typically include:
 # complex or tricky implementation details
 # example usage, if applicable, as a separate comment
 
-Finally accessors do not need comments, the only comment that accessor could have is the purpose of the instance variable.
+Finally accessors do not need comments; the only comment that accessor could have is the purpose of the instance variable.
 
 [[[
 day
@@ -843,7 +853,7 @@ day
 
 Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
 
-Do not comment obvious facts that is expressed simply as plain code.
+Do not comment an obvious fact that is expressed simply as plain code.
 	
 [[[
 | result |
@@ -862,7 +872,7 @@ result := self employees
 
 !!! Guideline: Use active voice and short sentences
 
-When writing comments, use active voice and avoid long and circumvoluted sentences.
+When writing comments, use active voice and avoid long and convoluted sentences.
 A method comment should state what the method does, its arguments, its effects and output.
 
 [[[
@@ -882,7 +892,7 @@ createShell
 
 Pharo offers executable examples in comment using the message ==>>>==. 
 Executable examples in comments are super cool because as the reader you can execute the code and understand the parameters. 
-In addition the documentation is always synchronised because the tools can check that the example are correct. 
+In addition the documentation is always synchronized because the tools can check that the example is correct. 
 
 [[[
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock
@@ -909,13 +919,14 @@ Object >> split: aSequenceableCollection
 	^ result
 ]]]
 
-!!! Guideline: Use CRC driven class comments
-A class is not in isolation but implement responsibilities (mainly one) and collaborate with other entities.
+!!! Guideline: Use CRC-driven class comments
+
+A class is not in isolation, but ''implements'' responsibilities (mainly one) and ''collaborates'' with other entities.
 Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators.
-Class Responsibility Collaboration (CRC) pattern is powerful to comment classes. Use it for commenting class.
+The Class Responsibility Collaboration (CRC) pattern is powerful to design but also to comment classes. Use it for commenting class.
 
 Knowing the instance variables is the least importance!
-Follow the template given by Pharo and show hereafter.
+Follow the template given by Pharo that is shown below.
 
 [[[
 Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
@@ -945,9 +956,9 @@ Implementation Points
 
 !!! Guideline: Comment the unusual
 
-When a behavior that is unusual, performing unexpected actions or using an ununexpected algorithms, it is important to comment it. 
-In general comments should make irregular and unusual aspects clearer. 
-You may want to include implementation-dependent, or platform specific idiosynchrasies. 
+When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment it.
+In general comments should make irregular and unusual aspects clearer.
+You may want to include implementation-dependent, or platform specific idiosyncrasies.
 
 
 
@@ -960,14 +971,14 @@ Again follow the convention.
 
 One important guideline when writing code is to follow conventions and in addition to be consistent.
 Systematically apply a formatting style.
-Keep the violations to convention to the minimum.
+Keep the violations to convention to a minimum.
 
 
 !!! Guideline: Use the general method template
 
 - Separate method signature and comments from method body with an empty line. 
 - Add an extra tab to the comments.
-- Add an extra line to stress the beginning of method body.
+- Add an extra line to stress the beginning of the method body.
 - Use a tab to separate the method body from the left margin.
 
 [[[
@@ -1040,7 +1051,7 @@ performCrawling: aName
 
 !!! Guideline: Use space to give breath to code
 
-Put space to make it easier to read code and clearly identify variables, arguments, assignments, block delimiters and returns.
+Put horizontal space to make it easier to read code and clearly identify variables, arguments, assignments, block delimiters and returns.
 
 Prefer
 [[[type=prefer
@@ -1062,7 +1073,8 @@ stemSymbolFrom:aName
 	^symbol
 ]]]
 
-Parentheses do not need spaces since they show that an expression fits together but favor space for ==[== and ==]==.
+Parentheses do not need spaces since they show that an expression fits together. 
+But favor space for ==[== and ==]==.
 
 [[[type=prefer
 drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
@@ -1096,10 +1108,12 @@ self phoneBook add:
 ]]]
 
 
-!!! Guideline: Use tab not space to indent and use space to help reading
+!!! Guideline: Use tabs not spaces to indent and use spaces to help reading
 
-Avoid extra spaces everywhere. Use one space to separate instructions. Avoid extra space at the end of the line. 
-Avoid extra space at the beginning and use tab to indent. 
+Avoid extra spaces everywhere.
+Use one space to separate instructions.
+Avoid extra spaces at the end of the line.
+Avoid extra spaces at the beginning and use tabs to indent.
 
 Prefer
 [[[type=prefer
@@ -1122,7 +1136,7 @@ stemSymbolFrom: aName
 ]]]
 
 
-!!! Guideline: Do not break line randomly
+!!! Guideline: Do not break lines randomly
 
 White lines attract the eyes and force the reader to ask himself why the code is separated that way.
 Only separate method signature and comment from method body with a new line.
