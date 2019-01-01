@@ -13,7 +13,7 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita for their feedback.
+Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly for their feedback.
 S. Ducasse - 30 December 2018.
 
 
@@ -267,9 +267,9 @@ Does this mean that the size was just read (red) or is it the size to read (reed
 
 !!! Guideline: Class names should indicate the class' parent
 
-Suffix with the root to convey the kind of object we are talking about. 
+Suffix class names with the root class to convey the kind of object we are talking about. 
 
-Below without the Morph suffix the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
+For example, without the ==Morph== suffix, the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
 
 Prefer
 [[[type=prefer
@@ -289,7 +289,8 @@ over
 Not ClyQueryView
 ]]]
 
-Here not mentioning the Presenter suffix makes the reader unclear about the fact that it is a Presenter object by opposition to a view object.
+In the following, not mentioning the ==Presenter== suffix makes it unclear to the reader that it is a Presenter object as opposed to a Model object.
+
 Prefer
 [[[type=prefer
 ApplicationWithToolBarPresenter
@@ -299,7 +300,7 @@ over
 Not ApplicationWithToolbar
 ]]]
 
-Here ==DynamicWidgetChange== does not conver the fact that this is not a ''domain'' object representing a change but a Presenter object in the Model View Presenter triad.
+In the next example, ==DynamicWidgetChange== does not convey that this is not a ''domain'' object representing a change, but a ==Presenter== object in the Model-View-Presenter triad:
 
 [[[type=prefer
 DynamicWidgetChangePresenter
@@ -310,7 +311,7 @@ Not DynamicWidgetChange
 ]]]
 
 
-!!! Guideline: Avoid name collision
+!!! Guideline: Avoid name collisions
 
 To avoid name space collisions, add a prefix indicative of the project to the name of the class.
 
@@ -320,7 +321,7 @@ CmdMessage
 ]]]
 
 @@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
-Note however that even in presence of namespace you will have to pay attention that your namespace name does not collide with another one.
+Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
 
 
 
@@ -328,13 +329,13 @@ Note however that even in presence of namespace you will have to pay attention t
 !! About variable names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
-There are good arguments for both styles. Let us see what are the guidelines that can help us finding the right balance.
+There are good arguments for both styles. Let us see what are the guidelines that can help us find the right balance.
 
 !!! Guideline: Favor semantic variables
 
 A semantic name is less restrictive than a type name. 
-When modifying code, it is possible that a variable may change type but unless one redefines the method, the semantics of it will not change. 
-We recommend to use semantically meaningful names wherever possible.
+When modifying code, it is possible that a variable may change type. But unless one redefines the method, the semantics of it will not change. 
+We recommend using semantically meaningful names wherever possible.
 
 In the example below, the typed variable does not indicate how it will be used whereas the semantic variable does.
 
@@ -350,13 +351,13 @@ over
 anInteger := numberOfAdults size max: numberOfChildren size
 ]]]
 
-Finding a semantic name is not always as obvious as in the above example. 
+Finding a semantic name is not always as obvious as demonstrated above. 
 There are cases in which choosing a descriptive semantic name is difficult.
 
 
 !!! Guideline: Use typed variables to indicate API
 
-Suppose a String, a Symbol, and nil are valid.
+Suppose a String, a Symbol, and nil are valid for a parameter.
 A developer may be tempted to use the name ==aStringOrSymbolOrNil==;
 however, most developers choose ==aString== or ==anObject==.
 ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
@@ -373,7 +374,7 @@ over
 Not properties: aCollection
 ]]]
 
-You may also want to stress a specific API. 
+You may also want to stress specific types in an API. 
 
 Prefer 
 [[[type=prefer
@@ -387,7 +388,7 @@ Not properties: aCollection
 
 
 
-!!! Guideline: Get the best from semantic and type variables
+!!! Guideline: Get the best from semantic and type variable
 
 A good practice is to use a mixture of both semantic and typed variable names. 
 Method parameter names are usually named after their type. 
@@ -418,7 +419,7 @@ paddedTo: newLength with: anObject
 !!! Guideline: Use semantics for state variable
 
 State variable names (instance variables, class variables, or class instance variables) are usually semantic-based. 
-A combination of semantic and type information can be really powerful too. 
+A combination of semantic and type information can be really powerful, too. 
 
 Prefer
 [[[type=prefer
@@ -435,6 +436,7 @@ Not labelForPerson
 
 
 !!! Guideline: Use predicate for Boolean
+
 Use predicate clauses or adjectives for Boolean objects or states.
 Do not use predicate clauses for non-Boolean states.
 
@@ -462,12 +464,13 @@ Use common nouns and phrases for objects that are not Boolean.
 ]]]
 
 !! Selectors
-Method names in Pharo are called selectors. 
-There are used in messages and are the main vehicule to convey adequate meaning. 
-The correct use of words and design of selectors is important. 
+
+Method names in Pharo are called selectors.
+They are used in messages and are the main vehicle to convey adequate meaning.
+The correct use of words and design of selectors is important.
 
 
-!!! Guideline: Choose selectors to form little sentences
+!!! Guideline: Choose selectors to form short sentences
 Choose method names so that someone reading the message can read the expression as if it were a sentence. 
 
 Prefer
@@ -479,7 +482,7 @@ FileDescriptor seekTo: word from: self position
 Not FileDescriptor lseek: word at: self position
 ]]]
 
-Write test first and make sure that your test scenario reads well. 
+Write the test first, and make sure that your test scenario reads well. 
 
 !!! Guideline: Use imperative verbs for actions
 
@@ -513,8 +516,9 @@ Not aFace surprised
 skipSeparators
 ]]]
 
-Pay attention that some word can be interpreted as interrogative while you want to give them an imperative meaning. 
-For example compare
+Pay attention that some words can be interpreted as interrogative, whereas you want to give them an imperative meaning.
+
+For example, compare:
 
 [[[
 optimized
@@ -528,7 +532,7 @@ triggerOptimization
 
 !!! Guideline: Indicate flow with preposition
 
-When state process is going from one object to another one, indicate the direction using meaningful names.
+When a process state is going from one object to another, indicate the direction using meaningful names.
 
 For example ==flattenProperties:== is not a good name because it does not convey where the properties will be flattened.
 
@@ -536,7 +540,7 @@ For example ==flattenProperties:== is not a good name because it does not convey
 aConfiguration flattenProperties: aDictionary
 ]]]
 
-Better names such as ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there is no ambiquities.
+Better names such as ==flattenPropertiesFrom:== and ==flattenPropertiesInto:== are much better because there are no ambiguities.
 
 [[[type=prefer
 aConfiguration flattenPropertiesFrom: aDictionary
@@ -545,7 +549,7 @@ aConfiguration flattenPropertiesInto: aDictionary
 
 Here are more examples
 [[[type=prefer
-changeField: anlnteger to: anObject
+changeField: anInteger to: anObject
 ]]]
 
 Prefer
