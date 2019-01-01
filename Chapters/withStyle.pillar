@@ -361,7 +361,7 @@ A developer may be tempted to use the name ==aStringOrSymbolOrNil==;
 however, most developers choose ==aString== or ==anObject==.
 ==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
 
-Below ==aDictionary== conveys that the argument should have the same API than a Dictionary (==at:==,==at:put:==)
+Below ==aDictionary== conveys that the argument should have the same API as a Dictionary (==at:==,==at:put:==)
 
 Prefer
 [[[type=prefer
