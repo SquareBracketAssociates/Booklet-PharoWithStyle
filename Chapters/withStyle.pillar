@@ -581,7 +581,7 @@ Not display: anObject using: aMedium
 
 
 !!!  Guideline: Use interrogative form for testing
-Use an interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
+When interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
 
 Prefer
 [[[type=prefer
@@ -606,7 +606,8 @@ Avoid the parameter type or name in the method name if you are using typed param
 
 Prefer
 [[[type=prefer
-fileSystem at: aKey put: aFile]]]
+fileSystem at: aKey put: aFile
+]]]
 over
 [[[type=not
 Not fileSystem atKey: aKey putFiIe: aFile
@@ -619,7 +620,7 @@ fileSystem atKey: index putFile: pathName
 ]]]
 
 [[[
-"useful when your class has several #atput: methods"
+"useful when your class has several #at:put: methods"
 fileSystem definitionAt: aKey put: definition
 ]]]
 
@@ -634,9 +635,9 @@ Not aFace changeExpressionTo: expression
 
 !!!  Guideline: Accessors 
 
-There are different schools about the use of accessors or not. 
-If you use accessors, use them consistently. 
-Name them also consistently:
+There are different schools about whether to use accessors.
+If you use accessors, use them consistently.
+Also, name them also consistently:
 
 For getter, prefer 
 [[[type=prefer
@@ -669,7 +670,7 @@ When you have accessors doing extra work place them in a separate protocols to s
 
 !!! Guideline: Use basic or raw to access low-level
 
-When two methods are needed for the same state variable, for example one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
+When two methods are needed for the same state variable, e.g., one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
 
 [[[
 method: aCompiledMethod
@@ -691,11 +692,11 @@ pathString
 ]]]
 
 !!! Guideline: Follow conventions and idioms
-When designing new objects, you may mimic some practices that the system use already with for example dictionaries, sets,...
+When designing new objects, you may mimic some practices that the system uses already with for example dictionaries, sets, etc.
 
 ""Example.""
-Since a stylesheet acts as a dictionary of properties it is much better to use
-==at:== instead of ==get:== especially when the message to set a value to a property is ==at:put:== and not ==set:==.
+Since a style sheet acts as a dictionary of properties it is much better to use
+==at:== instead of ==get:==, especially if you define the message to set a value to a property as ==at:put:== and not ==set:==.
 
 Prefer
 [[[type=prefer
@@ -736,8 +737,8 @@ Not aCollection atKey: #toto
 
 !!! Guideline: Distinguish class vs. instance selectors
 
-When defining a class method, we may name it the same way than an accessor of the class. 
-Such practice hampers code readibility in the sense that identifying rapidly class methods is then difficult. 
+When defining a class method, we may name it the same way as an accessor of the class. 
+Such practice hampers code readability in the sense that identifying rapidly class methods is then difficult. 
 The senders will report both the instance and class usage. 
 You may think that you will identify the message because the receiver is a class or an instance but there are many situations were this is not the case. 
 So better enriched the class method with a distinct word.
