@@ -1185,17 +1185,19 @@ Knowing them is also good because you will code faster.
 The message ==ifNotNil:== expects a block with one argument. 
 This argument is the object that is not nil.
 
+For example, 
 [[[
 self doThat ifNotNil: [ :that | self doSomethingWith: that ]
 ]]]
 
+is better than: 
 [[[
 | that |
 that := self doThat.
 that ifNotNil: [self doSomethingWith: that]
 ]]]
 
-Similarly have a look at the messages containing the ==ifPresent:== variation.
+Similarly have a look at the messages containing the ==ifPresent:== variations.
 [[[
 aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 ]]]
@@ -1203,7 +1205,7 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 
 !! Potential traps
 
-Understanding possible mistakes is a nice way to avoid them or to quickly identify errors made in your code.
+Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code.
 Here are some common mistakes.
 
 
@@ -1257,7 +1259,7 @@ lastNode = 0
 
 !!! Guideline: receiver of whileTrue: is a block
 
-The receiver of the message ==whileTrue:== is a block, its argument too. 
+The receiver of the message ==whileTrue:== is a block, and its argument is, too. 
 
 The following line is incorrect:
 [[[type=not
@@ -1300,9 +1302,9 @@ aCol do: [ :node | ...]
 
 !! Conclusion
 
-Remember that you write code once and read it thousand times.
+Remember that you write code once and will read it a thousand times.
 Take the time to give good names.
-However finding good names is not an easy task, but you can use refactorings to improve the situation.
+However finding good names is not an easy task, but you can use refactorings to improve things easily.
 This goes in pair with tests. 
 You write a test once and it gets executed million times. 
-Therefore write test to exercise the names you use and change them until they help you telling stories that can be understood.
+Therefore, write tests to exercise the names you use and change them until they help you telling stories that can be understood.
