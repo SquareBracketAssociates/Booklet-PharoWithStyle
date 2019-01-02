@@ -580,6 +580,37 @@ Not display: anObject using: aMedium
 ]]]
 
 
+!!! Guideline: Indicate return types
+
+When a method is returning an object (different from the receiver) and that this object is not polymorphic 
+with the receiver it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
+
+For example, the method ==characterSeparatorMethodSignatureFor:== of the pretty printer did not return 
+a character but a block as shown below:
+
+[[[
+characterSeparatorMethodSignatureFor: aMethodNode
+	^ [
+		(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
+			ifTrue: [ self newLine ]
+			ifFalse: [ self space ] ]
+]]]
+
+Favor ==characterSeparatorMethodSignatureBlockFor:== over ==characterSeparatorMethodSignatureFor:==
+when the method returns block and not a character as ==characterSeparatorMethodSignatureFor:== indicates. 
+
+A much better design is to rewrite this method and its users to use a character. 
+Returning a block in such situation is overkill and it hampers reusing the method without being forced to send a message.
+
+The following method is corresponding to its name.
+[[[
+characterSeparatorMethodSignatureFor: aMethodNode
+	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
+			ifTrue: [ self newLine ]
+			ifFalse: [ self space ]
+]]]
+
+
 !!!  Guideline: Use interrogative form for testing
 When interrogating the state of an object, use a selector beginning with a verb such as ==has==, ==is==, ==does==,...
 
