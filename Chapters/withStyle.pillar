@@ -588,7 +588,7 @@ with the receiver it is important to mention it. Since Pharo is not statically t
 For example, the method ==characterSeparatorMethodSignatureFor:== of the pretty printer did not return 
 a character but a block as shown below:
 
-[[[
+[[[type=not
 characterSeparatorMethodSignatureFor: aMethodNode
 	^ [
 		(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
@@ -603,12 +603,15 @@ A much better design is to rewrite this method and its users to use a character.
 Returning a block in such situation is overkill and it hampers reusing the method without being forced to send a message.
 
 The following method is corresponding to its name.
-[[[
+[[[type=prefer
 characterSeparatorMethodSignatureFor: aMethodNode
 	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
 			ifTrue: [ self newLine ]
 			ifFalse: [ self space ]
 ]]]
+
+A good example is the API of the ==FileReference== class.
+The message ==pathString== indicates clearly that it returns the path as a string while to access the path object the message ==path== should be used.
 
 
 !!!  Guideline: Use interrogative form for testing
