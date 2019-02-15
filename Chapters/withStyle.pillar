@@ -13,8 +13,8 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly for their feedback.
-S. Ducasse - 30 December 2018.
+Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
+S. Ducasse - 30 February 2019.
 
 
 !! General naming conventions
@@ -351,16 +351,27 @@ over
 anInteger := numberOfAdults size max: numberOfChildren size
 ]]]
 
+Note that semantic name can convey variable roles. Having more information is definitively useful for clients of the code.
+
+Prefer
+[[[type=prefer
+"Semantic variable"
+selectFrom: aBeginningDate to: anEndDate
+]]]
+
+over 
+[[[type=not
+"Type variable"
+selectFrom: aDate to: anotherDate
+]]]
+
 Finding a semantic name is not always as obvious as demonstrated above. 
 There are cases in which choosing a descriptive semantic name is difficult.
 
 
 !!! Guideline: Use typed variables to indicate API
 
-Suppose a String, a Symbol, and nil are valid for a parameter.
-A developer may be tempted to use the name ==aStringOrSymbolOrNil==;
-however, most developers choose ==aString== or ==anObject==.
-==anObject== is a better choice with an accompanying comment that says, "anObject can be a String or aSymbol"
+Using type variable is interesting to convey the API (set of messages) that the object held in the variable responds to.
 
 Below ==aDictionary== conveys that the argument should have the same API as a Dictionary (==at:==,==at:put:==)
 
@@ -371,10 +382,10 @@ properties: aDictionary
 
 over
 [[[type=not
-Not properties: aCollection
+Not properties: map
 ]]]
 
-You may also want to stress specific types in an API. 
+You may also want to stress specific types in an API referencing to interface that the object implements.
 
 Prefer 
 [[[type=prefer
@@ -388,9 +399,33 @@ Not properties: aCollection
 
 
 
+Suppose a String, a Symbol, and nil are valid for a parameter.
+A developer may be tempted to use the name ==aStringOrSymbolOrNil==.
+
+You may be tempted to ==aString== or ==anObject==.
+==anObject== is not really helping the developer that will have to use such variables. At the minimum such a use should be accompanied with a comment that says, "anObject can be a String or aSymbol"
+
+Some developers may argue that type variables should not refer to classes that do not exist. We disagree. As shown in the following guideline it is a lot better to indicate that an argument is block expecting two arguments (hence a binary block) than to just mention a block. And this even if there is no binary block class in the system.
+
+Prefer 
+[[[type=prefer
+inject: anObject into: aBinaryBlock 
+]]]
+
+over
+[[[type=not
+inject: anObject into: aBlock 
+]]]
+
+Note that for ==inject:into:== the best naming is to mix semantic ant type naming as in 
+
+[[[type=prefer
+inject: initialValue into: aBinaryBlock 
+]]]
+
 !!! Guideline: Get the best from semantic and type variable
 
-A good practice is to use a mixture of both semantic and typed variable names. 
+A good practice is to use a mixture of both semantic and typed variable names.
 Method parameter names are usually named after their type. 
 Instance, class, and temporary variables usually use a semantic name. 
 In some cases, a combination of both can be given in the names.
@@ -463,6 +498,13 @@ Use common nouns and phrases for objects that are not Boolean.
 	outputDevice
 ]]]
 
+Note that you can also use ==count== instead of ==numberOf== as in the following example:
+
+[[[
+	numberOfTires
+	tireCount
+]]]
+
 !! Selectors
 
 Method names in Pharo are called selectors.
@@ -506,6 +548,7 @@ Not aReadStream word
 Prefer
 [[[
 aFace lookSurprised 
+aFace beSurprised
 ]]]
 over
 [[[type=not
@@ -529,6 +572,19 @@ and
 [[[
 triggerOptimization
 ]]]
+
+This is why using ==beOptimized== would be better than a simple ==optimized== and why ==isOptimized== is better for the interrogative form.
+
+!!! Guideline: Prefix with as for conversion
+
+When converting an object to another one, the convention is to prefix the class name of the target with ==as==.
+
+[[[
+anArray asOrderedCollection 
+]]]
+
+Favor the use of existing classes. 
+
 
 !!! Guideline: Indicate flow with preposition
 
