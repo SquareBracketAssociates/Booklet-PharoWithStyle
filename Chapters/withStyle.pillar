@@ -723,11 +723,24 @@ over
 Not aFace changeExpressionTo: expression
 ]]]
 
-!!!  Guideline: Accessors 
+!!!  Guideline: Use accessors or not
 
-There are different schools about whether to use accessors.
-If you use accessors, use them consistently.
-Also, name them also consistently:
+There are different schools about whether to use accessors. In his seminal book Kent Beck discusses it in depth. Here we give a list of arguments for and against and you should decide and follow the conventions of the project you work on. In any case, if you use accessors or not, be consistent.
+
+Arguments in favor of accessors:
+- Accessors abstract from the exact state internal representation.
+- Accessors may hide that values are derived or not.
+- Subclasses may freely redefine the way accessors are implemented.
+
+Arguments against accessor use:
+- Accessors expose the internal state of an object.
+- When the class is small, using accessors may blow up the number of methods.
+- Using refactorings, we can always easily introduce accessors.
+
+
+!!! Guideline: Name accessors following variable name
+When you use accessors, name them consistently: 
+The getter is name as the variable it refers to. The setter is the same but with an extra terminating colon ==:==.
 
 For getter, prefer 
 [[[type=prefer
@@ -757,6 +770,18 @@ tiles: aCollection
 
 Put real accessors in the accessing protocols. 
 When you have accessors doing extra work place them in a separate protocols to stress their difference.
+
+!!! Guideline: Avoid prefixing with set public accessors
+
+Some developers may be tempted to name setter methods by prefixing
+the variable name 
+
+For Setters
+[[[type=prefer
+tiles: aCollection
+	tiles := aCollection 
+]]]
+
 
 !!! Guideline: Use basic or raw to access low-level
 
