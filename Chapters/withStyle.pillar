@@ -768,7 +768,7 @@ tiles: aCollection
 	tiles := aCollection 
 ]]]
 
-Put real accessors in the accessing protocols. 
+Put accessors in the =='accessing'== protocols. 
 When you have accessors doing extra work place them in a separate protocols to stress their difference.
 
 !!! Guideline: Avoid prefixing with set public accessors
@@ -776,12 +776,18 @@ When you have accessors doing extra work place them in a separate protocols to s
 Some developers may be tempted to name setter methods by prefixing
 the variable name 
 
-For Setters
+Prefer
 [[[type=prefer
 tiles: aCollection
 	tiles := aCollection 
 ]]]
+over
+[[[type=prefer
+setTiles: aCollection
+	tiles := aCollection 
+]]]
 
+Following K. Beck's advice, use ==setTitles:== only for private messages to initialize objects from class side methods.
 
 !!! Guideline: Use basic or raw to access low-level
 
