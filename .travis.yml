@@ -24,12 +24,11 @@ install:
 script:
   - ./pillar/build/pillar build pdf
 
-deploy:
-- provider: bintray
-  file: .bintray.json
-  on:
-    repo: SquareBracketAssociates/Booklet-PharoWithStyle
-  skip_cleanup: true
-  user: ducasse
-  key:
-    secure: knWdeYaDAnG2ymmegeryifQsVcP5m14iDhQMbhstjPT01lmtRAZ+Xb1VpekhQuGsksYyCrL1XbVfbIAO4gbCZWk5nAL1HOAqbxyZkq83qLW8+jpzdKwCJHCTPm278xvhHcD0h0ZKBpI5vmWfp9KumhWlkk/4V0XAQnxYBLsaF8IV5ydx9u43lEA72wiQlWE5SXLrygjWoNAPV7saJkjwkCdalMTPO3jhRw1jsM1+w/D1KlDjeyTYFhgWqHhi9go2HlfnOXpYLHgVK3GGEzh4MQGNl4iQR1Ikdbo1UZroDsKY6F0GltOdi1PMEEkijSTdWnBmSts2PCXCuuOUg5x5wmeomDHyU22/Af3EbmK51THi9vsEpxPTp8o1XHI+I6uOXIfzaOqt8g3XySpWJdVl6/sAjddvBvMudn0uPHWXp3PsIzlZo4mHbHAVlcIyjvzt75m9BH4/cHpjX7Y+Lx8WdeECBUGKTIGKD1bsAWAqrlZiKv3uGNc89gLxuAvQMjqB44JV3KOuit9/5UrKyIGCd3BwP0dTFnxTReoixFhCopDw4mSkxdkFAL5cZ5Tz/kF2GPAsETm0uR1b51EjM+qIb9sEmnhgSLLrpQIrmkrm3zZNoSeQM3QB7ittJJvY4JPgzKN5vcal6ybOf9xnmirsun5SETbz08KYbEaaE0h8hA8=
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - mv _result/pdf/withstylebook.pdf WithStyleBook-wip.pdf
+  - bash upload.sh WithStyleBooks-wip.pdf
+
+branches:
+  except:
+    - /^(?i:continuous)$/

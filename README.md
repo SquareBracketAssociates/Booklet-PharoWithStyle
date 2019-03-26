@@ -6,19 +6,5 @@ This book focuses on an important aspect of development: code communication. It 
 [travis]: https://travis-ci.org/SquareBracketAssociates/Booklet-PharoWithStyle
 [badge]: https://travis-ci.org/SquareBracketAssociates/Booklet-PharoWithStyle.svg?branch=master
 
-The PDF of the latest successful Travis build is available [here on Bintray (PDF)](https://bintray.com/squarebracketassociates/wip/download_file?file_path=withStyle-wip.pdf).
-
-## To contribute
-
-- Fork
-- Do pull requests 
-
-## To latex it locally
-Install pillar.
-```
-pillar build pdf
-```
-
-
-
-
+The PDF of the latest successful Travis build is available on the release pane of this page
+[https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle/releases](https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle/releases)
