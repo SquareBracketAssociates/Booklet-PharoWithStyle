@@ -27,7 +27,7 @@ script:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - mv _result/pdf/withstylebook.pdf WithStyleBook-wip.pdf
-  - bash upload.sh WithStyleBooks-wip.pdf
+  - bash upload.sh WithStyleBook-wip.pdf
 
 branches:
   except:
