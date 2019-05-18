@@ -214,6 +214,9 @@ over
 not GNAT_XML_Object
 ]]]
 
+
+
+
 When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming conventions. 
 The name should convey that the class is an abstract syntax tree node.
 Hence ==GnatXmlNode== is much better than ==GnatXmlObject==.
@@ -245,6 +248,29 @@ classExtensionSelectors
 classTags
 ]]]
 
+Prefer 
+[[[type=prefer
+| dataset f xMatrix scale x |
+]]]
+
+over 
+[[[type=not
+| dataset f Xmatrix scale X |
+]]]
+
+!!! Guideline:  Avoid underscore in variable identifiers
+
+In Pharo variables are using camelCase, just follow this convention. 
+
+Prefer
+[[[type=prefer
+| dataset pca scaledX reducedX |
+]]]
+
+over 
+[[[ 
+| dataset pca scaled_X reduced_X |
+]]]
 
 !!! Guideline: Favor unique meaning and pronunciation
 
@@ -1363,6 +1389,76 @@ testDefineASimpleClass
 	uUMLClass instVar: 'name'.
 	self assert: (uUMLClass variables includes: 'name')
 ]]]
+
+!!! Guideline: no need for extra parentheses
+
+
+There is no need for parentheses surrounding unary message.
+There is not much benefit to add parentheses around unaray messages. In Pharo unary messages are the messages that have the highest priority. They are executed first. 
+
+Prefer
+[[[type=prefer
+xMatrix := PMMatrix rows: x asArrayOfRows.
+]]]
+over 
+[[[type=not
+xMatrix := PMMatrix rows: ( x asArrayOfRows ).
+]]]
+
+!!!! No parentheses around message with higher priority
+In the similar way, there is no need to put parentheses around binary messages involved in keyword-based expressions. Binary messages are executed prior to 
+keyword-messages. In the following ==\=== is executed before ==ifTrue:==. 
+
+Prefer
+[[[type=prefer
+reducedX do: [ :row | 
+	(row at: 'target') = 'Iris-setosa' 
+		ifTrue: [ a add: row asArray ] ].
+]]]
+
+over 
+
+[[[type=not
+reducedX do: [ :row | 
+	( (row at: 'target') = 'Iris-setosa') 
+		ifTrue: [ a add: (row asArray) ] ].
+]]]
+
+!!!! No parentheses around variable
+Putting parentheses around a variable does not produce an array, it has no effect. 
+Do not confuse parentheses and curly braces. Curly braces is a shortcut to produce an array with the elements they surround: =={ a }== produces an array with one element whose value is the value held by the variable ==a== as shown by the examples below.
+
+TIn this code snippet, =={}== creates an array. 
+[[[
+| a |
+a := 12.  
+{a} printString
+>>> #(12)
+]]]
+
+In this snippet, the parentheses do not do anything. 
+[[[
+| a |
+a := 12.  
+(a) printString
+>>> 12
+]]]
+
+
+!!!! No parentheses around single message
+There is no need to put extra parentheses over a single message. It has no effect. 
+Parentheses make sense to disambiguate one message over a set of messages composing an expression. 
+
+Prefer 
+[[[type=prefer
+m := pca transform: xMatrix
+]]]
+over 
+[[[type=not
+m := (pca transform: xMatrix)
+]]]
+
+
 
 
 !!! Guideline: receiver of ifTrue:ifFalse: is a boolean
