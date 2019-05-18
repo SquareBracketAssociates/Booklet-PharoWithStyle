@@ -1364,11 +1364,18 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 
 !! Potential traps
 
-Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code.
-Here are some common mistakes.
+Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code. Here are some common mistakes.
 
 
-!!! Guideline: Use parentheses to disambiguate keyword messages
+!!! Guideline: Use parentheses to disambiguate messages with the same priority
+
+
+!!!! For keyword-messages
+The Pharo compiler does not know where to cut an expression composed on multiple keyword-based messages. For example, assert:includes: in the expression ==self assert: uUMLClass variables includes: 'name'== can be a message that the object ==self== can understand. For example testcases understand the message ==assert:equals:== 
+and the following expression is fully valid: ==self assert: uUMLClass variables equals: 'name'==. 
+
+Therefore, this is the programmer responsibility to use parenthese to separate correctly the messages having the same priority.
+The following example illustrates this point.
 
 [[[
 testDefineASimpleClass
@@ -1378,8 +1385,9 @@ testDefineASimpleClass
 	uUMLClass instVar: 'name'.
 	self assert: uUMLClass variables includes: 'name'
 ]]]
+
 There is no message ==assert:includes:==. 
-The expression ==uUMLClass variables includes: 'name'== should be parenthesized.
+The expression ==uUMLClass variables includes: 'name'== should be parenthesized, because this is the result of the execution of this expression that should be passed as argument of the message ==assert:==.
 
 [[[
 testDefineASimpleClass
@@ -1389,6 +1397,27 @@ testDefineASimpleClass
 	uUMLClass instVar: 'name'.
 	self assert: (uUMLClass variables includes: 'name')
 ]]]
+
+!!!! Between binary messages
+
+Pharo does not make any assumption about the possible mathematical meaning of messages. As a programmer you cannot describe the weight of a binary messages.
+It means that in an expression composed of multiple binary messages, they will be executed from left to right. 
+
+For example ==1 + 2 * 3== returns ==9== since first the message plus is resolved and its result is the receiver of the message ==*==. 
+
+[[[
+1 + 2 * 3
+>>> 9 
+]]]
+
+To get the correct mathematical behavior, one should use parentheses.
+
+[[[
+1 + (2 * 3)
+>>> 7 
+]]]
+
+
 
 !!! Guideline: no need for extra parentheses
 
