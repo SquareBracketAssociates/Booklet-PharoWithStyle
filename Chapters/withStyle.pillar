@@ -52,6 +52,15 @@ over
 Not GNAT_XML_Object
 ]]]
 
+Prefer
+[[[type=prefer
+releasedX
+]]]
+over 
+[[[type=not
+released_X
+]]]
+
 When creating private low-level methods that bind to external C-libraries, you may wan to use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
@@ -1153,6 +1162,24 @@ addLast: newObject
 	^ newObject
 ]]]
 
+
+
+Do not let space before the first word of the comment, align comment with method body, make sure that the reader can identify the beginning of the method body by using an empty line.
+
+Prefer the following 
+[[[type=prefer
+collectionNotIncluded
+	"Return a collection for wich each element is not included in 'nonEmpty'"
+	
+	^ collectionWithoutNil 
+]]]
+
+over:
+[[[type=not
+collectionNotIncluded
+" return a collection for wich each element is not included in 'nonEmpty' "
+	^ collectionWithoutNil 
+]]]
 
 !!! Guideline: Indent method body
 
