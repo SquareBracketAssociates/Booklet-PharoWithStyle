@@ -1181,6 +1181,14 @@ collectionNotIncluded
 	^ collectionWithoutNil 
 ]]]
 
+and over:
+[[[type=not
+collectionWithoutEqualElements
+
+" return a collection not including equal elements "
+	^collectionWithoutEqualElements 
+]]]
+
 !!! Guideline: Indent method body
 
 Use indentation to convey structure! Do not glue everything on the left margin.
