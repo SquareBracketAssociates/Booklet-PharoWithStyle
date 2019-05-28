@@ -1344,7 +1344,7 @@ paragraph
 	p := next.
 	[ p isNotNil and: [ p isKindOf: RubParagraph ] ]
 		whileFalse: [ p := p next ].
-	^p
+	^ p
 ]]]
 
 Over
