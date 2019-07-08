@@ -1452,6 +1452,37 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 ]]]
 
 
+
+!!! Guideline: Move returns outside branches
+When two branches of a condition are returning a value, better move the return  out of the blocks.
+
+
+Prefer
+[[[type=prefer
+depth: aNode
+	"Returns depth of a tree starting from the given node"
+	...
+	^ leftDepth > rightDepth
+		ifTrue: [ 1 + leftDepth ]
+		ifFalse: [ 1 + rightDepth ]
+]]]
+
+over 
+[[[type=not
+depth:aNode
+	"Returns depth of a tree starting from the given node"
+	
+	
+	^ leftDepth > rightDepth
+		ifTrue: [ 1 + leftDepth ]
+		ifFalse: [1 + rightDepth ]
+]]]	
+
+
+
+
+
+
 !! Potential traps
 
 Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code. Here are some common mistakes.
