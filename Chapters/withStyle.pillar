@@ -787,7 +787,28 @@ over
 getTiles
 	^ tiles
 ]]]
-Do not use get in accessor selectors!
+Do not use ==get== or ==set== in accessor selectors!
+
+!!!! Watch out.
+Pay attention a Setter is just setting a value and just returning (implicitly) the receiver. 
+The following setter definition is not correct.
+
+[[[type=not
+BinaryNode >> root: rootNode
+    "Set a root node"
+    ^ root := rootNode
+]]]
+
+Favor the following one instead: 
+[[[type=not
+BinaryNode >> root: rootNode
+
+    root := rootNode
+]]]
+
+Note that we do not need to comment a basic setter.
+
+
 
 
 For lazy initialization:
@@ -805,6 +826,9 @@ tiles: aCollection
 
 Put accessors in the =='accessing'== protocols. 
 When you have accessors doing extra work place them in a separate protocols to stress their difference.
+
+
+
 
 !!! Guideline: Avoid prefixing with set public accessors
 
@@ -1336,7 +1360,7 @@ White lines attract the eyes and force the reader to ask himself why the code is
 Only separate method signature and comment from method body with a new line.
 
 Prefer
-[[[
+[[[type=prefer
 paragraph
 	"this method is here to find the paragraph in the chain, instead of relying on implementing #doesNotUnderstand: !!!"
 
@@ -1348,7 +1372,7 @@ paragraph
 ]]]
 
 Over
-[[[
+[[[type=not
 paragraph
 	"this method is here to find the paragraph in the chain, instead of relying on implementing #doesNotUnderstand: !!!"
 
@@ -1364,11 +1388,42 @@ paragraph
 
 ]]]
 
+!!! Guideline: Highlight control flow
 
+Help the reader to understand control flow logic of your code by using indentation.
 
+[[[type=prefer
+size
+	"Returns size of a tree - number of nodes in a tree"
+	self root isNil 
+		ifTrue: [ ^0 ].
+	^ self size: self root
+]]]	
 
+Over 
+[[[type=not
+size
+	"Returns size of a tree - number of nodes in a tree"
+	self root isNil 
+	ifTrue: [ ^0 ].
+	^self size: self root.
+]]]	
 
-
+[[[type=not
+depth:aNode
+	"Returns depth of a tree starting from the given node"
+	| leftDepth rightDepth |
+	leftDepth := -1.
+	aNode leftChild isNotNil 
+	ifTrue: [ leftDepth := self depth: aNode leftChild ].
+	rightDepth := -1.
+	aNode rightChild isNotNil 
+	ifTrue: [ rightDepth := self depth: aNode rightChild ].
+	
+	( leftDepth > rightDepth )
+	ifTrue: [ ^ (1 + leftDepth) ]
+	ifFalse: [^ (1 + rightDepth ) ].
+]]]	
 
 !! Powerful coding idioms
 Some coding idioms will make your code a lot clearer. 
@@ -1487,6 +1542,44 @@ reducedX do: [ :row |
 	( (row at: 'target') = 'Iris-setosa') 
 		ifTrue: [ a add: (row asArray) ] ].
 ]]]
+
+Prefer
+[[[type=prefer
+depth: aNode
+	"Returns depth of a tree starting from the given node"
+	
+	| leftDepth rightDepth |
+	leftDepth := -1.
+	aNode leftChild isNotNil 
+		ifTrue: [ leftDepth := self depth: aNode leftChild ].
+	rightDepth := -1.
+	aNode rightChild isNotNil 
+		ifTrue: [ rightDepth := self depth: aNode rightChild ].
+	^ leftDepth > rightDepth
+		ifTrue: [ 1 + leftDepth ]
+		ifFalse: [ 1 + rightDepth ]
+]]]
+
+over 
+[[[type=not
+depth:aNode
+	"Returns depth of a tree starting from the given node"
+	| leftDepth rightDepth |
+	leftDepth := -1.
+	aNode leftChild isNotNil 
+	ifTrue: [ leftDepth := self depth: (aNode leftChild) ].
+	rightDepth := -1.
+	aNode rightChild isNotNil 
+	ifTrue: [ rightDepth := self depth: (aNode rightChild) ].
+	
+	( leftDepth > rightDepth )
+	ifTrue: [ ^ (1 + leftDepth) ]
+	ifFalse: [^ (1 + rightDepth ) ].
+]]]	
+
+
+
+
 
 !!!! No parentheses around variable
 Putting parentheses around a variable does not produce an array, it has no effect. 
