@@ -14,7 +14,7 @@ Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
 Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
-S. Ducasse - 30 February 2019.
+S. Ducasse - 12 August 2019.
 
 
 !! General naming conventions
@@ -1610,8 +1610,6 @@ depth:aNode
 
 
 
-
-
 !!!! No parentheses around variable
 Putting parentheses around a variable does not produce an array, it has no effect. 
 Do not confuse parentheses and curly braces. Curly braces is a shortcut to produce an array with the elements they surround: =={ a }== produces an array with one element whose value is the value held by the variable ==a== as shown by the examples below.
@@ -1717,6 +1715,10 @@ be executed.
 aCol do: [ :node | ...]
 ]]]
 
+
+
+
+		
 !! Conclusion
 
 Remember that you write code once and will read it a thousand times.
