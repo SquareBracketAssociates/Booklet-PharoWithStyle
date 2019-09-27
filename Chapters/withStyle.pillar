@@ -1480,6 +1480,22 @@ depth:aNode
 
 
 
+!!! Guideline: Use streamContents
+
+When you want to manipulate a potentially long stream you can avoid to have to define the explicit stream creation and access using ==streamContents== with a block whose argument is a ready to use stream.
+
+Prefer
+[[[type=prefer
+String streamContents: [:s | self displayStringOn: s]
+]]]
+
+over 
+
+[[[type=not
+stream := WriteStream on: (String new: 1000).
+stream ...
+^ stream contents
+]]]
 
 
 
