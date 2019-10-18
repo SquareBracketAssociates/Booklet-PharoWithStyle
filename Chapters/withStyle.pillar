@@ -1467,16 +1467,15 @@ depth: aNode
 		ifFalse: [ 1 + rightDepth ]
 ]]]
 
-over 
+over
 [[[type=not
 depth:aNode
 	"Returns depth of a tree starting from the given node"
-	
-	
-	^ leftDepth > rightDepth
-		ifTrue: [ 1 + leftDepth ]
-		ifFalse: [1 + rightDepth ]
-]]]	
+	...
+	leftDepth > rightDepth
+		ifTrue: [ ^ 1 + leftDepth ]
+		ifFalse: [ ^ 1 + rightDepth ]
+]]]
 
 
 
@@ -1498,6 +1497,56 @@ stream ...
 ]]]
 
 
+!!! Guideline: Avoid , when in loop
+In Pharo string concatenations are expressed using the message ==#,==. 
+
+[[[
+'Pharo' , ' with Style'
+>>> 'Pharo with Style'
+]]]
+
+The implementation of the method is however not really efficient since it copies the underlying collection during each concatenation
+as we show below.
+The alternative is to use a write stream or to use ==streamContents:== but using a stream makes the code more complex.
+Therefore there is a key question to be answered: When is it pointless to use a  WriteStream and just use ==#,== ?
+
+
+Avoid ==\#,== when the code is in a loop or recursion, use a stream.
+
+[[[type=prefer
+String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]]
+]]]
+
+Use ==\#,== when constructing error messages, class initialisation code, or situations where there is no loop.
+
+Note that in ==printOn:== methods, the argument is already a stream so we use it and avoid using message ==\#,==.
+
+!!!!!Difference in speed
+The following snippets shows the difference in execution on large concatenations.
+
+[[[
+[ String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]] ] bench
+>>> '551.890 per second'
+]]]
+
+[[[
+[ | s |
+  s := ''.
+  1 to: 10000 do: [ :i | s := s, i asString ]  ] bench
+>>> '8.465 per second'
+]]]
+
+[[[
+[ String streamContents: [:s | 1 to: 1000 do: [ :i | s << i asString ]]  ] bench 
+>>> '6313.137 per second'
+]]]
+
+[[[
+[ | s |
+  s := ''.
+  1 to: 1000 do: [ :i | s := s, i asString ]  ] bench  
+>>> '967.819 per second'
+]]]
 
 !! Potential traps
 
