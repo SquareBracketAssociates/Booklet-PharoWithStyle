@@ -1,8 +1,13 @@
 !! Instance initialization
 
+One key responsibility for a class is to initialize correctly the instance it creates. 
+This avoids to place the burdend on clients of such objects.
+In this chapter we will present some patterns to initialize objects. 
+
+
 !!! Guideline: Automatic object initialization 
 
-
+By default Pharo offers a way to initialize your objects. The method ==initialize== is automatically invoked by the method ==new==. 
 
 [[[
 Game >> initialize
