@@ -9,15 +9,17 @@ xargs tlmgr install <<DEPS
     footmisc
     gentium-tug
     graphics
+    ifetex
     import
     listings
+    luaotfload
     luatexbase
     memoir
+    ms
     multirow
     opensans
     pgf
     polyglossia
-    ragged2e
     tcolorbox
     tools
     trimspaces

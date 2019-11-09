@@ -12,8 +12,6 @@ smalltalk:
 # System tests test that we can install and use pillar as a black box
 env:
   global:
-    - TEXLIVE_RELEASE=2019
-    - TEXLIVE_MIRROR=http://mirror.ctan.org/systems/texlive/tlnet
     - PATH="$HOME/texlive/bin/x86_64-linux:$PWD/build:$PATH"
 
 install:
