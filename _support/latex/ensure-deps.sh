@@ -1,4 +1,5 @@
 #!/bin/bash
+# This file is for LaTeX 2018 and should be in sync with the travis setup. 
 
 xargs tlmgr install <<DEPS
     ctablestack
