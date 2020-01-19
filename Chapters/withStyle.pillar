@@ -1548,6 +1548,109 @@ The following snippets shows the difference in execution on large concatenations
 >>> '967.819 per second'
 ]]]
 
+
+
+
+
+!! Object initialization
+
+One key responsibility for a class is to initialize correctly the instance it creates.
+This avoids to place the burdend on clients of such objects.
+In this chapter we will present some patterns to initialize objects.
+
+
+!!! Guideline: Take advantage of automatic object initialization 
+
+By default Pharo offers a way to initialize your objects. 
+The method ==initialize== is automatically sent by the method ==new==.
+
+Imagine that we implement a game and that this game needs to initialize the number of turns the game is played. 
+Avoid to force the clients of the game to have the responsibility to initialize the turn. 
+Indeed if the clients forget to send the expression ==turn:==, the game logic may be simply broken.
+
+[[[type=not
+Game new turn: 0
+]]]
+
+Therefore when you want to initialize the state of yoru object, simply redefine 
+
+[[[type=prefer
+Game >> initialize
+	super initialize.
+	turn := 0.
+]]]
+
+This way ==Game new== will automatically set the value for ==turn==. 
+
+From a test perspective, it is often a good practice to have a test covering the default initialization. 
+
+[[[
+GameTest >> testDefaultInitialization
+
+	self assert: Game new turn equals: 0
+]]]
+
+
+!!! Guideline: No automatic initialize
+
+When you do not want to get the automatic initialization to happen you should use the message ==basicNew== on the class side and create your own ==initializeSomething:== method. 
+
+Let us imagine that the computation of the tiles of a game would be costly or that there is no simple default. 
+We can propose a class creation interface whose responsibility is to request the mandatory information and initialize only what is needed for the object creation. 
+
+Here we define a class method ==tileNumber:==, and we do not invoke ==new== but ==basicNew==. 
+Indeed ==new== sends the message ==initialize== and we do not want to pay the price for it. 
+==basicNew== just allocates the new object and does not perform any other operation.
+
+[[[
+Game class >> tileNumber: aNumber
+	^ self basicNew 
+		initializeTiles: aNumber ; 
+		yourself
+]]]
+
+Now on the instance side we can define the initialization of tiles as shown by the method ==initializeTiles:==.
+
+[[[
+Game >> initializeTiles: aNumber
+	tiles := Array new: aNumber
+]]]
+
+If you use ==new== instead of ==basicNew== in previous definition, the ==initialize== method and the method 
+==initializeTiles:== will be executed.
+
+
+
+!!! Guideline: No double super new initialize
+
+Since Pharo is automatically sending the message ==initialize== as part of the object creation process 
+using the  pattern below, there is no need for the developer to do it in addition. 
+
+Now you may wonder what is the problem if you inadvertly redefine new in one of your class as follows: 
+
+[[[type=not
+Game class >> new
+
+	^ super new initialize
+
+
+In Pharo, the method ==initialize== of the class ==Game== will be invoked twice.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 !! Potential traps
 
 Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code. Here are some common mistakes.
@@ -1790,6 +1893,7 @@ It is invoked by default by the message ==new==
 The following definition is not idiomatic:
 [[[type=not
 	initialize
+
 		default := 'no'.
 		^ super initialize
 ]]]
@@ -1799,6 +1903,7 @@ Prefer the following definition:
 
 [[[type=prefer
 	initialize
+
 		default := 'no'.
 		super initialize
 ]]]
@@ -1809,6 +1914,7 @@ It may happen that you need this order but it is rare so prefer the following ca
 
 [[[type=prefer
 	initialize
+
 		super initialize
 		default := 'no'.
 ]]]
@@ -1822,7 +1928,8 @@ No ==super== is not the superclass, nor an instance of the superclass.
 There is no need to use ==super== when returning an expression not passing it as argument. 
 For example passing ==super== as argument is useless and show that the developer did fully get what ==super== it. 
 [[[type=not
-foo 
+foo
+
 	anotherObject bar: super.
 	self continue.
 ]]]
@@ -1830,7 +1937,8 @@ foo
 Better use ==self==
 
 [[[type=prefer
-foo 
+foo
+
 	anotherObject bar: self.
 	self continue.
 ]]]
@@ -1838,14 +1946,16 @@ foo
 Similarly 
 
 [[[type=not
-foo 
+foo
+
 	^ super
 ]]]
 
 Better use ==self==
 
 [[[type=prefer
-foo 
+foo
+
 	^ self
 ]]]
 
@@ -1859,8 +1969,9 @@ since using ==self== in such a case simply creates and infinite loop.
 For example, the following just creates an infinite loop, since the method ==initialize== is calling itself infinitively. 
 
 [[[type=not
-initialize 
-	self initiliaze.
+initialize
+
+	self initialize.
 	self continue
 ]]]
 
@@ -1869,8 +1980,9 @@ class defining the method.
 The correct definition is then: 
 
 [[[type=prefer
-initialize 
-	super initiliaze.
+initialize
+
+	super initialize.
 	self continue
 ]]]
 
