@@ -1781,9 +1781,121 @@ aCol do: [ :node | ...]
 ]]]
 
 
+!!! Guideline: initialize does not need to return super
+
+The method ==initialize== is a method that modifies the receiver. 
+It is used by convention to initialize the default value of the receiver. 
+It is invoked by default by the message ==new==
+
+The following definition is not idiomatic:
+[[[type=not
+	initialize
+		default := 'no'.
+		^ super initialize
+]]]
+
+First it returns a value and this value is not really used. 
+Prefer the following definition:
+
+[[[type=prefer
+	initialize
+		default := 'no'.
+		super initialize
+]]]
+
+Second, the ordering implies that the first local information should be computed then 
+the one of the superclass. 
+It may happen that you need this order but it is rare so prefer the following canonical form:
+
+[[[type=prefer
+	initialize
+		super initialize
+		default := 'no'.
+]]]
+
+!!! Guideline: super is just self
+
+==super== is the receiver of the message, just as ==self==. 
+No ==super== is not the superclass, nor an instance of the superclass. 
+==super== is the receiver of the message. 
+
+There is no need to use ==super== when returning an expression not passing it as argument. 
+For example passing ==super== as argument is useless and show that the developer did fully get what ==super== it. 
+[[[type=not
+foo 
+	anotherObject bar: super.
+	self continue.
+]]]
+
+Better use ==self==
+
+[[[type=prefer
+foo 
+	anotherObject bar: self.
+	self continue.
+]]]
+
+Similarly 
+
+[[[type=not
+foo 
+	^ super
+]]]
+
+Better use ==self==
+
+[[[type=prefer
+foo 
+	^ self
+]]]
 
 
-		
+!!! Guideline: use super to invoke a method with the same selector
+
+==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. 
+However, ==super== is only necessary when the method you want to invoke has the same than the current one
+since using ==self== in such a case simply creates and infinite loop. 
+
+For example, the following just creates an infinite loop, since the method ==initialize== is calling itself infinitively. 
+
+[[[type=not
+initialize 
+	self initiliaze.
+	self continue
+]]]
+
+This is the only case where you must use ==super== to invoke the method that cannot be reach by the method lookup when it starts from the 
+class defining the method. 
+The correct definition is then: 
+
+[[[type=prefer
+initialize 
+	super initiliaze.
+	self continue
+]]]
+
+
+Now there is no need to use ==super== for message that have a different selector than the method they belong to. 
+For example, there is no need to use ==super bar== in the following, since the defining method is called ==foo== and you send the message ==bar==.
+
+[[[type=not
+foo 
+	super bar.
+	self continue
+]]]
+
+The correct definition is just to use ==self==.
+
+[[[type=prefer
+foo 
+	self bar.
+	self continue
+]]]
+
+While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. 
+So always be suspicious when you read or write such kind of code.
+
+
 !! Conclusion
 
 Remember that you write code once and will read it a thousand times.
