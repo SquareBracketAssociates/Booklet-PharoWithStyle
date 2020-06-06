@@ -828,7 +828,29 @@ Put accessors in the =='accessing'== protocols.
 When you have accessors doing extra work place them in a separate protocols to stress their difference.
 
 
+!!! Guideline: Avoid return in lazy block
 
+You may want to use accessors to implement lazy initialization: the instance variable is initialized only if needed by checking if its value is nil.
+
+Do not place returns inside the block.
+
+[[[type=prefer
+tiles
+	^ tiles ifNil: [ tiles := OrderedCollection new.
+]]]
+
+Over 
+[[[type=not
+tiles
+	^ tiles ifNil: [ tiles := OrderedCollection new. ^tiles ]
+]]]
+
+or even
+[[[type=not
+tiles
+	tiles ifNil: [ tiles := OrderedCollection new ].
+	^ tiles
+]]]
 
 !!! Guideline: Avoid prefixing with set public accessors
 
@@ -841,7 +863,7 @@ tiles: aCollection
 	tiles := aCollection 
 ]]]
 over
-[[[type=prefer
+[[[type=not
 setTiles: aCollection
 	tiles := aCollection 
 ]]]
