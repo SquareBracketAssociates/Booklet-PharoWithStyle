@@ -2030,6 +2030,183 @@ While using ==super== often does not break your code, it may because if you have
 So always be suspicious when you read or write such kind of code.
 
 
+
+
+
+!! Use Patterns
+
+In this chapter we present some points about existing libraries or functionality that are often misunderstood and lead to code of lesser quality.
+
+!!! Transcript: A misunderstood object
+
+we present why ==Transcript== can be really badly used. We present that with some simple care we can develop modular solutions that are flexible and can take advantages of using ==Transcript== without the inconvenients. 
+Let us imagine that you still want to log strings.
+
+!!! First simple case
+
+==Transcript== is a kind of stdout on which you can write some strings outputs. It is cheap. The class exposes a stream-based API (and this is a really important design point as we will see in the future).
+
+Here is a typical not really good use of ==Transcript==
+
+[[[
+myMethod
+    Transcript show: 'foo' ; cr  
+]]]
+
+It is bad because it hardcodes a reference to ==Transcript== while Pharo proposes some helpers methods such as ==traceCr:==.
+
+[[[
+myMethod
+   self traceCr: 'foo'
+]]]
+
+Some developers may think that this is not important but it can help you if one day you want to control the logging and for example use an object with the same API but to do something else. So avoid hardcoding globals. But there is more. 
+
+!!! The real concern
+
+The problem amongst others is that Transcript is a singleton and in fact an UGLY global variable. Once you use it for real in your code, you basically killed the modularity of your program and the only thing that you can do is to hope that nothing bad can happen.
+
+Let us look at a concrete simple case. The microdown Parser came (yes we removed this) with a simple method named closeMe:
+
+[[[
+MicAbstractBlock >> closeMe
+	
+    Transcript << 'Closing ' << self class name; cr; endEntry
+]]]
+
+So this method is producing a little trace so that the parser developer could understand what was happening. So you can think that this is ok.
+
+There are two main problems:
+- First what if you want to deploy your application in a system where you do not want at all to get Transcript its class and all its family. I'm thinking for example about people producing minimal images.
+- Second, when Pharo is built on Jenkins all the tests are executed because we love tests. And this Transcript expression produces dirt on the build log. You do not want to have read such trace when you are trying to understand why the build is not working.
+
+[[[
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicCodeBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicHeaderBlock
+Closing MicListItemBlock
+Closing MicListItemBlock
+Closing MicOrderedListBlock
+]]]
+
+Now let us see the good way to have a log and be able to unplug it.
+
+!!! Encapsulation to the rescue
+
+The solution is really simple. Just use object-oriented programming and encapsulation. To support the Parser developer, we can simply add a stream to the class.
+
+For example we define a new variable to and initialize it to a write stream.
+
+[[[
+Object subclass: #MicAbstractBlock
+	instanceVariableNames: 'parent children parser logStream'
+	classVariableNames: ''
+	package: 'Microdown-Model'
+]]]
+
+[[[
+MicAbstractBlock >> initialize
+	super initialize. 
+	children := OrderedCollection new.
+   logStream := WriteStream on: (String new: 1000)
+]]]
+
+Then we can rewrite the method closeMe as follows
+
+[[[
+MicAbstractBlock >> closeMe
+	logStream << 'Closing ' << self class name; cr
+]]]
+
+Then we can provide a simple setter method so that the developer can set for example the Transcript as a stream to write to. 
+
+[[[
+MicAbstractBlock >> logStream: aStream 
+	logStream := aStream
+]]]
+
+
+!!! When instance creation is delicate
+
+If we do not control the creation of instances of the class using the stream, we will have difficulties to configure it with the correct stream.
+So if you want to be able to configure the class to use a different logger, we should define a class variable so that we can send message to the class and at initialization time, we can take the value from the class variable instead of hardcoding the WriteStream.
+
+Here is a sketch to illustrate the idea. 
+
+We add a class variable ==DefaultStream== to the class. 
+
+[[[
+Object subclass: #MicAbstractBlock
+	instanceVariableNames: 'parent children parser logStream'
+	classVariableNames: 'DefaultStream'
+	package: 'Microdown-Model'
+]]]
+
+We define one setter. This is using this setter that we will be able to say to the system that for a given execution
+it should write to the ==Transcript==: for example doing ==MicAbstractBlock logStream: Transcript==.
+
+[[[
+MicAbstractBlock class >> logStream: aStream 
+	DefaultStream := aStream
+]]]
+
+We make sure that the class variable is initialized to a default stream. 
+Now we do it in way that we can later reset the stream to such default stream.
+
+[[[
+MicAbstractBlock class >> reset
+	self logStream: (WriteStream on: (String new: 1000))
+]]]
+
+Here we hardcode the stream and alternate solution that extract this expression in a separate messages if it makes sense
+for subclass to specialize.
+
+[[[
+MicAbstractBlock class >> initialize
+	self reset
+]]]
+
+And we will be able to reset the default solution either by reinitializing the class ==MicAbstractBlock initialize== or 
+==MicAbstractBlock logStream: MicAbstractBlock defaultValueForStream==
+
+Now we make sure that the instance creation uses the default stream hold by the class.  
+
+[[[
+MicAbstractBlock >> initialize
+	super initialize. 
+	children := OrderedCollection new.
+   logStream := DefaultStream
+]]]
+
+The net result is that we have the control and we can decide what is happening. In addition we can write tests to make sure that the logging is correct. Because using Transcript makes this a brittle exercise since someone else may write to the Transcript when you do not expect it. 
+
+!!! Conclusion
+
+==Transcript== is not bad per se. But it promotes bad coding practices. Developers should stop listening to the sirens of easy and cheap global variables. With a little bit of care and a limited infrastructure is to possible to get the best of both worlds: modular objects and taking advantages of the existing infrastructure whose ==Transcript== belongs to. 
+
+
+
+
+
+
+
+
 !! Conclusion
 
 Remember that you write code once and will read it a thousand times.
