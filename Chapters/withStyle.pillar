@@ -2200,6 +2200,8 @@ The net result is that we have the control and we can decide what is happening. 
 
 ==Transcript== is not bad per se. But it promotes bad coding practices. Developers should stop listening to the sirens of easy and cheap global variables. With a little bit of care and a limited infrastructure is to possible to get the best of both worlds: modular objects and taking advantages of the existing infrastructure whose ==Transcript== belongs to. 
 
+What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that 
+you have to blindly use it. You should apply sound principle and protect you some impact of changes.
 
 
 
