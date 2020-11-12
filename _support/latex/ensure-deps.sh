@@ -1,5 +1,5 @@
 #!/bin/bash
-# This file is for LaTeX 2018 and should be in sync with the travis setup. 
+# this dependency list is for LaTex 2018
 
 xargs tlmgr install <<DEPS
     ctablestack
@@ -21,11 +21,12 @@ xargs tlmgr install <<DEPS
     opensans
     pgf
     polyglossia
-    hyphen-english
+    slantsc
     tcolorbox
     tools
     trimspaces
     ulem
     varwidth
     xcolor
+    xtab
 DEPS
