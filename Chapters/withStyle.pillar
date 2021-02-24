@@ -61,7 +61,7 @@ over
 released_X
 ]]]
 
-When creating private low-level methods that bind to external C-libraries, you may wan to use underscores to follow C conventions to ease tracing back the communication between libraries.
+When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
 !!! Guideline: Use camel case
