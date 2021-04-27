@@ -1654,7 +1654,7 @@ Now you may wonder what is the problem if you inadvertly redefine new in one of 
 Game class >> new
 
 	^ super new initialize
-
+]]]
 
 In Pharo, the method ==initialize== of the class ==Game== will be invoked twice.
 
