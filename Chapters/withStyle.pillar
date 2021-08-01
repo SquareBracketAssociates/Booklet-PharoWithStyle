@@ -2140,7 +2140,7 @@ printProtocol: protocol sourceCode: sourceCode
 			nextPutAll: sourceCode ]	
 ]]]
 
-What you should see is that a stream is created and then another stream is created and discarded with the ==protocol printString==.
+What you should see is that a stream is created and then another stream is created and discarded with the expression ==protocol printString==.
 A better implementation is the following using ==print:==.
 
 [[[type=prefer
