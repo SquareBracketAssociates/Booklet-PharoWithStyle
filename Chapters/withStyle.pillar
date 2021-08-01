@@ -1804,7 +1804,7 @@ depth:aNode
 Putting parentheses around a variable does not produce an array, it has no effect. 
 Do not confuse parentheses and curly braces. Curly braces is a shortcut to produce an array with the elements they surround: =={ a }== produces an array with one element whose value is the value held by the variable ==a== as shown by the examples below.
 
-TIn this code snippet, =={}== creates an array. 
+In this code snippet, =={}== creates an array. 
 [[[
 | a |
 a := 12.  
