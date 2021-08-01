@@ -2058,7 +2058,7 @@ aPerson displayString
 
 !!! Guideline: About ==printString==
 Let us take a moment to step back about stream usage in ==printOn:== methods.
-The ==printString== method creates a stream and passes this string as argument of the ==printOn:== method as shown below:
+The ==printString== method creates a stream and passes this stream as argument of the ==printOn:== method as shown below:
 
 [[[
 Object >> printString
