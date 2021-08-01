@@ -2036,7 +2036,7 @@ So always be suspicious when you read or write such kind of code.
 Stream usage in the case of printing objects may be sometimes confusing. 
 In this chapter we clarify some of pitfalls.
 
-!!! ==printString== vs. ==displayString==
+!!! Guideline: ==printString== vs. ==displayString==
 
 Newcomers are often confused between ==printString== and ==displayString== and their counterparts ==printOn:== and ==displayStringOn::==.
 
@@ -2056,7 +2056,7 @@ aPerson displayString
 ]]]
 
 
-!!! About ==printString==
+!!! Guideline: About ==printString==
 Let us take a moment to step back about stream usage in ==printOn:== methods.
 The ==printString== method creates a stream and passes this string as argument of the ==printOn:== method as shown below:
 
@@ -2125,7 +2125,7 @@ Stream >> print: anObject
 
 Pay attention, sending the ==printString== message is often wrong and it is the duties of the system to do it.
 
-!!! Unnecessary stream creation
+!!! Guideline: Unnecessary stream creation
 Unnecessary stream creation can happen in other situations than ==printString==.
 Here is an example taken from Pharo. 
 
@@ -2155,7 +2155,7 @@ printProtocol: protocol sourceCode: sourceCode
 ]]]
 
 
-!!! printString vs. asString
+!!! Guideline: ==printString== vs. ==asString==
 
 Another difficulty you may encounter is to see the difference between ==printString== and ==asString==.
 
@@ -2273,7 +2273,9 @@ Now let us see the good way to have a log and be able to unplug it.
 
 !!! Encapsulation to the rescue
 
-The solution is really simple. Just use object-oriented programming and encapsulation. To support the Parser developer, we can simply add a stream to the class.
+The solution is really simple.
+Just use object-oriented programming and encapsulation.
+To support the Parser developer, we can simply add a stream to the class.
 
 For example we define a new variable to and initialize it to a write stream.
 
@@ -2291,7 +2293,7 @@ MicAbstractBlock >> initialize
    logStream := WriteStream on: (String new: 1000)
 ]]]
 
-Then we can rewrite the method closeMe as follows
+Then we can rewrite the method ==closeMe== as follows
 
 [[[
 MicAbstractBlock >> closeMe
