@@ -2369,11 +2369,35 @@ The net result is that we have the control and we can decide what is happening. 
 What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that 
 you have to blindly use it. You should apply sound principle and protect you some impact of changes.
 
+!!! About error
 
+One question that you can ask yourself is which one of the two following situation is the best:
 
+- Case one. Using the expression ==self error: 'Oh no!'== and defining the method ==error:== in your class (or calling)
+- Case two. Using the expression ==Error signal: 'Oh no!'==
 
+The case one is better.
+As general principle, defining a method and sending a message is often better because sending self-send messages create hooks that your subclasses can take advantage of. 
 
+For example imagine the following situation
 
+[[[
+MyClass >> ohNoError
+	Error signal: 'Oh no!'
+]]]
+
+[[[
+MyClass >> ohNoErrorUser
+	x isSomethingBad
+		ifTrue: [ self error: 'Oh no!' ]
+]]]
+
+Then you can redefine ==ohNoError== in your subclass.
+
+[[[
+MyClassSubclass >> ohNoError
+	Error signal: 'Oh no! Really no!'
+]]]
 
 !! Conclusion
 
