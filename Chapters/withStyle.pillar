@@ -13,7 +13,7 @@ We got influenced by the excellent little book called ''Smalltalk with Style''. 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
+Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
 S. Ducasse - 12 August 2019.
 
 
@@ -1611,7 +1611,7 @@ The following snippets shows the difference in execution on large concatenations
 !! Object initialization
 
 One key responsibility for a class is to initialize correctly the instance it creates.
-This avoids to place the burdend on clients of such objects.
+This avoids to place the burden on clients of such objects.
 In this chapter we will present some patterns to initialize objects.
 
 
@@ -1628,7 +1628,7 @@ Indeed if the clients forget to send the expression ==turn:==, the game logic ma
 Game new turn: 0
 ]]]
 
-Therefore when you want to initialize the state of yoru object, simply redefine 
+Therefore when you want to initialize the state of your object, simply redefine 
 
 [[[type=prefer
 Game >> initialize
@@ -2136,7 +2136,7 @@ MessageTally >> displayStringOn: aStream
 		nextPutAll: ')'
 ]]]
 
-This is clearly counter productive.
+This is clearly counterproductive.
 It is much better to send the message ==print:== to the stream or ==printOn:== to the instance variable it as follows: 
 
 [[[type=prefer
@@ -2212,7 +2212,7 @@ Sending the message ==asString== to the symbol ==#foo== converts it to a string.
 >>> 'foo'
 ]]]
 
-The situation is the same for strings but it can be a bit more destabilizing
+The situation is the same for strings but it can be a bit more destabilizing.
 The conversion of a string to a string is the string itself.
 [[[	
 'foo' asString 
