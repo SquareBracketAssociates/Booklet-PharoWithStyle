@@ -1171,7 +1171,8 @@ You may want to include implementation-dependent, or platform specific idiosyncr
 
 !! About code formatting
 
-Code formatting improves code comprehension.
+Code formatting improves code comprehension. 
+A reader gets used to regular formatting.
 Again follow the conventions.
 
 !!! Guideline: Be consistent
@@ -1179,6 +1180,17 @@ Again follow the conventions.
 One important guideline when writing code is to follow conventions and in addition to be consistent.
 Systematically apply a formatting style.
 Keep the violations to conventions to a minimum.
+
+This applies at all levels: 
+- Class names,
+- Method names,
+- Instance variable names, 
+- Method body, and
+- Comments.
+
+Inconsistencies will break the reading flow and understanding of code. 
+Inconsistencies often indicates that different developers touch the code
+and they may also be the source of bugs or indicate difficult places in the code.
 
 
 !!! Guideline: Use the general method template
@@ -1210,7 +1222,7 @@ addLast: newObject
 
 
 
-Do not let space before the first word of the comment, align comment with method body, make sure that the reader can identify the beginning of the method body by using an empty line.
+Do not let space before the first word of the comment, align comment with method body, make sure that the reader can identify the beginning of the method body by placing an empty line between the method signature and the method body.
 
 Prefer the following 
 [[[type=prefer
@@ -1222,7 +1234,7 @@ collectionNotIncluded
 
 over:
 [[[type=not
-collectionNotIncluded
+ collectionNotIncluded
 " return a collection for wich each element is not included in 'nonEmpty' "
 	^ collectionWithoutNil 
 ]]]
@@ -1414,6 +1426,7 @@ paragraph
 
 Help the reader to understand control flow logic of your code by using indentation.
 
+Prefer
 [[[type=prefer
 size
 	"Returns size of a tree - number of nodes in a tree"
@@ -1430,6 +1443,27 @@ size
 	ifTrue: [ ^0 ].
 	^self size: self root.
 ]]]	
+
+
+And prefer 
+[[[type=not
+depth: aNode
+	"Returns depth of a tree starting from the given node"
+
+	| leftDepth rightDepth |
+	leftDepth := -1.
+	aNode leftChild isNotNil 
+		ifTrue: [ leftDepth := self depth: aNode leftChild ].
+	rightDepth := -1.
+	aNode rightChild isNotNil 
+		ifTrue: [ rightDepth := self depth: aNode rightChild ].	
+	leftDepth > rightDepth
+		ifTrue: [ ^ 1 + leftDepth ]
+		ifFalse: [^ 1 + rightDepth ].
+]]]	
+
+Over the terribly unreadable
+
 
 [[[type=not
 depth:aNode
