@@ -14,106 +14,26 @@ Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
 Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
-S. Ducasse - 12 August 2019.
+S. Ducasse - 12 February 2022.
 
 
 !! General naming conventions
 
-Names are important. We will never repeat it enough.
-A good name is often driven by a domain.
+In this chapter we will start with guidelines about names.
 
-!!! Guideline:  Favor simple direct meaning 
+Indeed names are important. And using ''good'' names are the cornerstone of writing good software. We will never repeat it enough.
+
+Now finding a good name is often driven by a domain or an ecosystem.
+In addition, names are also about format and should follow conventions used within the community.
+
+
+!!! Guideline:  Favor simple direct meaning
 
 Some native English writers use often more precise but less common terms.
 Consider that your software may be read by people from different cultures. So use simple, mainstream, and common terms. Note that this is does not mean that you should not use precise terms.
 Avoid hidden or implied meanings that can only be understood by a limited group of people. 
 Make information explicit and clear.
 
-!!! Guideline: Avoid underscores and favor camel case
-
-The form is also important. 
-Following the form promoted by a complete ecosystem will make your software more readable and acceptable by Pharoers.
-Pharo and all its ecosystem is using camel case for class, variable, and method names, therefore avoid underscores and use camel case.
-
-Prefer
-[[[type=prefer
-timeOfDay
-]]]
-
-over 
-[[[type=not
-Not timeofday
-Not time_of_day
-]]]
-
-Prefer
-[[[type=prefer
-GnatXmlNode
-]]]
-over 
-[[[type=not
-Not GNAT_XML_Object
-]]]
-
-Prefer
-[[[type=prefer
-releasedX
-]]]
-over 
-[[[type=not
-released_X
-]]]
-
-When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries.
-In such a case, limit your use to carefully thought cases.
-
-!!! Guideline: Use camel case
-
-Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
-
-[[[
-| MaxLimit maxLimit |
-MaxLimit := 10.
-maxLimit := 20.
-MaxLimit
->>> 10
-]]]
-
-Still, Pharo favors camel case, so use it systematically for words.
-Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
-
-For local variables, method parameters and instance variables, use
-[[[type=prefer
-maxLimit
-]]]
-instead of
-[[[type=not
-Not maxlimit
-Not MAXLIMIT
-]]]
-
-
-For classes, or shared variables, use 
-[[[type=prefer
-OrderedCollection
-MaxLimit
-]]]
-instead of 
-[[[type=not
-Not ORDEREDCOLLECTION
-Not MAXLIMIT
-]]]
-
-@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
-
-Prefer
-[[[type=prefer
-superclass
-]]]
-over
-[[[type=not
-Not superClass
-]]]
 
 !!! Guideline: Use descriptive names
 
@@ -151,6 +71,7 @@ not eMenu
 
 Non-English native speakers often misplace word qualifiers. 
 In English the qualifier is often before the word it qualifies.
+In Pharo we follow such a convention.
 
 Prefer
 [[[type=prefer
@@ -160,6 +81,13 @@ over
 [[[type=not
 Not ParserForDate
 ]]]
+
+or
+
+[[[type=not
+Not ParserDate
+]]]
+
 
 Prefer
 [[[type=prefer
@@ -186,27 +114,6 @@ For example, ''Did you read that book? ... Yes, I read it yesterday.''
 About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
 Favor words with unique pronunciation.
 
-!!! Guideline: Method selectors start with lowercase
-
-Prefer
-[[[type=prefer
-getMethodsNamesFromAClass: aClass
-	| methodsNames |
-	methodsNames := aClass selectors.
-	methodsNames do: [ :each | names add: each ]
-]]]
-
-over
-[[[type=not
-GetMethodsNamesFromAClass: aClass
-	| methodsNames |
-	methodsNames := aClass selectors.
-	methodsNames do: [ :each | names add: each ]
-]]]
-
-Also, in this example the method selector is not good because method names are called selectors in Pharo.
-In addition in English ==methodsNames== should be written ==methodNames==.
-It should be ==gatherSelectorsFrom:== or something similar.
 
 
 
@@ -236,6 +143,160 @@ Hence ==GnatXmlNode== is much better than ==GnatXmlObject==.
 Another example is the following:  In Moose, an importer is an object creating FAMIX entities (classes, methods, etc.) from the data structure representing a language element, usually an Abstract Syntax Tree (AST). 
 Therefore ==GNATInstaller==, which creates entities from an AST, should be renamed ==GnatImporter==
 and ==GNATImporter==, which loads an AST in memory should be renamed ==GnatASTLoader==.
+
+
+
+!!! Guideline: Favor unique meaning and pronunciation
+
+Choose names that have a unique meaning.
+Avoid homographs.
+
+Prefer
+[[[type=prefer
+sizeToRead 
+sizeJustRead
+]]]
+
+[[[type=not
+Not readSize
+]]]
+
+Does this mean that the size was just read (red) or is it the size to read (reed)?
+
+
+
+!!! Guideline: Avoid name collisions
+
+To avoid name space collisions, add a prefix indicative of the project to the name of the class.
+
+[[[
+PRDocument
+CmdMessage
+]]]
+
+@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
+Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
+
+!!! Guideline: Do not use plural for class names
+
+A class often has many instances, still it is really awkwark to have class ending with S.
+
+[[[
+
+]]] 
+
+
+
+
+
+!!! Conclusion
+
+Finding a good name is often difficult. 
+
+A good way to find good names is to write unit tests. 
+Unit tests
+
+
+
+!! About format
+
+While in the previous chapter we focused on names, this chapter focuses on the form or format of names. 
+
+
+!!! Guideline: Avoid underscores and favor camel case
+
+The form or format of names is also important. 
+Following the form promoted by a complete ecosystem will make your software more readable and acceptable by Pharoers.
+
+Pharo and all its ecosystem is using camel case for class, variable, and method names, therefore avoid underscores and use camel case.
+
+Prefer
+[[[type=prefer
+timeOfDay
+]]]
+
+over 
+[[[type=not
+Not timeofday
+Not time_of_day
+]]]
+
+Prefer
+[[[type=prefer
+GnatXmlNode
+]]]
+over 
+[[[type=not
+Not GNAT_XML_Object
+]]]
+
+Prefer
+[[[type=prefer
+releasedX
+]]]
+over 
+[[[type=not
+Not released_X
+]]]
+
+When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries.
+In such a case, limit your use to carefully thought cases.
+
+
+
+!!! Guideline: Use camel case
+
+Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
+
+[[[
+| MaxLimit maxLimit |
+MaxLimit := 10.
+maxLimit := 20.
+MaxLimit
+>>> 10
+]]]
+
+Still, Pharo favors camel case, so use it systematically for words.
+Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
+
+For local variables, method parameters and instance variables, use
+[[[type=prefer
+maxLimit
+]]]
+instead of
+[[[type=not
+Not maxlimit
+Not MAXLIMIT
+]]]
+
+For classes, or shared variables, use 
+[[[type=prefer
+OrderedCollection
+MaxLimit
+]]]
+instead of 
+[[[type=not
+Not ORDEREDCOLLECTION
+Not MAXLIMIT
+]]]
+
+@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
+
+Prefer
+[[[type=prefer
+superclass
+]]]
+over
+[[[type=not
+Not superClass
+]]]
+
+
+
+
+
+
+
 
 
 !!! Guideline:  Shared variables start with uppercase 
@@ -283,23 +344,6 @@ over
 [[[ 
 | dataset pca scaled_X reduced_X |
 ]]]
-
-!!! Guideline: Favor unique meaning and pronunciation
-
-Choose names that have a unique meaning.
-Avoid homographs.
-
-Prefer
-[[[type=prefer
-sizeToRead 
-sizeJustRead
-]]]
-
-[[[type=not
-Not readSize
-]]]
-
-Does this mean that the size was just read (red) or is it the size to read (reed)?
 
 
 
@@ -349,17 +393,33 @@ Not DynamicWidgetChange
 ]]]
 
 
-!!! Guideline: Avoid name collisions
 
-To avoid name space collisions, add a prefix indicative of the project to the name of the class.
 
-[[[
-PRDocument
-CmdMessage
+
+!!! Guideline: Method selectors start with lowercase
+
+Prefer
+[[[type=prefer
+getMethodsNamesFromAClass: aClass
+	| methodsNames |
+	methodsNames := aClass selectors.
+	methodsNames do: [ :each | names add: each ]
 ]]]
 
-@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
-Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
+over
+[[[type=not
+GetMethodsNamesFromAClass: aClass
+	| methodsNames |
+	methodsNames := aClass selectors.
+	methodsNames do: [ :each | names add: each ]
+]]]
+
+Also, in this example the method selector is not good because method names are called selectors in Pharo.
+In addition in English ==methodsNames== should be written ==methodNames==.
+It should be ==gatherSelectorsFrom:== or something similar.
+
+
+
 
 
 
@@ -546,11 +606,22 @@ Note that you can also use ==count== instead of ==numberOf== as in the following
 	tireCount
 ]]]
 
+
+
+
+
+
+
+
+
+
 !! About method names
 
 Method names in Pharo are called selectors.
 They are used in messages and are the main vehicle to convey adequate meaning.
 The correct use of words and design of selectors is important.
+
+
 
 
 !!! Guideline: Choose selectors to form short sentences
@@ -1498,13 +1569,13 @@ This argument is the object that is not nil.
 
 For example, 
 [[[
-self doThat ifNotNil: [ :that | self doSomethingWith: that ]
+self doAndReturnThat ifNotNil: [ :that | self doSomethingWith: that ]
 ]]]
 
 is better than: 
 [[[
 | that |
-that := self doThat.
+that := self doAndReturnThat.
 that ifNotNil: [self doSomethingWith: that]
 ]]]
 
@@ -1515,8 +1586,8 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 
 
 
-!!! Guideline: Move returns outside branches
-When two branches of a condition are returning a value, better move the return  out of the blocks.
+!!! Guideline: Move return outside branches
+When two branches of a condition are returning a value, better move the return out of the blocks.
 
 
 Prefer
