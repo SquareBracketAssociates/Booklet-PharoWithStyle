@@ -418,11 +418,6 @@ over
 ]]]
 
 
-
-
-
-
-
 !!! Guideline: Method selectors start with lowercase
 
 Prefer
@@ -446,7 +441,12 @@ In addition in English ==methodsNames== should be written ==methodNames==.
 It should be ==gatherSelectorsFrom:== or something similar.
 
 
+!!! Conclusion
 
+This is a bit obvious but as a developer you should follow language conventions. 
+This is not because Pharo is permissive that you should bend the rules. 
+Doing so will only confuse you and other developers. So use camel case. 
+Remember private or local variables starts with a lower case letter, while class, class variables starts with an uppercase letter.
 
 
 
@@ -777,11 +777,9 @@ Not display: anObject using: aMedium
 
 !!! Guideline: Indicate return types
 
-When a method is returning an object (different from the receiver) and that this object is not polymorphic 
-with the receiver it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
+When a method is returning an object (different from the receiver) and that this object is not polymorphic with the receiver it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
 
-For example, the method ==characterSeparatorMethodSignatureFor:== of the pretty printer did not return 
-a character but a block as shown below:
+For example, the method ==characterSeparatorMethodSignatureFor:== of the pretty printer did not return a character but a block as shown below:
 
 [[[type=not
 characterSeparatorMethodSignatureFor: aMethodNode
@@ -795,7 +793,7 @@ Favor ==characterSeparatorMethodSignatureBlockFor:== over ==characterSeparatorMe
 when the method returns block and not a character as ==characterSeparatorMethodSignatureFor:== indicates. 
 
 A much better design is to rewrite this method and its users to use a character. 
-Returning a block in such situation is overkill and it hampers reusing the method without being forced to send a message.
+Returning a block in such a situation is overkill.
 
 The following method is corresponding to its name.
 [[[type=prefer
@@ -913,8 +911,6 @@ BinaryNode >> root: rootNode
 Note that we do not need to comment a basic setter.
 
 
-
-
 For lazy initialization:
 [[[type=prefer
 tiles
@@ -932,7 +928,7 @@ Put accessors in the =='accessing'== protocols.
 When you have accessors doing extra work place them in a separate protocols to stress their difference.
 
 
-!!! Guideline: Avoid return in lazy block
+!!! Guideline: Avoid return in lazy blocks
 
 You may want to use accessors to implement lazy initialization: the instance variable is initialized only if needed by checking if its value is nil.
 
@@ -956,7 +952,7 @@ tiles
 	^ tiles
 ]]]
 
-!!! Guideline: Avoid prefixing with set public accessors
+!!! Guideline: Avoid prefixing setters with set
 
 Some developers may be tempted to name setter methods by prefixing
 the variable name 
@@ -1159,7 +1155,7 @@ day
 	^ day
 ]]]
 
-!!! Guideline: Avoid relying on a comment to explain what can be reflected in code
+!!! Guideline: Good comment do not paraphrase code
 
 Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
 
@@ -1262,8 +1258,6 @@ Internal Representation and Key Implementation Points.
 
 Implementation Points
 ]]]
-
-
 
 !!! Guideline: Comment the unusual
 
