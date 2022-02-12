@@ -169,7 +169,8 @@ Does this mean that the size was just read (red) or is it the size to read (reed
 
 To avoid name space collisions, add a prefix indicative of the project to the name of the class.
 
-[[[
+Prefer
+[[[type=prefer
 PRDocument
 CmdMessage
 ]]]
@@ -179,22 +180,35 @@ Note, however, that even with a namespace you will have to pay attention that yo
 
 !!! Guideline: Do not use plural for class names
 
-A class often has many instances, still it is really awkwark to have class ending with S.
+A class often has many instances. TestCase classes are special classes where their methods are individual test. Still it is really awkwark to have class ending with S.
 
-[[[
+Prefer
+[[[type=prefer
+AthensTextRenderManualTest
+]]]
 
-]]] 
+over 
 
+[[[type=not
+AthensTextRenderManualTests
+]]]
 
+Of course some domain names ends with S, in such as case just follow the convention.
 
-
+Prefer
+[[[type=prefer
+NetworkSystemSettings
+]]]
 
 !!! Conclusion
 
 Finding a good name is often difficult. 
+However, nobody forces you to find it right upfront. 
+And you can always change a name once you find a good one.
 
 A good way to find good names is to write unit tests. 
-Unit tests
+When you write unit tests you are the first client of your code, you can then see if the names you chose let you write coherent and comprehensible little stories.
+You can explore the names you picked up and rename them.
 
 
 
@@ -370,6 +384,18 @@ over
 [[[type=not
 Not ClyQueryView
 ]]]
+
+Prefer 
+[[[type=prefer
+SpLayoutHelpTopics
+]]]
+
+over 
+[[[type=not
+Not SpLayouts
+]]]
+
+
 
 In the following, not mentioning the ==Presenter== suffix makes it unclear to the reader that it is a Presenter object as opposed to a Model object.
 
