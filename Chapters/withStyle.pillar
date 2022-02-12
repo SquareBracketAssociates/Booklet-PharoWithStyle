@@ -134,8 +134,6 @@ not GNAT_XML_Object
 ]]]
 
 
-
-
 When representing the XML Ada abstract syntax tree in Pharo, we should not follow Ada naming conventions. 
 The name should convey that the class is an abstract syntax tree node.
 Hence ==GnatXmlNode== is much better than ==GnatXmlObject==.
@@ -178,7 +176,7 @@ CmdMessage
 @@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
 Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
 
-!!! Guideline: Do not use plural for class names
+!!! Guideline: Avoid to use plural for class names
 
 A class often has many instances. TestCase classes are special classes where their methods are individual test. Still it is really awkwark to have class ending with S.
 
@@ -199,6 +197,66 @@ Prefer
 [[[type=prefer
 NetworkSystemSettings
 ]]]
+
+!!! Guideline: Class names should indicate the class' parent
+
+Suffix class names with the root class to convey the kind of object we are talking about. 
+
+For example, without the ==Morph== suffix, the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
+
+Prefer
+[[[type=prefer
+ClyBrowserButtonMorph
+]]]
+over 
+[[[type=not
+Not ClyBrowserButton
+]]]
+
+Prefer
+[[[type=prefer
+ClyQueryViewMorph
+]]]
+over
+[[[type=not
+Not ClyQueryView
+]]]
+
+Prefer 
+[[[type=prefer
+SpLayoutHelpTopics
+]]]
+
+over 
+[[[type=not
+Not SpLayouts
+]]]
+
+
+
+In the following, not mentioning the ==Presenter== suffix makes it unclear to the reader that it is a Presenter object as opposed to a Model object.
+
+Prefer
+[[[type=prefer
+ApplicationWithToolBarPresenter
+]]]
+over
+[[[type=not
+Not ApplicationWithToolbar
+]]]
+
+In the next example, ==DynamicWidgetChange== does not convey that this is not a ''domain'' object representing a change, but a ==Presenter== object in the Model-View-Presenter triad:
+
+[[[type=prefer
+DynamicWidgetChangePresenter
+]]]
+over
+[[[type=not
+Not DynamicWidgetChange
+]]]
+
+
+
 
 !!! Conclusion
 
@@ -360,63 +418,6 @@ over
 ]]]
 
 
-
-!!! Guideline: Class names should indicate the class' parent
-
-Suffix class names with the root class to convey the kind of object we are talking about. 
-
-For example, without the ==Morph== suffix, the reader is forced to check the superclass to understand if the class is about a graphical object or not. 
-
-Prefer
-[[[type=prefer
-ClyBrowserButtonMorph
-]]]
-over 
-[[[type=not
-Not ClyBrowserButton
-]]]
-
-Prefer
-[[[type=prefer
-ClyQueryViewMorph
-]]]
-over
-[[[type=not
-Not ClyQueryView
-]]]
-
-Prefer 
-[[[type=prefer
-SpLayoutHelpTopics
-]]]
-
-over 
-[[[type=not
-Not SpLayouts
-]]]
-
-
-
-In the following, not mentioning the ==Presenter== suffix makes it unclear to the reader that it is a Presenter object as opposed to a Model object.
-
-Prefer
-[[[type=prefer
-ApplicationWithToolBarPresenter
-]]]
-over
-[[[type=not
-Not ApplicationWithToolbar
-]]]
-
-In the next example, ==DynamicWidgetChange== does not convey that this is not a ''domain'' object representing a change, but a ==Presenter== object in the Model-View-Presenter triad:
-
-[[[type=prefer
-DynamicWidgetChangePresenter
-]]]
-over
-[[[type=not
-Not DynamicWidgetChange
-]]]
 
 
 
