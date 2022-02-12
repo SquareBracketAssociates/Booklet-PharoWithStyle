@@ -25,12 +25,15 @@ A good name is often driven by a domain.
 !!! Guideline:  Favor simple direct meaning 
 
 Some native English writers use often more precise but less common terms.
-Consider that your software may be read by people from different cultures. So use simple, mainstream, and common terms.
+Consider that your software may be read by people from different cultures. So use simple, mainstream, and common terms. Note that this is does not mean that you should not use precise terms.
 Avoid hidden or implied meanings that can only be understood by a limited group of people. 
-Make information explicit.
-
+Make information explicit and clear.
 
 !!! Guideline: Avoid underscores and favor camel case
+
+The form is also important. 
+Following the form promoted by a complete ecosystem will make your software more readable and acceptable by Pharoers.
+Pharo and all its ecosystem is using camel case for class, variable, and method names, therefore avoid underscores and use camel case.
 
 Prefer
 [[[type=prefer
@@ -361,6 +364,9 @@ Note, however, that even with a namespace you will have to pay attention that yo
 
 
 
+
+
+
 !! About variable names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
@@ -540,7 +546,7 @@ Note that you can also use ==count== instead of ==numberOf== as in the following
 	tireCount
 ]]]
 
-!! Selectors
+!! About method names
 
 Method names in Pharo are called selectors.
 They are used in messages and are the main vehicle to convey adequate meaning.
@@ -610,7 +616,7 @@ triggerOptimization
 
 This is why using ==beOptimized== would be better than a simple ==optimized== and why ==isOptimized== is better for the interrogative form.
 
-!!! Guideline: Prefix with as for conversion
+!!! Guideline: Prefix selector with as for conversion
 
 When converting an object to another one, the convention is to prefix the class name of the target with ==as==.
 
