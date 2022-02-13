@@ -21,10 +21,12 @@ S. Ducasse - 12 February 2022.
 
 In this chapter we will start with guidelines about names.
 
-Indeed names are important. And using ''good'' names are the cornerstone of writing good software. We will never repeat it enough.
+Indeed names are important. And using ''good'' names are the cornerstone of writing good software. This is true in any language. We will never repeat it enough.
 
-Now finding a good name is often driven by a domain or an ecosystem.
-In addition, names are also about format and should follow conventions used within the community.
+Now finding a good name is sometimes difficult. 
+To help good names are often driven by a domain or an ecosystem.
+Finally, the object-oriented programming paradigm gives some context that are useful:
+For example the "Don't ask, tell" motto favor active and direct orders for method names.
 
 
 !!! Guideline:  Favor simple direct meaning
@@ -256,9 +258,6 @@ over
 [[[type=not
 Not DynamicWidgetChange
 ]]]
-
-
-
 
 !!! Conclusion
 
