@@ -38,32 +38,34 @@ Make information explicit and clear.
 !!! Guideline: Use descriptive names
 
 Choose descriptive names that capture domain entities unambiguously.
+Avoid cryptic names. Characters are cheap so do not count them.
+If you are slow to type then use completion engine. 
 
 Prefer
 [[[type=prefer
-timeOfDay
+dayOfWeek
 ]]]
 over 
 [[[type=not
-Not tod
+Not dow
 ]]]
 
 Prefer
 [[[type=prefer
-milliseconds
+seconds
 ]]]
 over
 [[[type=not
-not mil
+Not sec
 ]]]
 
 Prefer
 [[[type=prefer
-editMenu
+copyMenu
 ]]]
 over
 [[[type=not
-not eMenu
+Not cMenu
 ]]]
 
 
@@ -371,7 +373,7 @@ Not superClass
 
 
 
-!!! Guideline:  Shared variables start with uppercase 
+!!! Guideline: Shared variables start with uppercase 
 
 Begin class names, global variables, pool variables, and class variables with an uppercase letter.
 If the word is compound, then use use camel case for the rest.
@@ -382,7 +384,7 @@ Transcript 	"global variable"
 PackageGlobalOrganizer	"class variables"
 ]]]
 
-!!! Guideline:  Private variables start with lowercase 
+!!! Guideline: Private variables start with lowercase 
 
 Begin instance variables, temporary variables, method parameters, and method selectors with lower case. 
 If the word is compound, then use camel case for the rest.
@@ -447,6 +449,10 @@ This is a bit obvious but as a developer you should follow language conventions.
 This is not because Pharo is permissive that you should bend the rules. 
 Doing so will only confuse you and other developers. So use camel case. 
 Remember private or local variables starts with a lower case letter, while class, class variables starts with an uppercase letter.
+
+
+
+
 
 
 
@@ -775,7 +781,7 @@ Not display: anObject using: aMedium
 ]]]
 
 
-!!! Guideline: Indicate return types
+!!! Guideline: Indicate returned type
 
 When a method is returning an object (different from the receiver) and that this object is not polymorphic with the receiver it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
 
@@ -1259,11 +1265,14 @@ Internal Representation and Key Implementation Points.
 Implementation Points
 ]]]
 
+
 !!! Guideline: Comment the unusual
 
 When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment it.
+
 In general comments should make irregular and unusual aspects clearer.
 You may want to include implementation-dependent, or platform specific idiosyncrasies.
+
 
 
 
