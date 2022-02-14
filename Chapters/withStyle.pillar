@@ -2527,7 +2527,9 @@ anObject use: [ ... body of a long block ... ]
 
 
 
+!!! Guideline: Exception catch must not be empty
 
+Stef here.
 
 
 
