@@ -73,7 +73,12 @@ Not cMenu
 
 !!! Guideline: Pay attention to meaning
 
-Non-English native speakers often misplace word qualifiers. 
+Pharo uses english as main language. 
+It looks strange to mention it but this has some implications. 
+We should pay attention to two mistakes that non native english speakers tend to do: first the adjective inversion and second keeping the plural form during inversion of composition (using of).
+
+!!!!! Adjective inversion
+Non-English native speakers often misplace word  qualifiers (adjective). 
 In English the qualifier is often before the word it qualifies.
 In Pharo we follow such a convention.
 
@@ -81,7 +86,9 @@ Prefer
 [[[type=prefer
 DateParser
 ]]]
+
 over
+
 [[[type=not
 Not ParserForDate
 ]]]
@@ -103,6 +110,24 @@ over
 [[[type=not
 Not associationUser
 ]]]
+
+!!!!! No plural inside
+
+In english the names of methods can also be written method names.
+Notice that in such a situation there is no s in method.
+
+Prefer
+[[[type=prefer
+userAssociation
+]]]
+
+over
+[[[type=not
+Not usersAssociation
+]]]
+
+!!!!! Avoid homographs
+
 Compare the three following variables:
 
 [[[
@@ -165,20 +190,161 @@ Not readSize
 
 Does this mean that the size was just read (red) or is it the size to read (reed)?
 
+!!! Guideline: Limit or use abbreviations consistently
 
-
-!!! Guideline: Avoid name collisions
-
-To avoid name space collisions, add a prefix indicative of the project to the name of the class.
+Abbreviations or acronisms are often obscure to newcomers. 
+Now they are often handy so when you use them use consistently. 
 
 Prefer
 [[[type=prefer
-PRDocument
-CmdMessage
+ASTNode
 ]]]
 
-@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
-Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
+
+
+
+!!! Guideline: Avoid numbers
+It can be handy when trying something new to reuse an identifier and add to it a number. 
+Now limit such practice to your development session. 
+Indeed, a number does not help the reader to understand the difference. 
+As a general principle keeping multiple implementations of the same classes is
+a way to propose rotten code. So if you want to keep several versions then make sure
+that why several versions are kept is made clear.
+
+
+Prefer
+[[[type=prefer
+StackBasedInlineParser
+NewInlineParser
+CleanerInlineParser
+]]]
+
+over 
+
+[[[type=not
+InlineParser2
+]]]
+
+
+
+
+
+
+
+
+
+
+
+!! About class names
+
+In object-oriented programming classes play an important role. 
+They are factories of objects and as such they are important to convey the main abstractions within an application.
+
+!!! Guideline: Use direct and natural style
+
+Often classes represent objects even abstract ones. Use the names that fit the best without inventing some clunky 
+new terms. 
+
+Prefer
+[[[type=prefer
+Terminal
+]]]
+
+over
+[[[type=not
+Not PlaceToDisplayInformation
+]]]
+
+Some classes represent an action (such as Visitor) or process.
+
+[[[type=prefer
+RBReadBeforeWrittenTester
+MicHTMLWriter
+]]]
+
+Finally some may represent some state. 
+In Pharo announcements are following the convention to finish by the verb in past tense. 
+It is contradicting with english conventions but it is applied uniformly.
+
+[[[type=prefer
+IcePackageLoaded
+MCVersionSaved
+RubBoundsChanged
+]]]
+
+Avoid class name using gerund
+
+[[[type=not
+RBParsing
+OpeningFile
+]]]
+
+
+!!! Guideline: Use natural language
+When defining class names, avoid abbreviations that are not obvious, avoid shortening names and favor
+natural language.
+
+Prefer
+[[[type=prefer
+RandomNumberGenerator
+]]]
+
+over 
+
+[[[type=not
+RandNumbGen
+]]]
+
+Prefer
+[[[type=prefer
+CSVImporter
+]]]
+
+over 
+
+[[[type=not
+CSVImport
+]]]
+
+
+Prefer
+[[[type=prefer
+RemoteControl
+]]]
+
+over 
+
+[[[type=not
+RemControl
+]]]
+
+Prefer
+[[[type=prefer
+Player
+]]]
+
+over 
+
+[[[type=not
+BoardMan
+]]]
+
+!!! Guideline: Do not expose implementation 
+A class name should not expose the implementation the class uses. 
+This is important because implementation may change in the future.
+
+Prefer
+[[[type=prefer
+PropertyName
+ContactBook
+]]]
+
+over 
+
+[[[type=not
+PropertyNameString
+ContactDictionary
+]]]
 
 !!! Guideline: Avoid to use plural for class names
 
@@ -201,6 +367,21 @@ Prefer
 [[[type=prefer
 NetworkSystemSettings
 ]]]
+
+!!! Guideline: Avoid name collisions
+
+To avoid name space collisions, add a prefix indicative of the project to the name of the class.
+
+Prefer
+[[[type=prefer
+PRDocument
+CmdMessage
+]]]
+
+@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
+Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
+
+
 
 !!! Guideline: Class names should indicate the class' parent
 
@@ -271,15 +452,17 @@ You can explore the names you picked up and rename them.
 
 
 
-!! About format
+!! About identifier format
 
-While in the previous chapter we focused on names, this chapter focuses on the form or format of names. 
+While in the previous chapters we focused on identifiers or class variables, this chapter focuses on the form or format of such names. Indeed writing software is about writing sentences that smootly integrate with existing ones.
+You want your program not to be identifiable from existing one. This is particularly true on multiple developer project with common code ownership. Note that even if you are working a single person project you will use existing class libraries and you do not want to have your ""ugly"" code stepping out.
 
 
 !!! Guideline: Avoid underscores and favor camel case
 
 The form or format of names is also important. 
-Following the form promoted by a complete ecosystem will make your software more readable and acceptable by Pharoers.
+Following the form promoted by a complete ecosystem will make your software more readable and acceptable by others.
+This is true in any programming language.
 
 Pharo and all its ecosystem is using camel case for class, variable, and method names, therefore avoid underscores and use camel case.
 
@@ -315,61 +498,18 @@ Not released_X
 When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries.
 In such a case, limit your use to carefully thought cases.
 
+!!! Guideline: CamelCase fully identifiers
 
-
-!!! Guideline: Use camel case
-
-Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
-
-[[[
-| MaxLimit maxLimit |
-MaxLimit := 10.
-maxLimit := 20.
-MaxLimit
->>> 10
-]]]
-
-Still, Pharo favors camel case, so use it systematically for words.
-Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
-
-For local variables, method parameters and instance variables, use
-[[[type=prefer
-maxLimit
-]]]
-instead of
-[[[type=not
-Not maxlimit
-Not MAXLIMIT
-]]]
-
-For classes, or shared variables, use 
-[[[type=prefer
-OrderedCollection
-MaxLimit
-]]]
-instead of 
-[[[type=not
-Not ORDEREDCOLLECTION
-Not MAXLIMIT
-]]]
-
-@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
+Use consistently camel case on the full length of an identifier.
 
 Prefer
 [[[type=prefer
-superclass
+readyForNextItem
 ]]]
-over
+over 
 [[[type=not
-Not superClass
+Not readyFornextitem
 ]]]
-
-
-
-
-
-
-
 
 
 !!! Guideline: Shared variables start with uppercase 
@@ -419,7 +559,60 @@ over
 ]]]
 
 
+!!! Guideline: Convey language semantics
+
+Remember ==MaxLimit==, ==maxLimit==, ==maxlimit==, and ==MAXLIMIT== are all different identifiers in Pharo. 
+
+[[[
+| MaxLimit maxLimit |
+MaxLimit := 10.
+maxLimit := 20.
+MaxLimit
+>>> 10
+]]]
+
+Still, Pharo favors camel case, so use it systematically for words.
+Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
+
+!!!!! For local variables.
+Method parameters and instance variables, use
+[[[type=prefer
+maxLimit
+]]]
+instead of
+[[[type=not
+Not maxlimit
+Not MAXLIMIT
+]]]
+
+!!!!! For classes, or shared variables. 
+Use 
+[[[type=prefer
+OrderedCollection
+MaxLimit
+]]]
+instead of 
+[[[type=not
+Not ORDEREDCOLLECTION
+Not MAXLIMIT
+]]]
+
+@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
+
+Prefer
+[[[type=prefer
+superclass
+]]]
+over
+[[[type=not
+Not superClass
+]]]
+
+
 !!! Guideline: Method selectors start with lowercase
+
+
+
 
 Prefer
 [[[type=prefer
