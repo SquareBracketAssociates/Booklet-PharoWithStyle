@@ -1797,9 +1797,27 @@ depth:aNode
 
 
 
+!!! Guideline: Declare temporary close their use
 
+Temporary variables that will only be used within the block should not be defined outside of the block
+but in the local block.
 
+Prefer
 
+[[[type=prefer
+| block |
+block := [ :arg |
+  | local | 
+  ... local ... ]
+]]]
+
+over
+
+[[[type=not
+| block local |
+block := [: arg | 
+  ... local ... ]
+]]]
 
 
 
@@ -2436,17 +2454,11 @@ at different execution point of a method.
 
 !!! Guideline: Do not change behavior of well-known message
 
-Readable code is key and resuing a local temporary variable to store different objects
-during a method execution should be avoided. 
-Creating a separate temporary does not incurr any execution cost.
-Therefore create a temporary variable instead of storing different objects inside the same variable
-at different execution point of a method.
+When reading code, developers read it in the context of core libraries and a common vocabulary and expected behavior.
+Therefore this is important not to define methods having the same name than common message but that exhibit
+different behavior. 
 
-Stef here more. 
-
-add: 
-remove: 
-includes: 
+When you define a method you can check really fast using implementors if existing libraries already defined such a message.
 
 
 !!! Guideline: Use iterators
@@ -2535,7 +2547,7 @@ anObject use: [ ... body of a long block ... ]
 
 !!! Guideline: Exception catch must not be empty
 
-Stef here.
+Exceptional behavior can be captured and controlled using ==on:do:==. Now this is 
 
 
 
