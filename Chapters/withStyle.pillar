@@ -2442,6 +2442,12 @@ Creating a separate temporary does not incurr any execution cost.
 Therefore create a temporary variable instead of storing different objects inside the same variable
 at different execution point of a method.
 
+Stef here more. 
+
+add: 
+remove: 
+includes: 
+
 
 !!! Guideline: Use iterators
 
