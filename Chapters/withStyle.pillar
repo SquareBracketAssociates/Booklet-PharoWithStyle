@@ -144,8 +144,6 @@ About ==readSize==: does this mean that the size was just read (red) or it is th
 Favor words with unique pronunciation.
 
 
-
-
 !!! Guideline: Follow domain 
 
 Follow the domain concepts and culture of the project. 
@@ -225,13 +223,8 @@ over
 InlineParser2
 ]]]
 
-
-
-
-
-
-
-
+!!! Conclusion 
+The guidelines presented so far are general. We will see that we also have guideline for classes and variables.
 
 
 
@@ -452,10 +445,16 @@ You can explore the names you picked up and rename them.
 
 
 
+
+
+
+
+
+
 !! About identifier format
 
 While in the previous chapters we focused on identifiers or class variables, this chapter focuses on the form or format of such names. Indeed writing software is about writing sentences that smootly integrate with existing ones.
-You want your program not to be identifiable from existing one. This is particularly true on multiple developer project with common code ownership. Note that even if you are working a single person project you will use existing class libraries and you do not want to have your ""ugly"" code stepping out.
+You want your program not to be identifiable from existing one. This is particularly true on multiple developer project with common code ownership. Note that even if you are working a single person project you will use existing class libraries and you do not want to have your 'ugly' code stepping out.
 
 
 !!! Guideline: Avoid underscores and favor camel case
@@ -801,15 +800,24 @@ Not labelForPerson
 Use predicate clauses or adjectives for Boolean objects or states.
 Do not use predicate clauses for non-Boolean states.
 
+Prefer
 [[[type=prefer
 alarmEnabled
+isAlarmEnabled
 ]]]
+
+over
+
+[[[
+alarm
+]]]
+
 
 !!! Guideline: Use common nouns and phrases 
 
 Use common nouns and phrases for objects that are not Boolean.
 
-[[[
+[[[type=prefer
 "In class Vehicle..."
 	numberOfTires 
 	numberOfDoors
@@ -826,7 +834,7 @@ Use common nouns and phrases for objects that are not Boolean.
 
 Note that you can also use ==count== instead of ==numberOf== as in the following example:
 
-[[[
+[[[type=prefer
 	numberOfTires
 	tireCount
 ]]]
@@ -843,8 +851,9 @@ Note that you can also use ==count== instead of ==numberOf== as in the following
 !! About method names
 
 Method names in Pharo are called selectors.
-They are used in messages and are the main vehicle to convey adequate meaning.
-The correct use of words and design of selectors is important.
+They are used in messages and are the main vehicle to convey adequate meaning to computation.
+From that perspective this is really important to use them to convey the exact meaning of the computation they perform.
+The correct use of words and design of selectors is then important.
 
 
 
@@ -1170,32 +1179,33 @@ Following K. Beck's advice, use ==setTitles:== only for private messages to init
 
 !!! Guideline: Use basic or raw to access low-level
 
-When two methods are needed for the same state variable, e.g., one returning the actual object stored and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
+When two methods are needed for the same state variable, e.g., one returning the actual stored object and one returning and raising an event, prefix the one returning the actual object with the word ==basic== or ==raw==.
 
-[[[
+[[[type=prefer
 method: aCompiledMethod
 	self basicMethod: aCompiledMethod.
 	self signal: MethodChanged
 ]]]
 
-[[[
+[[[type=prefer
 basicMethod: aCompiledMethod
 	method := aCompiledMethod
 ]]]
 
 When you have a getter that returns an object and a getter than return a different representation of the same object add a suffix
 
-[[[
+[[[type=prefer
 path
 	^ path
 ]]]
 
-[[[
+[[[type=prefer
 pathString
 	^ self path asString
 ]]]
 
 !!! Guideline: Follow conventions and idioms
+
 When designing new objects, you may mimic some practices that the system uses already with for example dictionaries, sets, etc.
 
 ""Example.""
@@ -1239,7 +1249,7 @@ Not aCollection atKey: #toto
 ]]]
 
 
-!!! Guideline: Distinguish class vs. instance selectors
+!!! Guideline: Distinguish between class and instance selectors
 
 When defining a class method, we may name it the same way as an accessor of the class.
 Such practice hampers code readability in the sense that it is difficult to identify rapidly class methods. 
@@ -1252,7 +1262,7 @@ So it's better to enrich the class method with a distinct word.
 In Pillar, annotations have parameters and the accessor method ==parameters:==. 
 Now, in some version, an instance creation method with the same name than the accessor method.
 
-Reading the code of the parser, it is not clear whether array second is a class or an instance.
+Reading the code of the parser and in particular the message ==parameters==, it is not clear whether array second is a class or an instance.
 
 [[[type=not
 annotation
@@ -1261,19 +1271,19 @@ annotation
 			[ :array | array second parameters: (array third ifNil: [ SmallDictionary new ]) ]
 ]]]
 
-To create an instance, it is better to name the method ==withParameter:==. 
+To create an instance, it is better to name the method ==newParameter:==. 
 This way we can immediately spot that the second element is a class. 
 
 [[[type=prefer
 annotation
 	^ super annotation
 		==>
-			[ :array | array second withParameters: (array third ifNil: [ SmallDictionary new ]) ]
+			[ :array | array second newParameters: (array third ifNil: [ SmallDictionary new ]) ]
 ]]]
 
 
 [[[type=prefer
-PRAbstractAnnotation class >> withParameters: aCollection
+PRAbstractAnnotation class >> newParameters: aCollection
 
 	| parameters |
 	parameters := self checkKeysOf: aCollection.
@@ -1315,7 +1325,7 @@ Do not believe people that say that methods do not need comments. Obviously here
 # obvious methods such as accessors do not need comments,
 # a good comment is not describing in English how the code executes,
 # it is better to split long methods into smaller ones with a single responsibility,
-# but a good comment is always welcome because it reinforces the understanding of the reader.
+# but a good comment is always welcomed because it reinforces the understanding of the reader.
 
 A comment should be adapted to the level of granularity (i.e., package, class, method) to which it applies.
 
@@ -1468,6 +1478,9 @@ You may want to include implementation-dependent, or platform specific idiosyncr
 
 
 
+
+
+
 !! About code formatting
 
 Code formatting improves code comprehension. 
@@ -1518,7 +1531,6 @@ addLast: newObject
 	array at: lastIndex put: newObject.
 	^ newObject
 ]]]
-
 
 
 Do not let space before the first word of the comment, align comment with method body, make sure that the reader can identify the beginning of the method body by placing an empty line between the method signature and the method body.
@@ -1761,7 +1773,7 @@ depth: aNode
 		ifFalse: [^ 1 + rightDepth ].
 ]]]	
 
-Over the terribly unreadable
+Over the terribly unreadable ==depth:aNode== method.
 
 
 [[[type=not
@@ -1779,6 +1791,18 @@ depth:aNode
 	ifTrue: [ ^ (1 + leftDepth) ]
 	ifFalse: [^ (1 + rightDepth ) ].
 ]]]	
+
+
+
+
+
+
+
+
+
+
+
+
 
 !! Powerful coding idioms
 Some coding idioms will make your code a lot clearer. 
@@ -1852,56 +1876,57 @@ stream ...
 ]]]
 
 
-!!! Guideline: Avoid , when in loop
-In Pharo string concatenations are expressed using the message ==#,==. 
+!!! Guideline: use super to invoke a method with the same selector
 
-[[[
-'Pharo' , ' with Style'
->>> 'Pharo with Style'
+==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. 
+However, ==super== is only necessary when the method you want to invoke has the same than the current one
+since using ==self== in such a case simply creates and infinite loop. 
+
+For example, the following just creates an infinite loop, since the method ==initialize== is calling itself infinitively. 
+
+[[[type=not
+initialize
+
+	self initialize.
+	self continue
 ]]]
 
-The implementation of the method is however not really efficient since it copies the underlying collection during each concatenation
-as we show below.
-The alternative is to use a write stream or to use ==streamContents:== but using a stream makes the code more complex.
-Therefore there is a key question to be answered: When is it pointless to use a  WriteStream and just use ==#,== ?
-
-
-Avoid ==\#,== when the code is in a loop or recursion, use a stream.
+This is the only case where you must use ==super== to invoke the method that cannot be reach by the method lookup when it starts from the 
+class defining the method. 
+The correct definition is then: 
 
 [[[type=prefer
-String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]]
+initialize
+
+	super initialize.
+	self continue
 ]]]
 
-Use ==\#,== when constructing error messages, class initialisation code, or situations where there is no loop.
 
-Note that in ==printOn:== methods, the argument is already a stream so we use it and avoid using message ==\#,==.
+Now there is no need to use ==super== for message that have a different selector than the method they belong to. 
+For example, there is no need to use ==super bar== in the following, since the defining method is called ==foo== and you send the message ==bar==.
 
-!!!!!Difference in speed
-The following snippets shows the difference in execution on large concatenations.
-
-[[[
-[ String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]] ] bench
->>> '551.890 per second'
+[[[type=not
+foo 
+	super bar.
+	self continue
 ]]]
 
-[[[
-[ | s |
-  s := ''.
-  1 to: 10000 do: [ :i | s := s, i asString ]  ] bench
->>> '8.465 per second'
+The correct definition is just to use ==self==.
+
+[[[type=prefer
+foo 
+	self bar.
+	self continue
 ]]]
 
-[[[
-[ String streamContents: [:s | 1 to: 1000 do: [ :i | s << i asString ]]  ] bench 
->>> '6313.137 per second'
-]]]
+While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. 
+So always be suspicious when you read or write such kind of code.
 
-[[[
-[ | s |
-  s := ''.
-  1 to: 1000 do: [ :i | s := s, i asString ]  ] bench  
->>> '967.819 per second'
-]]]
+
+
+
+
 
 
 
@@ -1992,6 +2017,40 @@ Game class >> new
 In Pharo, the method ==initialize== of the class ==Game== will be invoked twice.
 
 
+!!! Guideline: initialize does not need to return super
+
+The method ==initialize== is a method that modifies the receiver. 
+It is used by convention to initialize the default value of the receiver. 
+It is invoked by default by the message ==new==
+
+The following definition is not idiomatic:
+[[[type=not
+	initialize
+
+		default := 'no'.
+		^ super initialize
+]]]
+
+First it returns a value and this value is not really used. 
+Prefer the following definition:
+
+[[[type=prefer
+	initialize
+
+		default := 'no'.
+		super initialize
+]]]
+
+Second, the ordering implies that the first local information should be computed then 
+the one of the superclass. 
+It may happen that you need this order but it is rare so prefer the following canonical form:
+
+[[[type=prefer
+	initialize
+
+		super initialize
+		default := 'no'.
+]]]
 
 
 
@@ -2002,11 +2061,7 @@ In Pharo, the method ==initialize== of the class ==Game== will be invoked twice.
 
 
 
-
-
-
-
-!! Potential traps
+!! Potential traps: a syntactic perspective
 
 Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code. Here are some common mistakes.
 
@@ -2174,7 +2229,15 @@ m := (pca transform: xMatrix)
 
 Do not use a block as receiver of a ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:== or ==ifFalse:ifTrue:== messages.
 
-The following expressions does not work
+The following expression is the following:
+
+[[[type=prefer
+lastNode = 0 
+	ifTrue:[ lastNode := curNode ]
+	ifFalse:[ lastNode next: curNode ]
+]]]
+
+The following expressions do not work
 
 [[[type=not
 [lastNode =0] value 
@@ -2188,12 +2251,7 @@ The following expressions does not work
 	ifFalse:[ lastNode next: curNode ]
 ]]]
 
-The correct is the following
-[[[type=prefer
-lastNode = 0 
-	ifTrue:[ lastNode := curNode ]
-	ifFalse:[ lastNode next: curNode ]
-]]]
+
 
 !!! Guideline: receiver of whileTrue: is a block
 
@@ -2239,40 +2297,57 @@ aCol do: [ :node | ...]
 ]]]
 
 
-!!! Guideline: initialize does not need to return super
+!!! Guideline: Avoid , when in loop
+In Pharo string concatenations are expressed using the message ==#,==. 
 
-The method ==initialize== is a method that modifies the receiver. 
-It is used by convention to initialize the default value of the receiver. 
-It is invoked by default by the message ==new==
-
-The following definition is not idiomatic:
-[[[type=not
-	initialize
-
-		default := 'no'.
-		^ super initialize
+[[[
+'Pharo' , ' with Style'
+>>> 'Pharo with Style'
 ]]]
 
-First it returns a value and this value is not really used. 
-Prefer the following definition:
+The implementation of the method is however not really efficient since it copies the underlying collection during each concatenation
+as we show below.
+The alternative is to use a write stream or to use ==streamContents:== but using a stream makes the code more complex.
+Therefore there is a key question to be answered: When is it pointless to use a  WriteStream and just use ==#,== ?
+
+
+Avoid ==\#,== when the code is in a loop or recursion, use a stream.
 
 [[[type=prefer
-	initialize
-
-		default := 'no'.
-		super initialize
+String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]]
 ]]]
 
-Second, the ordering implies that the first local information should be computed then 
-the one of the superclass. 
-It may happen that you need this order but it is rare so prefer the following canonical form:
+Use ==\#,== when constructing error messages, class initialisation code, or situations where there is no loop.
 
-[[[type=prefer
-	initialize
+Note that in ==printOn:== methods, the argument is already a stream so we use it and avoid using message ==\#,==.
 
-		super initialize
-		default := 'no'.
+!!!!!Difference in speed
+The following snippets shows the difference in execution on large concatenations.
+
+[[[
+[ String streamContents: [:s | 1 to: 10000 do: [ :i | s << i asString ]] ] bench
+>>> '551.890 per second'
 ]]]
+
+[[[
+[ | s |
+  s := ''.
+  1 to: 10000 do: [ :i | s := s, i asString ]  ] bench
+>>> '8.465 per second'
+]]]
+
+[[[
+[ String streamContents: [:s | 1 to: 1000 do: [ :i | s << i asString ]]  ] bench 
+>>> '6313.137 per second'
+]]]
+
+[[[
+[ | s |
+  s := ''.
+  1 to: 1000 do: [ :i | s := s, i asString ]  ] bench  
+>>> '967.819 per second'
+]]]
+
 
 !!! Guideline: super is just self
 
@@ -2315,56 +2390,9 @@ foo
 ]]]
 
 
-!!! Guideline: use super to invoke a method with the same selector
-
-==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. 
-However, ==super== is only necessary when the method you want to invoke has the same than the current one
-since using ==self== in such a case simply creates and infinite loop. 
-
-For example, the following just creates an infinite loop, since the method ==initialize== is calling itself infinitively. 
-
-[[[type=not
-initialize
-
-	self initialize.
-	self continue
-]]]
-
-This is the only case where you must use ==super== to invoke the method that cannot be reach by the method lookup when it starts from the 
-class defining the method. 
-The correct definition is then: 
-
-[[[type=prefer
-initialize
-
-	super initialize.
-	self continue
-]]]
 
 
-Now there is no need to use ==super== for message that have a different selector than the method they belong to. 
-For example, there is no need to use ==super bar== in the following, since the defining method is called ==foo== and you send the message ==bar==.
-
-[[[type=not
-foo 
-	super bar.
-	self continue
-]]]
-
-The correct definition is just to use ==self==.
-
-[[[type=prefer
-foo 
-	self bar.
-	self continue
-]]]
-
-While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. 
-So always be suspicious when you read or write such kind of code.
-
-
-
-!! About ==printing== and Streams
+!! Potential traps: About ==printing== and Streams
 
 Stream usage in the case of printing objects may be sometimes confusing. 
 In this chapter we clarify some of pitfalls.
