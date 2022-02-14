@@ -2434,6 +2434,101 @@ at different execution point of a method.
 
 
 
+!!! Guideline: Do not change behavior of well-known message
+
+Readable code is key and resuing a local temporary variable to store different objects
+during a method execution should be avoided. 
+Creating a separate temporary does not incurr any execution cost.
+Therefore create a temporary variable instead of storing different objects inside the same variable
+at different execution point of a method.
+
+
+!!! Guideline: Use iterators
+
+Pharo has a large collection of really powerful iterators in its deep core. 
+Use ==do:==, ==collect:==, ==select:==, ==reject:== to start with.
+
+Prefer
+[[[type=prefer
+collection do: [ :element | ... ]
+]]]
+
+over 
+
+[[[type=not
+1 to: collection size do: [ :index | ... ]
+]]]
+
+
+
+!!! Guideline: Avoid low-level messages
+
+Pharo offers a large set of low-level messages such as ==isKindOf:==, ==isMemberOf:==, ==become:==,
+==canUnderstand:==, ==doesNotUnderstand:==, ....
+Such messages are handy for constructing tools and the infrastructure of the language. 
+However, such methods make code more complex and often more fragile.
+In addition some are mosre costly and in addition breaks basic cross-references.
+So always think if you really need to use such methods.
+
+!!! Guideline: Do not abuse blocks
+
+Blocks are powerful. They are handy because they are like anonymous methods created on the fly. 
+Avoid nest blocks and complex flow when explicit methods are possible.
+
+Prefer
+[[[type=prefer
+action1 
+	... code1
+
+action2
+	... code2
+
+some method 
+	x <y 
+		ifTrue: [ self action1 ]
+		ifFasel: [ self action2  ]
+]]]
+
+over 
+[[[type=not
+action1 := [ ... code1 ].
+action2 := [ ... code2 ]
+
+some method 
+	x <y 
+		ifTrue: [ action1 value ]
+		ifFasel: [ action2 value ]
+]]]
+
+
+
+!!! Guideline: Do not write lengthly blocks
+
+Blocks are powerful. They are handy because they are like anonymous methods created on the fly. 
+Now write long blocks is a problem because blocks are not methods and you cannot simply call them.
+In addition blocks does not create simple hook methods that subclass can customize.
+
+A good practice is to keep block body length short and to convert long blocks into methods and 
+called such methods from the block. 
+
+Prefer
+[[[type=prefer
+messageWithBlock
+	body of a long block
+
+anObject use: [ self messageWithBlock ]
+]]]
+
+over 
+
+[[[type=not
+anObject use: [ ... body of a long block ... ]
+]]]
+
+
+
+
+
 
 
 !! Potential traps: About ==printing== and Streams
@@ -2609,12 +2704,13 @@ In this chapter we present some points about existing libraries or functionality
 !!! Guideline: Write small methods
 
 Long methods are the sign of less mature code. 
-Indeed small methods offer many advantages:
-- they are easier to read and understand
-- they are easier to test
-- they are elementary elements of customization. Sending a message is creating a hook that subclasses can customized within their context.
+Indeed small methods offer many strong advantages:
+- they are easier to read and understand,
+- they are easier to test,
+- they are easier to reuse and compose,
+- they are elementary pieces of customization. Indeed sending amessage to self creates a hook that subclasses can customize within their context. This is the foundation of object-oriented programming.
 
-As measured by Zaitsev and Ducasse, realize that Pharo methods have 3 lines of code as median value.
+As measured by Zaitsev and Ducasse,  Pharo methods (exclusing test method) have 3 lines of code as median value.
 Therefore this is not just anecdoctal but an important point.
 
 
