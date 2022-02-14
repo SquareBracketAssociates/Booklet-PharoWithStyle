@@ -2545,9 +2545,21 @@ anObject use: [ ... body of a long block ... ]
 
 
 
-!!! Guideline: Exception catch must not be empty
+!!! Guideline: Exception catch MUST not be empty
 
-Exceptional behavior can be captured and controlled using ==on:do:==. Now this is 
+Exceptional behavior can be captured and controlled using ==on:do:==. Now this is important not to catch 
+an exceptional behavior and do nothing.  This is basically the worse you can do and it will backfire in your face
+months later. In addition, it makes your code super difficult to debug.
+
+Prefer 
+[[[type=not
+[ expression ] on: Error do: [:ex | Stdio stderr nextPutAll: 'Error in...' ]
+]]]
+
+over
+[[[type=not
+[ expression ] on: Error do: []
+]]]
 
 
 
