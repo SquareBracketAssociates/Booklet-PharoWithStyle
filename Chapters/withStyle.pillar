@@ -10,10 +10,12 @@ These conventions are not cast in stone but they set the foundation of a common 
 
 We got influenced by the excellent little book called ''Smalltalk with Style''. We hope that you will enjoy this one and that it will help you to become a better communicating designer. 
 
-Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
+Feedback and suggestions are welcome! Don't hesitate to send me ideas, or examples at stephane.ducasse@inria.fr.
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo for their feedback.
+Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo, Hernan Morales for their feedback.
+
+
 S. Ducasse - 12 February 2022.
 
 
@@ -1805,6 +1807,7 @@ depth:aNode
 
 
 !! Powerful coding idioms
+
 Some coding idioms will make your code a lot clearer. 
 Knowing them is also good because you will code faster.
 
@@ -1833,6 +1836,7 @@ aCol at: key ifPresent: [ :present | self doSomethingWith: present]
 
 
 !!! Guideline: Move return outside branches
+
 When two branches of a condition are returning a value, better move the return out of the blocks.
 
 
@@ -1856,8 +1860,6 @@ depth:aNode
 		ifFalse: [ ^ 1 + rightDepth ]
 ]]]
 
-
-
 !!! Guideline: Use streamContents
 
 When you want to manipulate a potentially long stream you can avoid to have to define the explicit stream creation and access using ==streamContents== with a block whose argument is a ready to use stream.
@@ -1875,8 +1877,40 @@ stream ...
 ^ stream contents
 ]]]
 
+!!! Guideline: Preallocate overly large collections
 
-!!! Guideline: use super to invoke a method with the same selector
+You may work on really large collections and in such case the allocation of the collection can 
+have a speed penalty.
+
+If you know in advance, how large your collection will be preallocate a big one, and store elements into it:
+
+[[[
+| list |
+list := OrderedCollection new: 10000.
+1 to: 10000 do: [ :i |
+	list add: i ]
+]]]
+
+You can use the method ==bench== to get a first idea.
+
+[[[
+[| list |
+list := OrderedCollection new: 100000.
+1 to: 100000 do: [ :i |
+	list add: i ] ] bench 
+"for 100,000 get 165.901 per second"
+"for 10,000 get 5484.903 per second"
+
+[| list |
+list := OrderedCollection new.
+1 to: 100000 do: [ :i |
+	list add: i ] ] bench 
+"for 100,000 get 79.368 per second" 
+"for 10,000 get 5278.544 per second"
+]]]
+
+
+!!! Guideline: Use super to send a message with the same selector
 
 ==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. 
 However, ==super== is only necessary when the method you want to invoke has the same than the current one
@@ -2390,6 +2424,16 @@ foo
 ]]]
 
 
+!!! Guideline: Do not reuse temporaries
+
+Readable code is key and resuing a local temporary variable to store different objects
+during a method execution should be avoided. 
+Creating a separate temporary does not incurr any execution cost.
+Therefore create a temporary variable instead of storing different objects inside the same variable
+at different execution point of a method.
+
+
+
 
 
 !! Potential traps: About ==printing== and Streams
@@ -2562,13 +2606,43 @@ Now printing a string includes the quotes and quotes should be double quoted.
 
 In this chapter we present some points about existing libraries or functionality that are often misunderstood and lead to code of lesser quality.
 
-!!! Transcript: A misunderstood object
+!!! Guideline: Write small methods
 
-we present why ==Transcript== can be really badly used. We present that with some simple care we can develop modular solutions that are flexible and can take advantages of using ==Transcript== without the inconvenients. 
+Long methods are the sign of less mature code. 
+Indeed small methods offer many advantages:
+- they are easier to read and understand
+- they are easier to test
+- they are elementary elements of customization. Sending a message is creating a hook that subclasses can customized within their context.
+
+As measured by Zaitsev and Ducasse, realize that Pharo methods have 3 lines of code as median value.
+Therefore this is not just anecdoctal but an important point.
+
+
+!!! Guideline: Avoid singletons
+
+Singletons are evil, because they make you feel that you are writing object-oriented code but in reality they are disguided
+global variables. Now you can ask yourself why this would be a problem.
+
+This is a problem when you want to modularize your code. In essence you cannot subtitute a singleton by another object and 
+any change to the singleton is widely visible.
+
+A symptom of the problem is when you want to write tests. You often do not want to have your tests impacting the complete system.
+So think twice before using a singleton. 
+
+A good way to know if you need a singleton is whether you can add an instance variable to your domain objects and pass 
+a reference to the object that you would like to have as singleton. If you can avoid the singleton just with the addition of an instance variable it means that you did not need the singleton. 
+
+This is why good object-oriented designers say that Singleton is about time and not space, meaning that you need a singleton when you cannot have two instances working at the same time - Think about a scheduler. You cannot have two scheduler manipulating threads
+at the same time.
+
+The following guideline is an example of a Singleton bad use. 
+
+!!! Guideline: Avoid explicit Transcript 
+
+We present why ==Transcript== can be really badly used. We present that with some simple care we can develop modular solutions that are flexible and can take advantages of using ==Transcript== without the inconvenients. 
 Let us imagine that you still want to log strings.
 
-!!! First simple case
-
+!!!!! First simple case
 ==Transcript== is a kind of stdout on which you can write some strings outputs. It is cheap. The class exposes a stream-based API (and this is a really important design point as we will see in the future).
 
 Here is a typical not really good use of ==Transcript==
@@ -2578,7 +2652,7 @@ myMethod
     Transcript show: 'foo' ; cr  
 ]]]
 
-It is bad because it hardcodes a reference to ==Transcript== while Pharo proposes some helpers methods such as ==traceCr:==.
+It is not really good because it hardcodes a reference to ==Transcript== while Pharo proposes some helpers methods such as ==traceCr:==.
 
 [[[
 myMethod
@@ -2589,7 +2663,7 @@ Some developers may think that this is not important but it can help you if one 
 
 !!! The real concern
 
-The problem amongst others is that Transcript is a singleton and in fact an UGLY global variable. Once you use it for real in your code, you basically killed the modularity of your program and the only thing that you can do is to hope that nothing bad can happen.
+The problem amongst others is that Transcript is a singleton and in fact a global variable. Once you use it for real in your code, you basically killed the modularity of your program and the only thing that you can do is to hope that nothing bad can happen.
 
 Let us look at a concrete simple case. The microdown Parser came (yes we removed this) with a simple method named closeMe:
 
@@ -2602,8 +2676,8 @@ MicAbstractBlock >> closeMe
 So this method is producing a little trace so that the parser developer could understand what was happening. So you can think that this is ok.
 
 There are two main problems:
-- First what if you want to deploy your application in a system where you do not want at all to get Transcript its class and all its family. I'm thinking for example about people producing minimal images.
-- Second, when Pharo is built on Jenkins all the tests are executed because we love tests. And this Transcript expression produces dirt on the build log. You do not want to have read such trace when you are trying to understand why the build is not working.
+- First what if you want to deploy your application in a system where you do not want at all to get Transcript its class and all its family. Think for example about people producing minimal images.
+- Second, when Pharo is built on Jenkins all the tests are executed because we love tests. And this Transcript expression produces dirt on the build log. You do not want to have read such a trace when you are trying to understand why the build is not working.
 
 [[[
 Closing MicCodeBlock
@@ -2614,13 +2688,6 @@ Closing MicCodeBlock
 Closing MicCodeBlock
 Closing MicCodeBlock
 Closing MicCodeBlock
-Closing MicCodeBlock
-Closing MicCodeBlock
-Closing MicCodeBlock
-Closing MicCodeBlock
-Closing MicHeaderBlock
-Closing MicHeaderBlock
-Closing MicHeaderBlock
 Closing MicHeaderBlock
 Closing MicHeaderBlock
 Closing MicHeaderBlock
@@ -2632,7 +2699,7 @@ Closing MicOrderedListBlock
 
 Now let us see the good way to have a log and be able to unplug it.
 
-!!! Encapsulation to the rescue
+!!! Guideline: Parametrized your object with log stream
 
 The solution is really simple.
 Just use object-oriented programming and encapsulation.
@@ -2669,7 +2736,7 @@ MicAbstractBlock >> logStream: aStream
 ]]]
 
 
-!!! When instance creation is delicate
+!!!! When instance creation is delicate
 
 If we do not control the creation of instances of the class using the stream, we will have difficulties to configure it with the correct stream.
 So if you want to be able to configure the class to use a different logger, we should define a class variable so that we can send message to the class and at initialization time, we can take the value from the class variable instead of hardcoding the WriteStream.
@@ -2723,14 +2790,14 @@ MicAbstractBlock >> initialize
 
 The net result is that we have the control and we can decide what is happening. In addition we can write tests to make sure that the logging is correct. Because using Transcript makes this a brittle exercise since someone else may write to the Transcript when you do not expect it. 
 
-!!! Conclusion
+!!!! Conclusion
 
 ==Transcript== is not bad per se. But it promotes bad coding practices. Developers should stop listening to the sirens of easy and cheap global variables. With a little bit of care and a limited infrastructure is to possible to get the best of both worlds: modular objects and taking advantages of the existing infrastructure whose ==Transcript== belongs to. 
 
-What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that 
-you have to blindly use it. You should apply sound principle and protect you some impact of changes.
+What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that you have to blindly use it. You should apply sound principle and protect you some impact of changes.
 
-!!! About error
+
+!!! Guideline: Wrap explicit signal raising
 
 One question that you can ask yourself is which one of the two following situation is the best:
 
@@ -2762,9 +2829,14 @@ MyClassSubclass >> ohNoError
 
 !! Conclusion
 
+We hope that you enjoyed such guideline list.
 Remember that you write code once and will read it a thousand times.
 Take the time to give good names.
 However finding good names is not an easy task, but you can use refactorings to improve things easily.
 This goes in pair with tests. 
 You write a test once and it gets executed million times. 
 Therefore, write tests to exercise the names you use and change them until they help you telling stories that can be understood.
+
+
+
+
