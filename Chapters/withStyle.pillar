@@ -1076,7 +1076,7 @@ basicMethod: aCompiledMethod
 	method := aCompiledMethod
 ]]]
 
-When you have a getter that returns an object and a getter than returns a different representation of the same object, add a suffix.
+When you have a getter that returns an object and a getter that returns a different representation of the same object, add a suffix.
 
 [[[type=prefer
 path
