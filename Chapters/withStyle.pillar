@@ -400,10 +400,11 @@ While in the previous chapters we focused on identifiers or class variables, thi
 
 !!! Guideline: Avoid underscores and favor camel case
 
-The form or format of names is also important. Following the form promoted by a complete ecosystem will make your software more readable and acceptable by others.
+The form or format of identifiers is also important. Following the form promoted by a complete ecosystem will make your software more readable and acceptable by others.
 This is true in any programming language.
 
-Because Pharo and its ecosystem use camel case for class, variable, and method names, avoid using underscores and instead use camel case.
+Because Pharo and its ecosystem use camel case for class, variable, and method names.
+Avoid using underscores.
 
 Prefer
 [[[type=prefer
@@ -434,7 +435,19 @@ over
 Not released_X
 ]]]
 
+Prefer
+[[[type=prefer
+| scaledX reducedX |
+]]]
+
+over 
+[[[ 
+| scaled_X reduced_X |
+]]]
+
 When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries. In such a case, limit your use to carefully thought-out cases.
+
+
 
 !!! Guideline: CamelCase fully identifiers
 
@@ -479,19 +492,7 @@ over
 | dataset f Xmatrix scale X |
 ]]]
 
-!!! Guideline:  Avoid underscore in variable identifiers
 
-In Pharo variables are using camelCase, just follow this convention. 
-
-Prefer
-[[[type=prefer
-| dataset pca scaledX reducedX |
-]]]
-
-over 
-[[[ 
-| dataset pca scaled_X reduced_X |
-]]]
 
 
 !!! Guideline: Convey language semantics
@@ -2211,7 +2212,6 @@ Similarly
 
 [[[type=not
 foo
-
 	^ super
 ]]]
 
@@ -2219,7 +2219,6 @@ Better use ==self==
 
 [[[type=prefer
 foo
-
 	^ self
 ]]]
 
