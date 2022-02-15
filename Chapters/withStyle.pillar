@@ -10,8 +10,7 @@ Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 
 PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
-Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo, Hernan Morales for their feedback.
-
+Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo, Hernán Morales for their feedback.
 
 S. Ducasse - 12 February 2022.
 
@@ -30,7 +29,7 @@ Some native English speakers use more precise, but less common terms. Consider t
 
 !!! Guideline: Use descriptive names
 
-Choose descriptive names that capture domain entities unambiguously. Avoid cryptic names. Characters are cheap so do not count them. If you are slow to type then use completion engine. 
+Choose descriptive names that capture domain entities unambiguously. Avoid cryptic names. Characters are cheap, so do not count them. If you are slow at typing then use the completion engine. 
 
 Prefer
 [[[type=prefer
@@ -61,14 +60,11 @@ Not cMenu
 
 !!! Guideline: Pay attention to meaning
 
-Pharo uses english as main language. 
-It looks strange to mention it but this has some implications. 
-We should pay attention to two mistakes that non native english speakers tend to do: first the adjective inversion and second keeping the plural form during inversion of composition (using of).
+Pharo uses English as main language. It looks strange to mention it, but this has some implications. We should pay attention to two mistakes that non native english speakers tend to do: first, adjective inversion, and second, keeping the plural form during inversion of composition (using of).
 
 !!!!! Adjective inversion
-Non-English native speakers often misplace word  qualifiers (adjective). 
-In English the qualifier is often before the word it qualifies.
-In Pharo we follow such a convention.
+
+Non-English native speakers often misplace word qualifiers (adjective). In English, the qualifier is often before the word it qualifies. In Pharo, we follow such a convention.
 
 Prefer
 [[[type=prefer
@@ -101,8 +97,7 @@ Not associationUser
 
 !!!!! No plural inside
 
-In english the names of methods can also be written method names.
-Notice that in such a situation there is no s in method.
+In English, the names of methods can also be written method names. Notice that in such a situation there is no s in method.
 
 Prefer
 [[[type=prefer
@@ -126,9 +121,9 @@ readSize
 
 In this situation, avoid homographs (*https://en.wiktionary.org/wiki/homograph*). 
 That is, words that are written the same way but can have different meanings or pronunciations. For example, ''Did you read that book? ... Yes, I read it yesterday.''
-About ==readSize==: does this mean that the size was just read (red) or it is the size to read (reed)?
+About ==readSize==: does this mean that the size was just read (red) or that it is the size to read (reed)?
 
-Favor words with unique pronunciation.
+Favor words with a unique pronunciation.
 
 !!! Guideline: Follow domain 
 
@@ -166,25 +161,16 @@ Does this mean that the size was just read (red) or is it the size to read (reed
 
 !!! Guideline: Limit or use abbreviations consistently
 
-Abbreviations or acronisms are often obscure to newcomers. 
-Now they are often handy so when you use them use consistently. 
+Abbreviations or acronisms are often obscure to newcomers.  Now they are often handy so when you use them use consistently. 
 
 Prefer
 [[[type=prefer
 ASTNode
 ]]]
 
-
-
-
 !!! Guideline: Avoid numbers
-It can be handy when trying something new to reuse an identifier and add to it a number. 
-Now limit such practice to your development session. 
-Indeed, a number does not help the reader to understand the difference. 
-As a general principle keeping multiple implementations of the same classes is
-a way to propose rotten code. So if you want to keep several versions then make sure
-that why several versions are kept is made clear.
 
+It can be handy when trying something new to reuse an identifier and add a number to it. Now limit this practice to your development session. Indeed, a number does not help the reader understand the difference. As a general principle, keeping multiple implementations of the same classes is a way to propose rotten code. So if you want to keep several versions then make sure that why several versions are kept is made clear.
 
 Prefer
 [[[type=prefer
@@ -200,19 +186,16 @@ InlineParser2
 ]]]
 
 !!! Conclusion 
-The guidelines presented so far are general. We will see that we also have guideline for classes and variables.
 
-
+The guidelines presented so far are general. We will see that we also have guidelines for classes and variables.
 
 !! About class names
 
-In object-oriented programming classes play an important role. 
-They are factories of objects and as such they are important to convey the main abstractions within an application.
+In object-oriented programming, classes play an important role. They are factories of objects, and as such, they are important for conveying the main abstractions within an application.
 
 !!! Guideline: Use direct and natural style
 
-Often classes represent objects even abstract ones. Use the names that fit the best without inventing some clunky 
-new terms. 
+Often, classes represent objects, even abstract ones. Use the names that fit the best without inventing some clunky new terms. 
 
 Prefer
 [[[type=prefer
@@ -231,9 +214,7 @@ RBReadBeforeWrittenTester
 MicHTMLWriter
 ]]]
 
-Finally some may represent some state. 
-In Pharo announcements are following the convention to finish by the verb in past tense. 
-It is contradicting with english conventions but it is applied uniformly.
+Finally, some may represent a particular state. In Pharo, announcements follow the convention of finishing with the verb in the past tense. It contradicts English conventions, but it is applied uniformly.
 
 [[[type=prefer
 IcePackageLoaded
@@ -248,10 +229,9 @@ RBParsing
 OpeningFile
 ]]]
 
-
 !!! Guideline: Use natural language
-When defining class names, avoid abbreviations that are not obvious, avoid shortening names and favor
-natural language.
+
+When defining class names, avoid abbreviations that are not obvious, avoid shortening names, and favor natural language.
 
 Prefer
 [[[type=prefer
@@ -299,8 +279,8 @@ BoardMan
 ]]]
 
 !!! Guideline: Do not expose implementation 
-A class name should not expose the implementation the class uses. 
-This is important because implementation may change in the future.
+
+A class name should not expose the implementation the class uses. This is important because implementation may change in the future.
 
 Prefer
 [[[type=prefer
@@ -347,10 +327,8 @@ PRDocument
 CmdMessage
 ]]]
 
-@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousands euros, we can fix that!
+@@note You may find that Pharo is lacking a namespace. If you have a couple hundred thousand euros, we can fix that!
 Note, however, that even with a namespace you will have to pay attention that your namespace name does not collide with another one.
-
-
 
 !!! Guideline: Class names should indicate the class' parent
 
@@ -416,20 +394,13 @@ A good way to find good names is to write unit tests.
 When you write unit tests, you are the first client of your code. You can then see if the names you chose let you write coherent and comprehensible little stories. You can explore the names you picked up and rename them.
 
 
-
-
-
-
-
 !! About identifier format
 
-While in the previous chapters we focused on identifiers or class variables, this chapter focuses on the form or format of such names. Indeed writing software is about writing sentences that smootly integrate with existing ones.
-You want your program not to be identifiable from existing one. This is particularly true on multiple developer project with common code ownership. Note that even if you are working a single person project you will use existing class libraries and you do not want to have your 'ugly' code stepping out.
+While in the previous chapters we focused on identifiers or class variables, this chapter focuses on the form or format of such names. Indeed, writing software is about writing sentences that seamlessly integrate with existing ones. You do not want your program to be easily identifiable as an existing one. This is particularly true for multiple developer projects with common code ownership. Note that even if you are working on a single-person project, you will use existing class libraries and you do not want to have your 'ugly' code stepping out.
 
 !!! Guideline: Avoid underscores and favor camel case
 
-The form or format of names is also important. 
-Following the form promoted by a complete ecosystem will make your software more readable and acceptable by others.
+The form or format of names is also important. Following the form promoted by a complete ecosystem will make your software more readable and acceptable by others.
 This is true in any programming language.
 
 Because Pharo and its ecosystem use camel case for class, variable, and method names, avoid using underscores and instead use camel case.
@@ -463,8 +434,7 @@ over
 Not released_X
 ]]]
 
-When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries.
-In such a case, limit your use to carefully thought cases.
+When creating private low-level methods that bind to external C-libraries, you may want to use underscores to follow C conventions to ease tracing back the communication between libraries. In such a case, limit your use to carefully thought-out cases.
 
 !!! Guideline: CamelCase fully identifiers
 
@@ -536,11 +506,12 @@ MaxLimit
 >>> 10
 ]]]
 
-Still, Pharo favors camel case, so use it systematically for words.
-Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
+Still, Pharo favors the camel case, so use it systematically for words. Wikipedia defines camel case as: Camel case (stylized as camelCase) is the practice of writing phrases such that each word or abbreviation in the middle of the phrase begins with a capital letter, with no intervening spaces or punctuation.
 
 !!!!! For local variables.
+
 Method parameters and instance variables, use
+
 [[[type=prefer
 maxLimit
 ]]]
@@ -550,7 +521,8 @@ Not maxlimit
 Not MAXLIMIT
 ]]]
 
-!!!!! For classes, or shared variables. 
+!!!!! For classes, or shared variables
+
 Use 
 [[[type=prefer
 OrderedCollection
@@ -562,7 +534,7 @@ Not ORDEREDCOLLECTION
 Not MAXLIMIT
 ]]]
 
-@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an upper case letter. For example, some readers may think that the "c" in ==subclass== should be upper case, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
+@@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an uppercase letter. For example, some readers may think that the "c" in ==subclass== should be uppercase, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
 
 Prefer
 [[[type=prefer
@@ -573,11 +545,7 @@ over
 Not superClass
 ]]]
 
-
 !!! Guideline: Method selectors start with lowercase
-
-
-
 
 Prefer
 [[[type=prefer
@@ -602,12 +570,12 @@ Also, in this example, the method selector is not good because method names are 
 
 This is a bit obvious, but as a developer you should follow language conventions. 
 
-This is not because Pharo is permissive that you should bend the rules. Doing so will only confuse you and other developers. So use camel case. Remember, private or local variables start with a lowercase letter, while class, class variables start with an uppercase letter.
+This is not because Pharo is permissive that you should bend the rules. Doing so will only confuse you and other developers. So use camel case. Remember, private or local variables start with a lowercase letter, while class variables start with an uppercase letter.
 
 !! About variable names
 
 When choosing an appropriate name for a variable, the developer is faced with the decision: ''Should I choose a name that conveys semantic meaning to tell the user how to use the variable, or should I choose a name that indicates the type of object the variable is storing?'' 
-There are good arguments for both styles. Let us see what are the guidelines that can help us find the right balance.
+There are good arguments for both styles. Let us see what the guidelines are that can help us find the right balance.
 
 !!! Guideline: Favor semantic variables
 
@@ -673,7 +641,7 @@ Not properties: aCollection
 
 Suppose a String, a Symbol, and nil are valid for a parameter. A developer may be tempted to use the name ==aStringOrSymbolOrNil==.
 
-You may be tempted to ==aString== or ==anObject==. ==anObject== is not really helping the developer that will have to use such variables. At the minimum, such a use should be accompanied by a comment that says, "anObject can be a String or aSymbol"
+You may be tempted to ==aString== or ==anObject==. ==anObject== is not really helping the developer who will have to use such variables. At the minimum, such a use should be accompanied by a comment that says, "anObject can be a String or aSymbol"
 
 Some developers may argue that type variables should not refer to classes that do not exist. We disagree. As shown in the following guidelines, it is a lot better to indicate that an argument is a block expecting two arguments (hence a binary block) than to just mention a block. And this works even if there is no binary block class in the system.
 
@@ -695,7 +663,7 @@ inject: initialValue into: aBinaryBlock
 
 !!! Guideline: Get the best from semantic and type variable
 
-A good practice is to use a mixture of both semantic and typed variable names. Method parameter names are usually named after their type. Instances, class, and temporary variables usually have a semantic name. In some cases, a combination of both can be given in the names.
+A good practice is to use a mixture of both semantic and typed variable names. Method parameter names are usually named after their type. Instances, classes, and temporary variables usually have a semantic name. In some cases, a combination of both can be given in the names.
 
 Prefer
 [[[type=prefer
@@ -779,13 +747,7 @@ Note that you can also use ==count== instead of ==numberOf== as in the following
 
 !! About method names
 
-Method names in Pharo are called selectors.
-They are used in messages and are the main vehicle to convey adequate meaning to computation.
-From that perspective this is really important to use them to convey the exact meaning of the computation they perform.
-The correct use of words and design of selectors is then important.
-
-
-
+Method names in Pharo are called selectors. They are used in messages and are the main vehicle to convey adequate meaning to computation. From that perspective, it is really important to use them to convey the exact meaning of the computation they perform. The correct use of words and the design of selectors are then important.
 
 !!! Guideline: Choose selectors to form short sentences
 
@@ -912,7 +874,7 @@ Not display: anObject using: aMedium
 
 !!! Guideline: Indicate returned type
 
-When a method is returning an object (different from the receiver) and that this object is not polymorphic with the receiver it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
+When a method returns an object (different from the receiver) and this object is not polymorphic with the receiver, it is important to mention it. Since Pharo is not statically typed, we can use the selector name to give such information to the sender of the message.
 
 For example, the method ==characterSeparatorMethodSignatureFor:== of the pretty printer did not return a character but a block, as shown below:
 
@@ -1058,7 +1020,6 @@ tiles: aCollection
 
 Put accessors in the =='accessing'== protocols. When you have accessors doing extra work place them in a separate protocols to stress their difference.
 
-
 !!! Guideline: Avoid return in lazy blocks
 
 You may want to use accessors to implement lazy initialization: the instance variable is initialized only if needed by checking if its value is nil.
@@ -1115,7 +1076,7 @@ basicMethod: aCompiledMethod
 	method := aCompiledMethod
 ]]]
 
-When you have a getter that returns an object and a getter than return a different representation of the same object add a suffix
+When you have a getter that returns an object and a getter than returns a different representation of the same object, add a suffix.
 
 [[[type=prefer
 path
@@ -1129,11 +1090,11 @@ pathString
 
 !!! Guideline: Follow conventions and idioms
 
-When designing new objects, you may mimic some practices that the system uses already with for example dictionaries, sets, etc.
+When designing new objects, you may mimic some of the practices that the system already uses, for example, dictionaries, sets, etc.
 
 !!!! Example
 
-Since a style sheet acts as a dictionary of properties it is much better to use
+Since a style sheet acts as a dictionary of properties, it is much better to use
 ==at:== instead of ==get:==, especially if you define the message to set a value to a property as ==at:put:== and not ==set:==.
 
 Prefer
@@ -1181,7 +1142,7 @@ You may think that you will identify the message because the receiver is a class
 
 !!!! Example
 
-In Pillar, annotations have parameters and the accessor method ==parameters:==. In some versions, an instance creation method with the same name as the accessor method exists.
+In Pillar, a markup syntax to write documentation, annotations have parameters and the accessor method ==parameters:==. In some versions, an instance creation method with the same name as the accessor method exists.
 
 Reading the code of the parser and in particular the message ==parameters==, it is not clear whether array second is a class or an instance.
 
@@ -1192,8 +1153,7 @@ annotation
 			[ :array | array second parameters: (array third ifNil: [ SmallDictionary new ]) ]
 ]]]
 
-To create an instance, it is better to name the method ==newParameter:==. 
-This way we can immediately spot that the second element is a class. 
+To create an instance, it is better to name the method ==newParameter:==. This way, we can immediately spot that the second element is a class. 
 
 [[[type=prefer
 annotation
@@ -1226,8 +1186,7 @@ PRAbstractAnnotation class >> parameters: aCollection
 		yourself
 ]]]
 	
-Now if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
-
+Now, if you favor a fluid interface with many parameters, using ==withParameters:== may not be good. 
 
 !!! Guidelines: Follow existing protocols
 
@@ -1236,24 +1195,21 @@ Protocols are ways to sort methods. It is important to place your methods into a
 Pharo provides auto categorisation of protocols for the common methods. So use it as much as possible. If you override your specific methods, place them in similar protocols.
 
 !! Comments
-Comments are important.
-Comments tell readers that they are smart guys and that they correctly guessed your intentions or your code.
-Do not believe people that say that methods do not need comments. Obviously here is what they mean:
-# obvious methods such as accessors do not need comments,
-# a good comment is not describing in English how the code executes,
-# it is better to split long methods into smaller ones with a single responsibility,
-# but a good comment is always welcomed because it reinforces the understanding of the reader.
 
-A comment should be adapted to the level of granularity (i.e., package, class or method) to which it applies.
+Comments are important. Comments tell readers that they are smart guys and that they correctly guessed your intentions or your code. Do not believe those who claim that methods do not require comments. Obviously, this is what they mean:
+
+# "Obvious methods" such as accessors do not need comments.
+# A good comment does not describe how the code works in English.
+# It is better to split long methods into smaller ones with a single responsibility,
+# But a good comment is always welcome because it reinforces the understanding of the reader.
+
+A comment should be adapted to the level of granularity (i.e., package, class, or method) to which it applies.
 
 !!! Guideline: Method comments
 
 Method comments should contain sufficient information for a user to know exactly ""how to use"" the method, ""what"" the method does, including any side effects, and ""what it answers"" without having to look at the source code. Imagine that the source code is not available.
 
-The main method comment is not about its implementation.
-Do not rephrase the implementation.
-The second level comments can include information about the implementation.
-Insert a new line to separate the method comments from the method body.
+The main method comment is not about its implementation. Do not rephrase the implementation. The second level comments can include information about the implementation. Insert a new line to separate the method comments from the method body.
 
 [[[type=prefer
 Collection >> asCommaString
@@ -1282,9 +1238,9 @@ day
 
 !!! Guideline: Good comment do not paraphrase code
 
-Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented to draw the reader's attention. If the source code implements an algorithm that requires explanation, then the steps of the algorithm should be commented as needed.
+Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented upon to draw the reader's attention. If the source code implements an algorithm that requires an explanation, then the steps of the algorithm should be commented as needed.
 
-Do not comment an obvious fact that is expressed simply as plain code.
+Do not comment on an obvious fact that is expressed simply as plain code.
 
 Prefer
 [[[type=prefer
@@ -1301,11 +1257,9 @@ result := self employees
 	collect: [:employee |  employee salary > amount].
 ]]]
 
-
 !!! Guideline: Use active voice and short sentences
 
-When writing comments, use active voice and avoid long and convoluted sentences.
-A method comment should state what the method does, its arguments, its effects and output.
+When writing comments, use active voice and avoid long, convoluted sentences. A method comment should state what the method does, its arguments, its effects, and its output.
 
 [[[
 "Active voice"
@@ -1354,6 +1308,7 @@ A class is not in isolation, but ''implements'' responsibilities (mainly one) an
 The Class Responsibility Collaboration (CRC) pattern is powerful to design but also to comment classes. Use it for commenting class.
 
 Knowing the instance variables is the least important!
+
 Follow the template given by Pharo that is shown below.
 
 [[[type=prefer
@@ -1383,10 +1338,9 @@ Implementation Points
 
 !!! Guideline: Comment the unusual
 
-When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment it.
+When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment on it.
 
-In general, comments should make irregular and unusual aspects clearer.
-You may want to include implementation-dependent, or platform specific idiosyncrasies.
+In general, comments should make irregular and unusual aspects clearer. You may want to include implementation-dependent or platform specific idiosyncrasies.
 
 !! About code formatting
 
@@ -1394,7 +1348,7 @@ Code formatting improves code comprehension. A reader gets used to regular forma
 
 !!! Guideline: Be consistent
 
-One important guideline when writing code is to follow conventions and, in addition, to be consistent. Systematically apply a formatting style. Keep the violations to conventions to a minimum.
+One important guideline when writing code is to follow conventions and, in addition, to be consistent. Systematically apply a formatting style. Keep the violations of conventions to a minimum.
 
 This applies at all levels: 
 - Class names,
@@ -1690,12 +1644,9 @@ depth:aNode
 ]]]	
 
 
-
-
 !!! Guideline: Declare temporary close their use
 
-Temporary variables that will only be used within the block should not be defined outside of the block
-but in the local block.
+Temporary variables that will only be used within the block should not be defined outside of the block but in the local block.
 
 Prefer
 
@@ -1713,11 +1664,6 @@ over
 block := [: arg | 
   ... local ... ]
 ]]]
-
-
-
-
-
 
 !! Powerful coding idioms
 
@@ -1790,10 +1736,9 @@ stream ...
 
 !!! Guideline: Preallocate overly large collections
 
-You may work on really large collections and in such case the allocation of the collection can 
-have a speed penalty.
+You may work on really large collections, and in such a case, the allocation of the collection can have a speed penalty.
 
-If you know in advance, how large your collection will be preallocate a big one, and store elements into it:
+If you know in advance how large your collection will be, preallocate a big one and store elements in it:
 
 [[[
 | list |
@@ -1823,9 +1768,7 @@ list := OrderedCollection new.
 
 !!! Guideline: Use super to send a message with the same selector
 
-==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. 
-However, ==super== is only necessary when the method you want to invoke has the same than the current one
-since using ==self== in such a case simply creates and infinite loop. 
+==super== is used to start the method lookup in the superclass of the class of the method containing ==super==. However, ==super== is only necessary when the method you want to invoke has the same than the current one since using ==self== in such a case simply creates and infinite loop. 
 
 For example, the following just creates an infinite loop, since the method ==initialize== is calling itself infinitively. 
 
@@ -1836,9 +1779,7 @@ initialize
 	self continue
 ]]]
 
-This is the only case where you must use ==super== to invoke the method that cannot be reach by the method lookup when it starts from the 
-class defining the method. 
-The correct definition is then: 
+This is the only case where you must use ==super== to invoke a method that cannot be reached by the method lookup when it starts from the class defining the method. The correct definition is then: 
 
 [[[type=prefer
 initialize
@@ -1847,9 +1788,7 @@ initialize
 	self continue
 ]]]
 
-
-Now there is no need to use ==super== for message that have a different selector than the method they belong to. 
-For example, there is no need to use ==super bar== in the following, since the defining method is called ==foo== and you send the message ==bar==.
+Now there is no need to use ==super== for messages that have a different selector than the method they belong to. For example, there is no need to use ==super bar== in the following, since the defining method is called ==foo== and you send the message ==bar==.
 
 [[[type=not
 foo 
@@ -1865,31 +1804,24 @@ foo
 	self continue
 ]]]
 
-While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. 
-So always be suspicious when you read or write such kind of code.
-
-
-
-
-
+While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. Always be cautious when reading or writing such code.
 
 !! Object initialization
 
-One key responsibility for a class is to initialize correctly the instance it creates.
-This avoids to place the burden on clients of such objects.
-In this chapter we will present some patterns to initialize objects.
+One key responsibility for a class is to correctly initialize the instance it creates.
+This avoids placing the burden on clients of such objects. In this chapter, we will present some patterns to initialize objects.
 
 !!! Guideline: Take advantage of automatic object initialization 
 
 By default Pharo offers a way to initialize your objects. The method ==initialize== is automatically sent by the method ==new==.
 
-Imagine that we implement a game and that this game needs to initialize the number of turns the game is played. Avoid to force the clients of the game to have the responsibility to initialize the turn. Indeed if the clients forget to send the expression ==turn:==, the game logic may be simply broken.
+Imagine that we implement a game and that this game needs to initialize the number of turns it plays. Avoid forcing the clients of the game to have the responsibility of initializing the turn. Indeed, if the clients forget to send the expression ==turn:==, the game logic may be simply broken.
 
 [[[type=not
 Game new turn: 0
 ]]]
 
-Therefore when you want to initialize the state of your object, simply redefine 
+Therefore, when you want to initialize the state of your object, simply redefine 
 
 [[[type=prefer
 Game >> initialize
@@ -1911,9 +1843,9 @@ GameTest >> testDefaultInitialization
 
 When you do not want to get the automatic initialization to happen you should use the message ==basicNew== on the class side and create your own ==initializeSomething:== method. 
 
-Let us imagine that the computation of the tiles of a game would be costly or that there is no simple default. We can propose a class creation interface whose responsibility is to request the mandatory information and initialize only what is needed for the object creation. 
+Let us imagine that the computation of the tiles of a game would be costly or that there would be no simple default. We can propose a class creation interface whose responsibility is to request the mandatory information and initialize only what is needed for the object creation. 
 
-Here we define a class method ==tileNumber:==, and we do not invoke ==new== but ==basicNew==. Indeed ==new== sends the message ==initialize== and we do not want to pay the price for it. ==basicNew== just allocates the new object and does not perform any other operation.
+Here we define a class method ==tileNumber:==, and we do not invoke ==new== but ==basicNew==. Indeed ==new== sends the message ==initialize== and we do not want to pay the price for it. ==basicNew== just allocates the new object and does not perform any other operations.
 
 [[[
 Game class >> tileNumber: aNumber
@@ -1935,7 +1867,7 @@ If you use ==new== instead of ==basicNew== in previous definition, the ==initial
 
 Since Pharo is automatically sending the message ==initialize== as part of the object creation process using the  pattern below, there is no need for the developer to do it in addition. 
 
-Now you may wonder what is the problem if you inadvertly redefine new in one of your class as follows: 
+Now you may wonder what the problem is if you inadvertently redefine new in one of your classes as follows: 
 
 [[[type=not
 Game class >> new
@@ -1948,9 +1880,7 @@ In Pharo, the method ==initialize== of the class ==Game== will be invoked twice.
 
 !!! Guideline: initialize does not need to return super
 
-The method ==initialize== is a method that modifies the receiver. 
-It is used by convention to initialize the default value of the receiver. 
-It is invoked by default by the message ==new==
+The method ==initialize== is a method that modifies the receiver. It is used by convention to initialize the default value of the receiver. It is invoked by default by the message ==new==
 
 The following definition is not idiomatic:
 [[[type=not
@@ -1960,8 +1890,7 @@ The following definition is not idiomatic:
 		^ super initialize
 ]]]
 
-First it returns a value and this value is not really used. 
-Prefer the following definition:
+First it returns a value and this value is not really used. Prefer the following definition:
 
 [[[type=prefer
 	initialize
@@ -1970,9 +1899,7 @@ Prefer the following definition:
 		super initialize
 ]]]
 
-Second, the ordering implies that the first local information should be computed then 
-the one of the superclass. 
-It may happen that you need this order but it is rare so prefer the following canonical form:
+Second, the ordering implies that the first local information should be computed, then one of the superclasses. It may happen that you need this order, but it is rare, so prefer the following canonical form:
 
 [[[type=prefer
 	initialize
@@ -1980,15 +1907,6 @@ It may happen that you need this order but it is rare so prefer the following ca
 		super initialize
 		default := 'no'.
 ]]]
-
-
-
-
-
-
-
-
-
 
 !! Potential traps: a syntactic perspective
 
@@ -2308,27 +2226,17 @@ foo
 
 !!! Guideline: Do not reuse temporaries
 
-Readable code is key and resuing a local temporary variable to store different objects
-during a method execution should be avoided. 
-Creating a separate temporary does not incurr any execution cost.
-Therefore create a temporary variable instead of storing different objects inside the same variable
-at different execution point of a method.
-
-
+Readable code is key and reusing a local temporary variable to store different objects during the execution of a method should be avoided. Creating a separate temporary does not incur any execution cost. Therefore, create a temporary variable instead of storing different objects inside the same variable at different execution points of a method.
 
 !!! Guideline: Do not change behavior of well-known message
 
-When reading code, developers read it in the context of core libraries and a common vocabulary and expected behavior.
-Therefore this is important not to define methods having the same name than common message but that exhibit
-different behavior. 
+When reading code, developers read it in the context of core libraries, a common vocabulary, and expected behavior. Therefore, it is important not to define methods having the same name as a common message but that exhibit different behaviors. 
 
-When you define a method you can check really fast using implementors if existing libraries already defined such a message.
-
+When you define a method, you can check really fast using implementors if existing libraries have already defined such a message.
 
 !!! Guideline: Use iterators
 
-Pharo has a large collection of really powerful iterators in its deep core. 
-Use ==do:==, ==collect:==, ==select:==, ==reject:== to start with.
+Pharo has a large collection of really powerful iterators in its deep core. Use ==do:==, ==collect:==, ==select:==, ==reject:== to start with.
 
 Prefer
 [[[type=prefer
@@ -2347,17 +2255,12 @@ The correct definition is then:
 
 !!! Guideline: Avoid low-level messages
 
-Pharo offers a large set of low-level messages such as ==isKindOf:==, ==isMemberOf:==, ==become:==,
-==canUnderstand:==, ==doesNotUnderstand:==, ....
-Such messages are handy for constructing tools and the infrastructure of the language. 
-However, such methods make code more complex and often more fragile.
-In addition some are mosre costly and in addition breaks basic cross-references.
-So always think if you really need to use such methods.
+Pharo offers a large set of low-level messages such as ==isKindOf:==, ==isMemberOf:==, ==become:==, ==canUnderstand:==, ==doesNotUnderstand:==, ....
+Such messages are handy for constructing tools and the infrastructure of the language. However, such methods make the code more complex and often more fragile. In addition, some are more costly and, in addition, break basic cross-references. So, always consider whether such methods are truly necessary.
 
 !!! Guideline: Do not abuse blocks
 
-Blocks are powerful. They are handy because they are like anonymous methods created on the fly. 
-Avoid nest blocks and complex flow when explicit methods are possible.
+Blocks are powerful. They are handy because they are like anonymous methods created on the fly. Avoid nest blocks and complex flow when explicit methods are possible.
 
 Prefer
 [[[type=prefer
@@ -2388,12 +2291,9 @@ some method
 
 !!! Guideline: Do not write lengthly blocks
 
-Blocks are powerful. They are handy because they are like anonymous methods created on the fly. 
-Now write long blocks is a problem because blocks are not methods and you cannot simply call them.
-In addition blocks does not create simple hook methods that subclass can customize.
+Now, writing long blocks is a problem because blocks are not methods and you cannot simply call them. In addition, blocks do not create simple hook methods that subclasses can customize.
 
-A good practice is to keep block body length short and to convert long blocks into methods and 
-called such methods from the block. 
+A good practice is to keep the block body length short and to convert long blocks into methods and call such methods from the block. 
 
 Prefer
 [[[type=prefer
@@ -2410,12 +2310,9 @@ anObject use: [ ... body of a long block ... ]
 ]]]
 
 
-
 !!! Guideline: Exception catch MUST not be empty
 
-Exceptional behavior can be captured and controlled using ==on:do:==. Now this is important not to catch 
-an exceptional behavior and do nothing.  This is basically the worse you can do and it will backfire in your face
-months later. In addition, it makes your code super difficult to debug.
+Exceptional behavior can be captured and controlled using ==on:do:==. Now this is important not to catch an exceptional behavior and do nothing.  This is basically the worst thing you can do, and it will backfire on you months later. In addition, it makes your code super difficult to debug.
 
 Prefer 
 [[[type=not
@@ -2427,12 +2324,9 @@ over
 [ expression ] on: Error do: []
 ]]]
 
-
-
 !! Potential traps: About ==printing== and Streams
 
-Stream usage in the case of printing objects may be sometimes confusing. 
-In this chapter we clarify some of pitfalls.
+Stream usage in the case of printing objects may be sometimes confusing. In this chapter we clarify some of pitfalls.
 
 !!! Guideline: ==printString== vs. ==displayString==
 
@@ -2538,8 +2432,7 @@ printProtocol: protocol sourceCode: sourceCode
 			nextPutAll: sourceCode ]	
 ]]]
 
-What you should see is that a stream is created and then another stream is created and discarded with the expression ==protocol printString==.
-A better implementation is the following using ==print:==.
+What you should see is that a stream is created and then another stream is created and discarded with the expression ==protocol printString==. A better implementation is the following using ==print:==.
 
 [[[type=prefer
 printProtocol: protocol sourceCode: sourceCode
@@ -2595,42 +2488,36 @@ In this chapter we present some points about existing libraries or functionality
 
 !!! Guideline: Write small methods
 
-Long methods are the sign of less mature code. 
-Indeed small methods offer many strong advantages:
-- they are easier to read and understand,
-- they are easier to test,
-- they are easier to reuse and compose,
-- they are elementary pieces of customization. Indeed sending amessage to self creates a hook that subclasses can customize within their context. This is the foundation of object-oriented programming.
+Long methods are a sign of less mature code. Indeed, small methods offer many strong advantages:
 
-As measured by Zaitsev and Ducasse,  Pharo methods (exclusing test method) have 3 lines of code as median value.
-Therefore this is not just anecdoctal but an important point.
+- Are easier to read and understand,
+- Are easier to test,
+- Are easier to reuse and compose,
+- Are elementary pieces of customization. Indeed, sending a message to self creates a hook that subclasses can customize within their context. This is the foundation of object-oriented programming.
+
+As measured by Zaitsev and Ducasse, Pharo methods (excluding test methods) have 3 lines of code as a median value. Therefore, this is not just anecdotal but an important point.
 
 
 !!! Guideline: Avoid singletons
 
-Singletons are evil, because they make you feel that you are writing object-oriented code but in reality they are disguided
-global variables. Now you can ask yourself why this would be a problem.
+Singletons are evil because they make you feel that you are writing object-oriented code, but in reality they are disguided global variables. Now you can ask yourself why this would be a problem.
 
-This is a problem when you want to modularize your code. In essence you cannot subtitute a singleton by another object and 
-any change to the singleton is widely visible.
+This is a problem when you want to modularize your code. In essence, you cannot subtitute a singleton with another object, and any change to the singleton is widely visible.
 
-A symptom of the problem is when you want to write tests. You often do not want to have your tests impacting the complete system.
-So think twice before using a singleton. 
+A symptom of the problem is when you want to write tests. You often do not want to have your tests impact the complete system. So think twice before using a singleton. 
 
-A good way to know if you need a singleton is whether you can add an instance variable to your domain objects and pass 
-a reference to the object that you would like to have as singleton. If you can avoid the singleton just with the addition of an instance variable it means that you did not need the singleton. 
+A good way to know if you need a singleton is whether you can add an instance variable to your domain objects and pass a reference to the object that you would like to have as a singleton. If you can avoid the singleton just with the addition of an instance variable, it means that you did not need the singleton. 
 
-This is why good object-oriented designers say that Singleton is about time and not space, meaning that you need a singleton when you cannot have two instances working at the same time - Think about a scheduler. You cannot have two scheduler manipulating threads
-at the same time.
+This is why good object-oriented designers say that Singleton is about time and not space, meaning that you need a singleton when you cannot have two instances working at the same time - Think about a scheduler. You cannot have two scheduler manipulating threads at the same time.
 
 The following guideline is an example of a Singleton bad use. 
 
 !!! Guideline: Avoid explicit Transcript 
 
-We present why ==Transcript== can be really badly used. We present that with some simple care we can develop modular solutions that are flexible and can take advantages of using ==Transcript== without the inconvenients. 
-Let us imagine that you still want to log strings.
+We present why ==Transcript== can be really badly used. We present that with some simple care we can develop modular solutions that are flexible and can take advantages of using ==Transcript== without the inconvenients. Let us imagine that you still want to log strings.
 
 !!!!! First simple case
+
 ==Transcript== is a kind of stdout on which you can write some strings outputs. It is cheap. The class exposes a stream-based API (and this is a really important design point as we will see in the future).
 
 Here is a typical not really good use of ==Transcript==
@@ -2725,7 +2612,7 @@ MicAbstractBlock >> logStream: aStream
 
 !!! When instance creation is delicate
 
-If we do not control the creation of instances of the class using the stream, we will have difficulties to configure it with the correct stream. So if you want to be able to configure the class to use a different logger, we should define a class variable so that we can send message to the class and at initialization time, we can take the value from the class variable instead of hardcoding the WriteStream.
+If we do not control the creation of instances of the class using the stream, we will have difficulties configuring it with the correct stream. So if you want to be able to configure the class to use a different logger, we should define a class variable so that we can send message to the class and at initialization time, we can take the value from the class variable instead of hardcoding the WriteStream.
 
 Here is a sketch to illustrate the idea. 
 
@@ -2738,8 +2625,7 @@ Object subclass: #MicAbstractBlock
 	package: 'Microdown-Model'
 ]]]
 
-We define one setter. This is using this setter that we will be able to say to the system that for a given execution
-it should write to the ==Transcript==: for example doing ==MicAbstractBlock logStream: Transcript==.
+We define one setter. This is using this setter that we will be able to say to the system that for a given execution it should write to the ==Transcript==: for example doing ==MicAbstractBlock logStream: Transcript==.
 
 [[[
 MicAbstractBlock class >> logStream: aStream 
@@ -2771,13 +2657,13 @@ MicAbstractBlock >> initialize
    logStream := DefaultStream
 ]]]
 
-The net result is that we have the control and we can decide what is happening. In addition we can write tests to make sure that the logging is correct. Because using Transcript makes this a brittle exercise since someone else may write to the Transcript when you do not expect it. 
+The net result is that we have control and can decide what is happening. In addition, we can write tests to make sure that the logging is correct. Because using Transcript makes this a brittle exercise since someone else may write to the Transcript when you do not expect it. 
 
 !!!! Conclusion
 
-==Transcript== is not bad per se. But it promotes bad coding practices. Developers should stop listening to the sirens of easy and cheap global variables. With a little bit of care and a limited infrastructure is to possible to get the best of both worlds: modular objects and taking advantages of the existing infrastructure whose ==Transcript== belongs to. 
+==Transcript== is not bad per se. But it promotes bad coding practices. Developers should stop listening to the sirens of easy and cheap global variables. With a little bit of care and a limited infrastructure, it is possible to get the best of both worlds: modular objects and taking advantage of the existing infrastructure whose ==Transcript== belongs to. 
 
-What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that you have to blindly use it. You should apply sound principle and protect you some impact of changes.
+What we presented about ==Transcript== can be applied to any global object or singleton. This is not because a library exposes a singleton that you have to blindly use. You should apply sound principles and protect yourself from the impact of changes.
 
 
 !!! Guideline: Wrap explicit signal raising
@@ -2811,13 +2697,11 @@ MyClassSubclass >> ohNoError
 
 !! Conclusion
 
-We hope that you enjoyed such guideline list.
-Remember that you write code once and will read it a thousand times.
-Take the time to give good names.
-However finding good names is not an easy task, but you can use refactorings to improve things easily.
-This goes in pair with tests. 
-You write a test once and it gets executed million times. 
-Therefore, write tests to exercise the names you use and change them until they help you telling stories that can be understood.
+We hope that you enjoyed this guideline list. Remember that you write code once and will read it a thousand times. Take the time to give good names. However, finding good names is not an easy task, but you can use refactorings to improve things easily.
+
+This goes in pairs with tests. 
+
+You write a test once and it gets executed a million times. Therefore, write tests to exercise the names you use and change them until they help you tell stories that can be understood.
 
 
 
