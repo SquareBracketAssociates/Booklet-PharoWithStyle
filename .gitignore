@@ -8,3 +8,6 @@
 /_result/
 .DS_Store
 *.DS_Store
+*.synct*
+*.log*
+*.aux
