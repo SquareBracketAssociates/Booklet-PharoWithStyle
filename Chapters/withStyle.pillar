@@ -2228,7 +2228,7 @@ foo
 
 Readable code is key and reusing a local temporary variable to store different objects during the execution of a method should be avoided. Creating a separate temporary does not incur any execution cost. Therefore, create a temporary variable instead of storing different objects inside the same variable at different execution points of a method.
 
-!!! Guideline: Do not change behavior of well-known message
+!!! Guideline: Do not change behavior of well-known messages
 
 When reading code, developers read it in the context of core libraries, a common vocabulary, and expected behavior. Therefore, it is important not to define methods having the same name as a common message but that exhibit different behaviors. 
 
