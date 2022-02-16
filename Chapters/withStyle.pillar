@@ -1461,6 +1461,8 @@ performCrawling: aName
 	^ symbol
 ]]]
 
+
++>file://PWS-Guidelines-1.pdf+
 !!! Guideline: Use space to give breath to code
 
 Gluing all the characters together slows down reading. The reader needs to separate expressions. Gluing characters also hampers the identification of logical groups such as conditional branches. 
