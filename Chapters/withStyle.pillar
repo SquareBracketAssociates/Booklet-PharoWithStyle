@@ -1195,153 +1195,6 @@ Protocols are ways to sort methods. It is important to place your methods into a
 
 Pharo provides auto categorisation of protocols for the common methods. So use it as much as possible. If you override your specific methods, place them in similar protocols.
 
-!! Comments
-
-Comments are important. Comments tell readers that they are smart guys and that they correctly guessed your intentions or your code. Do not believe those who claim that methods do not require comments. Obviously, this is what they mean:
-
-# "Obvious methods" such as accessors do not need comments.
-# A good comment does not describe how the code works in English.
-# It is better to split long methods into smaller ones with a single responsibility,
-# But a good comment is always welcome because it reinforces the understanding of the reader.
-
-A comment should be adapted to the level of granularity (i.e., package, class, or method) to which it applies.
-
-!!! Guideline: Method comments
-
-Method comments should contain sufficient information for a user to know exactly ""how to use"" the method, ""what"" the method does, including any side effects, and ""what it answers"" without having to look at the source code. Imagine that the source code is not available.
-
-The main method comment is not about its implementation. Do not rephrase the implementation. The second level comments can include information about the implementation. Insert a new line to separate the method comments from the method body.
-
-[[[type=prefer
-Collection >> asCommaString
-    "Return collection printed as 'a, b, c' "
-    "#('a' 'b' 'c') asCommaString >>> 'a, b, c'"
-    
-    ^ String streamContents: [:s | self asStringOn: s delimiter: ', ']
-]]]
-
-The comments of a  method should typically include:
-# the method purpose (even if implemented or supplemented by a subclass)
-# the parameters and their types
-# the possible return values and their types
-# complex or tricky implementation details
-# example usage, if applicable, as a separate comment
-
-Finally accessors do not need comments; the only comment that accessor could have is the purpose of the instance variable.
-
-[[[
-day
-	"Answer number of days (an instance of Integer) from 
-	the receiver to January 1, 1901."
-
-	^ day
-]]]
-
-!!! Guideline: Good comment do not paraphrase code
-
-Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented upon to draw the reader's attention. If the source code implements an algorithm that requires an explanation, then the steps of the algorithm should be commented as needed.
-
-Do not comment on an obvious fact that is expressed simply as plain code.
-
-Prefer
-[[[type=prefer
-| result |
-result := self employees
-	collect: [:employee | employee salary > amount].
-]]]
-
-over
-[[[
-| result |
-"Store the employees who have a salary greater than in result." 
-result := self employees
-	collect: [:employee |  employee salary > amount].
-]]]
-
-!!! Guideline: Use active voice and short sentences
-
-When writing comments, use active voice and avoid long, convoluted sentences. A method comment should state what the method does, its arguments, its effects, and its output.
-
-[[[
-"Active voice"
-createShell
-	"Create the receiver's shell. Hook the focus callback."
-]]]
-
-[[[
-Not "Passive voice"
-createShell
-	"The receiver's shell is created. The focus callback is hooked."
-]]]
-
-!!! Guideline: Include executable comments
-
-Pharo offers executable examples in a comment using the message ==>>>==. Executable examples in comments are super cool because, as the reader, you can execute the code and understand the parameters. In addition, the documentation is always synchronized because tools such as the test runner can check that examples are correct.
-
-[[[type=prefer
-ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock
-	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block
-	else execute the nilBlock block "
-	
-	"(nil ifNil: [42] ifNotNil: [:o | o + 3 ] ) >>> 42"
-	"(3 ifNil: [42] ifNotNil: [:o | o + 3 ]) >>> 6"
-	
-	^ ifNotNilBlock cull: self
-]]]
-
-[[[type=prefer
-Object >> split: aSequenceableCollection
-	"Split the argument using the receiver as a separator."
-	"optimized version for single delimiters"
-	"($/ split: '/foo/bar')>>>#('' 'foo' 'bar') asOrderedCollection"
-	"([:c| c isSeparator] split: 'aa bb cc dd') >>> #('aa' 'bb' 'cc' 'dd') asOrderedCollection"
-		
-	| result |
-	result := OrderedCollection new: (aSequenceableCollection size / 2) asInteger.
-	self split: aSequenceableCollection do: [ :item |
-		result add: item ].
-	^ result
-]]]
-
-!!! Guideline: Use CRC-driven class comments
-
-A class is not in isolation, but ''implements'' responsibilities (mainly one) and ''collaborates'' with other entities. Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators.
-The Class Responsibility Collaboration (CRC) pattern is powerful to design but also to comment classes. Use it for commenting class.
-
-Knowing the instance variables is the least important!
-
-Follow the template given by Pharo that is shown below.
-
-[[[type=prefer
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
-
-For the Class part:  
-	State a one line summary. For example, "I represent a paragraph of text".
-
-For the Responsibility part: 
-	Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: 
-	State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-	- message one   
-	- message two 
-	- (for bonus points) how to create instances.
-
-One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-Implementation Points
-]]]
-
-
-!!! Guideline: Comment the unusual
-
-When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment on it.
-
-In general, comments should make irregular and unusual aspects clearer. You may want to include implementation-dependent or platform specific idiosyncrasies.
 
 !! About code formatting
 
@@ -1462,7 +1315,8 @@ performCrawling: aName
 ]]]
 
 
-+>file://PWS-Guidelines-1.pdf+
++A summary of good practices for code.>file://PWS-Guidelines-1.pdf+
+
 !!! Guideline: Use space to give breath to code
 
 Gluing all the characters together slows down reading. The reader needs to separate expressions. Gluing characters also hampers the identification of logical groups such as conditional branches. 
@@ -1667,6 +1521,159 @@ over
 block := [: arg | 
   ... local ... ]
 ]]]
+
+
+
+
+
+!! Comments
+
+Comments are important. Comments tell readers that they are smart guys and that they correctly guessed your intentions or your code. Do not believe those who claim that methods do not require comments. Obviously, this is what they mean:
+
+# "Obvious methods" such as accessors do not need comments.
+# A good comment does not describe how the code works in English.
+# It is better to split long methods into smaller ones with a single responsibility,
+# But a good comment is always welcome because it reinforces the understanding of the reader.
+
+A comment should be adapted to the level of granularity (i.e., package, class, or method) to which it applies.
+
+!!! Guideline: Method comments
+
+Method comments should contain sufficient information for a user to know exactly ""how to use"" the method, ""what"" the method does, including any side effects, and ""what it answers"" without having to look at the source code. Imagine that the source code is not available.
+
+The main method comment is not about its implementation. Do not rephrase the implementation. The second level comments can include information about the implementation. Insert a new line to separate the method comments from the method body.
+
+[[[type=prefer
+Collection >> asCommaString
+    "Return collection printed as 'a, b, c' "
+    "#('a' 'b' 'c') asCommaString >>> 'a, b, c'"
+    
+    ^ String streamContents: [:s | self asStringOn: s delimiter: ', ']
+]]]
+
+The comments of a  method should typically include:
+# the method purpose (even if implemented or supplemented by a subclass)
+# the parameters and their types
+# the possible return values and their types
+# complex or tricky implementation details
+# example usage, if applicable, as a separate comment
+
+Finally accessors do not need comments; the only comment that accessor could have is the purpose of the instance variable.
+
+[[[
+day
+	"Answer number of days (an instance of Integer) from 
+	the receiver to January 1, 1901."
+
+	^ day
+]]]
+
+!!! Guideline: Good comment do not paraphrase code
+
+Good Pharo source code is self-documenting, often making comments on statements redundant. Statements need only be commented upon to draw the reader's attention. If the source code implements an algorithm that requires an explanation, then the steps of the algorithm should be commented as needed.
+
+Do not comment on an obvious fact that is expressed simply as plain code.
+
+Prefer
+[[[type=prefer
+| result |
+result := self employees
+	collect: [:employee | employee salary > amount].
+]]]
+
+over
+[[[
+| result |
+"Store the employees who have a salary greater than in result." 
+result := self employees
+	collect: [:employee |  employee salary > amount].
+]]]
+
+!!! Guideline: Use active voice and short sentences
+
+When writing comments, use active voice and avoid long, convoluted sentences. A method comment should state what the method does, its arguments, its effects, and its output.
+
+[[[
+"Active voice"
+createShell
+	"Create the receiver's shell. Hook the focus callback."
+]]]
+
+[[[
+Not "Passive voice"
+createShell
+	"The receiver's shell is created. The focus callback is hooked."
+]]]
+
+!!! Guideline: Include executable comments
+
+Pharo offers executable examples in a comment using the message ==>>>==. Executable examples in comments are super cool because, as the reader, you can execute the code and understand the parameters. In addition, the documentation is always synchronized because tools such as the test runner can check that examples are correct.
+
+[[[type=prefer
+ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block
+	else execute the nilBlock block "
+	
+	"(nil ifNil: [42] ifNotNil: [:o | o + 3 ] ) >>> 42"
+	"(3 ifNil: [42] ifNotNil: [:o | o + 3 ]) >>> 6"
+	
+	^ ifNotNilBlock cull: self
+]]]
+
+[[[type=prefer
+Object >> split: aSequenceableCollection
+	"Split the argument using the receiver as a separator."
+	"optimized version for single delimiters"
+	"($/ split: '/foo/bar')>>>#('' 'foo' 'bar') asOrderedCollection"
+	"([:c| c isSeparator] split: 'aa bb cc dd') >>> #('aa' 'bb' 'cc' 'dd') asOrderedCollection"
+		
+	| result |
+	result := OrderedCollection new: (aSequenceableCollection size / 2) asInteger.
+	self split: aSequenceableCollection do: [ :item |
+		result add: item ].
+	^ result
+]]]
+
+!!! Guideline: Use CRC-driven class comments
+
+A class is not in isolation, but ''implements'' responsibilities (mainly one) and ''collaborates'' with other entities. Therefore a class comment should be composed of at least 3 parts: the class, its responsibilities and how it uses its collaborators.
+The Class Responsibility Collaboration (CRC) pattern is powerful to design but also to comment classes. Use it for commenting class.
+
+Knowing the instance variables is the least important!
+
+Follow the template given by Pharo that is shown below.
+
+[[[type=prefer
+Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+
+For the Class part:  
+	State a one line summary. For example, "I represent a paragraph of text".
+
+For the Responsibility part: 
+	Three sentences about my main responsibilities - what I do, what I know.
+
+For the Collaborators Part: 
+	State my main collaborators and one line about how I interact with them. 
+
+Public API and Key Messages
+	- message one   
+	- message two 
+	- (for bonus points) how to create instances.
+
+One simple example is simply gorgeous.
+ 
+Internal Representation and Key Implementation Points.
+
+Implementation Points
+]]]
+
+
+!!! Guideline: Comment the unusual
+
+When a behavior is unusual, performing unexpected actions or using an unexpected algorithm, it is important to comment on it.
+
+In general, comments should make irregular and unusual aspects clearer. You may want to include implementation-dependent or platform specific idiosyncrasies.
+
 
 !! Powerful coding idioms
 
