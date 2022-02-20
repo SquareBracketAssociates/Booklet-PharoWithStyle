@@ -8,7 +8,7 @@ We were influenced by the excellent little book called ''Smalltalk with Style''.
 
 Feedback and suggestions are welcome at stephane.ducasse@inria.fr.
 
-PullRequests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
+Pull requests on *https://github.com/SquareBracketAssociates/Booklet-PharoWithStyle* are also welcome.
 
 Special thank to Réné-Paul Mages, Christopher Furhman, Benoit St Jean and Masashi Fujita, Nathan Reilly, Esteban Maringolo, Hernán Morales for their feedback.
 
@@ -153,6 +153,7 @@ sizeToRead
 sizeJustRead
 ]]]
 
+over 
 [[[type=not
 Not readSize
 ]]]
@@ -167,6 +168,13 @@ Prefer
 [[[type=prefer
 ASTNode
 ]]]
+
+over 
+[[[type=prefer
+TreeNode
+AbstractSyntaxTreeNode
+]]]
+
 
 !!! Guideline: Avoid numbers
 
@@ -204,7 +212,7 @@ Terminal
 
 over
 [[[type=not
-Not PlaceToDisplayInformation
+PlaceToDisplayInformation
 ]]]
 
 Some classes represent an action (such as Visitor) or process.
@@ -342,7 +350,7 @@ ClyBrowserButtonMorph
 ]]]
 over 
 [[[type=not
-Not ClyBrowserButton
+ClyBrowserButton
 ]]]
 
 Prefer
@@ -351,7 +359,7 @@ ClyQueryViewMorph
 ]]]
 over
 [[[type=not
-Not ClyQueryView
+ClyQueryView
 ]]]
 
 Prefer 
@@ -361,7 +369,7 @@ SpLayoutHelpTopics
 
 over 
 [[[type=not
-Not SpLayouts
+SpLayouts
 ]]]
 
 In the following, not mentioning the ==Presenter== suffix makes it unclear to the reader that it is a Presenter object as opposed to a Model object.
@@ -372,7 +380,7 @@ ApplicationWithToolBarPresenter
 ]]]
 over
 [[[type=not
-Not ApplicationWithToolbar
+ApplicationWithToolbar
 ]]]
 
 In the next example, ==DynamicWidgetChange== does not convey that this is not a ''domain'' object representing a change, but a ==Presenter== object in the Model-View-Presenter triad:
@@ -382,7 +390,7 @@ DynamicWidgetChangePresenter
 ]]]
 over
 [[[type=not
-Not DynamicWidgetChange
+DynamicWidgetChange
 ]]]
 
 !!! Conclusion
@@ -413,8 +421,8 @@ timeOfDay
 
 over 
 [[[type=not
-Not timeofday
-Not time_of_day
+timeofday
+time_of_day
 ]]]
 
 Prefer
@@ -423,7 +431,7 @@ GnatXmlNode
 ]]]
 over 
 [[[type=not
-Not GNAT_XML_Object
+GNAT_XML_Object
 ]]]
 
 Prefer
@@ -432,7 +440,7 @@ releasedX
 ]]]
 over 
 [[[type=not
-Not released_X
+released_X
 ]]]
 
 Prefer
@@ -459,7 +467,7 @@ readyForNextItem
 ]]]
 over 
 [[[type=not
-Not readyFornextitem
+readyFornextitem
 ]]]
 
 !!! Guideline: Shared variables start with uppercase 
@@ -518,8 +526,8 @@ maxLimit
 ]]]
 instead of
 [[[type=not
-Not maxlimit
-Not MAXLIMIT
+maxlimit
+MAXLIMIT
 ]]]
 
 !!!!! For classes, or shared variables
@@ -531,8 +539,8 @@ MaxLimit
 ]]]
 instead of 
 [[[type=not
-Not ORDEREDCOLLECTION
-Not MAXLIMIT
+ORDEREDCOLLECTION
+MAXLIMIT
 ]]]
 
 @@note In a compound word, do not confuse a prefix or suffix with a word when trying to determine which words should begin with an uppercase letter. For example, some readers may think that the "c" in ==subclass== should be uppercase, but ==sub== is a prefix, not a word. When in doubt about prefixes and suffixes, check a dictionary.
@@ -543,7 +551,7 @@ superclass
 ]]]
 over
 [[[type=not
-Not superClass
+superClass
 ]]]
 
 !!! Guideline: Method selectors start with lowercase
@@ -625,7 +633,7 @@ properties: aDictionary
 
 over
 [[[type=not
-Not properties: map
+properties: map
 ]]]
 
 You may also want to stress specific types in an API reference to the interface that the object implements.
@@ -637,7 +645,7 @@ properties: aPuttable
 
 over
 [[[type=not
-Not properties: aCollection
+properties: aCollection
 ]]]
 
 Suppose a String, a Symbol, and nil are valid for a parameter. A developer may be tempted to use the name ==aStringOrSymbolOrNil==.
@@ -673,8 +681,8 @@ ifTrue: trueBlock ifFalse: falseBlock
 
 over
 [[[type=not
-Not ifTrue: block1 ifFalse: block2
-Not ifTrue: action1 ifFalse: action2
+ifTrue: block1 ifFalse: block2
+ifTrue: action1 ifFalse: action2
 ]]]
 
 The following are other examples of good names.
@@ -699,8 +707,8 @@ name
 
 over
 [[[type=not
-Not number
-Not labelForPerson
+number
+labelForPerson
 ]]]
 
 !!! Guideline: Use predicate for Boolean
@@ -760,7 +768,7 @@ FileDescriptor seekTo: word from: self position
 ]]]
 over
 [[[type=not
-Not FileDescriptor lseek: word at: self position
+FileDescriptor lseek: word at: self position
 ]]]
 
 Write the test first, and make sure that your test scenario reads well. 
@@ -781,7 +789,7 @@ aReadStream peek
 ]]]
 over
 [[[type=not
-Not aReadStream word
+aReadStream word
 ]]]
 
 Prefer
@@ -791,7 +799,7 @@ aFace beSurprised
 ]]]
 over
 [[[type=not
-Not aFace surprised
+aFace surprised
 ]]]
 
 [[[type=prefer
@@ -852,7 +860,7 @@ ReadWriteStream on: aCollection.
 ]]]
 over
 [[[type=not
-Not ReadWriteStream for: aCollection.
+ReadWriteStream for: aCollection.
 ]]]
 
 Prefer
@@ -861,7 +869,7 @@ File openOn: stream
 ]]]
 over
 [[[type=not
-Not File with: stream
+File with: stream
 ]]]
 
 Prefer
@@ -870,7 +878,7 @@ display: anObject on: aMedium
 ]]]
 over
 [[[type=not
-Not display: anObject using: aMedium
+display: anObject using: aMedium
 ]]]
 
 !!! Guideline: Indicate returned type
@@ -912,7 +920,7 @@ isAtLineEnd
 ]]]
 over
 [[[type=not
-Not atLineEnd
+atLineEnd
 ]]]
 
 [[[type=prefer
@@ -920,7 +928,7 @@ aVehicle hasFourWheels
 ]]]
 over
 [[[type=not
-Not aVehicle fourWheels
+aVehicle fourWheels
 ]]]
 
 !!! Guideline: Avoid using parameter and variable name type
@@ -933,7 +941,7 @@ fileSystem at: aKey put: aFile
 ]]]
 over
 [[[type=not
-Not fileSystem atKey: aKey putFiIe: aFile
+fileSystem atKey: aKey putFiIe: aFile
 ]]]
 
 
@@ -953,7 +961,7 @@ aFace changeTo: expression
 ]]]
 over
 [[[type=not
-Not aFace changeExpressionTo: expression
+aFace changeExpressionTo: expression
 ]]]
 
 !!!  Guideline: Use accessors or not
@@ -1027,12 +1035,13 @@ You may want to use accessors to implement lazy initialization: the instance var
 
 Do not place returns inside the block.
 
+Prefer
 [[[type=prefer
 tiles
 	^ tiles ifNil: [ tiles := OrderedCollection new.
 ]]]
 
-Over 
+over 
 [[[type=not
 tiles
 	^ tiles ifNil: [ tiles := OrderedCollection new. ^tiles ]
@@ -1113,7 +1122,7 @@ aCollection groupedBy: [ :each | each odd ]
 ]]]
 over
 [[[type=not
-Not aCollection groupBy: [ :each | each odd ]
+aCollection groupBy: [ :each | each odd ]
 ]]]
 
 Prefer
@@ -1122,7 +1131,7 @@ series at: #k3 put: 'x'.
 ]]]
 over
 [[[type=not
-Not series atKey: #k3 put: 'x'
+series atKey: #k3 put: 'x'
 ]]]
 
 Prefer
@@ -1131,7 +1140,7 @@ aCollection at: #toto
 ]]]
 over
 [[[
-Not aCollection atKey: #toto
+aCollection atKey: #toto
 ]]]
 
 
@@ -1198,7 +1207,7 @@ Pharo provides auto categorisation of protocols for the common methods. So use i
 
 !! About code formatting
 
-Code formatting improves code comprehension. A reader gets used to regular formatting.Again follow the conventions.
+Code formatting improves code comprehension. Readers are used to regular formatting. Don't produce blobs of code. Copy the pros, follow the conventions.
 
 !!! Guideline: Be consistent
 
@@ -1250,14 +1259,14 @@ collectionNotIncluded
 	^ collectionWithoutNil 
 ]]]
 
-over:
+over
 [[[type=not
  collectionNotIncluded
 " return a collection for wich each element is not included in 'nonEmpty' "
 	^ collectionWithoutNil 
 ]]]
 
-and over:
+and over
 [[[type=not
 collectionWithoutEqualElements
 
@@ -1333,7 +1342,7 @@ stemSymbolFrom: aName
 	^ symbol
 ]]]
 
-Over 
+over 
 [[[type=not
 stemSymbolFrom:aName
 
@@ -1368,7 +1377,7 @@ self phoneBook add:
 		country: 'Canada').
 ]]]
 
-Over 
+over 
 [[[type=not
 self phoneBook add: 
 	(Person new
@@ -1425,7 +1434,7 @@ paragraph
 	^ p
 ]]]
 
-Over
+over
 [[[type=not
 paragraph
 	"this method is here to find the paragraph in the chain, instead of relying on implementing #doesNotUnderstand: !!!"
@@ -1455,7 +1464,7 @@ size
 	^ self size: self root
 ]]]	
 
-Over 
+over 
 [[[type=not
 size
 	"Returns size of a tree - number of nodes in a tree"
@@ -1482,7 +1491,7 @@ depth: aNode
 		ifFalse: [^ 1 + rightDepth ].
 ]]]	
 
-Over the terribly unreadable ==depth:aNode== method.
+over the terribly unreadable ==depth:aNode== method.
 
 [[[type=not
 depth:aNode
@@ -1593,14 +1602,16 @@ result := self employees
 
 When writing comments, use active voice and avoid long, convoluted sentences. A method comment should state what the method does, its arguments, its effects, and its output.
 
+Prefer
 [[[
 "Active voice"
 createShell
 	"Create the receiver's shell. Hook the focus callback."
 ]]]
 
+over
 [[[
-Not "Passive voice"
+"Passive voice"
 createShell
 	"The receiver's shell is created. The focus callback is hooked."
 ]]]
@@ -1816,6 +1827,12 @@ foo
 
 While using ==super== often does not break your code, it may because if you have a method named ==bar== in the same class this method will not be invoked. Always be cautious when reading or writing such code.
 
+
+
+
+
+
+
 !! Object initialization
 
 One key responsibility for a class is to correctly initialize the instance it creates.
@@ -1917,6 +1934,10 @@ Second, the ordering implies that the first local information should be computed
 		super initialize
 		default := 'no'.
 ]]]
+
+
+
+
 
 !! Potential traps: a syntactic perspective
 

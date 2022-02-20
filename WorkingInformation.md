@@ -14,3 +14,9 @@ I modified
 	\setulmarginsandblock{.75in}{.75in}{*}}
 \pagelayout{\bodpage}
 ```
+
+But this is stupid because this is the cls that is used. 
+So it should be in the cls file and it works.
+
+## for the 
+- I changed the size of the current canvs
