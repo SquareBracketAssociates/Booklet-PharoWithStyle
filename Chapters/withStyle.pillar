@@ -624,7 +624,7 @@ Finding a semantic name is not always as obvious as demonstrated above. There ar
 
 Using a type variable is an interesting way to convey the API (set of messages) that the object held in the variable responds to.
 
-Below ==aDictionary== conveys that the argument should have the same API as a Dictionary (==at:==,==at:put:==)
+Below ==aDictionary== conveys that the argument should have the same API as a Dictionary (==at:==, ==at:put:==)
 
 Prefer
 [[[type=prefer
@@ -1939,7 +1939,7 @@ Second, the ordering implies that the first local information should be computed
 
 
 
-!! Potential traps: a syntactic perspective
+!! Potential traps: A syntactic perspective
 
 Understanding possible mistakes is a nice way to avoid them or to spot errors made in your code. Here are some common mistakes.
 
