@@ -664,7 +664,7 @@ over
 inject: anObject into: aBlock 
 ]]]
 
-Note that for ==inject:into:== the best naming is to mix semantic ant type naming as in 
+Note that for ==inject:into:== the best naming is to mix semantic and type naming as in 
 
 [[[type=prefer
 inject: initialValue into: aBinaryBlock 
