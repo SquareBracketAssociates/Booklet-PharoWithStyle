@@ -1,10 +1,10 @@
-name: Book generation
+name: Book with Pillar
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
     - cron:  '0 0 * * 0'
 
@@ -13,6 +13,6 @@ on:
 
 jobs:
   build:
-    uses: SquareBracketAssociates/BookBuilderDashboard/.github/workflows/main.yml@master
+    uses: SquareBracketAssociates/BookBuilderDashboard/.github/workflows/main.yml@newVersionOfPillar
     with:
       bookname: PharoWithStyle
