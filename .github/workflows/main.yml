@@ -1,4 +1,4 @@
-name: Book with Pillar
+name: Pillar > 10
 
 on:
   push:
