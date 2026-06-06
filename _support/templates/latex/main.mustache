@@ -2,6 +2,7 @@
 \documentclass[10pt,twoside,english]{_support/latex/sbabook/sbabook}
 \let\wholebook=\relax
 
+%\usepackage{amsmath}
 \usepackage{import}
 \subimport{_support/latex/}{common.tex}
 
@@ -44,7 +45,7 @@
 \cleartoverso
 {\small
 
-  Copyright 2022 by «& attribution».
+  Copyright 2023 by «& attribution».
 
   The contents of this book are protected under the Creative Commons
   Attribution-NonCommercial-NoDerivs 
@@ -78,8 +79,8 @@ Keepers of the lighthouse\\
 Édition : BoD - Books on Demand,\\
 12/14 rond-point des Champs-Élysées,75008 Paris\\
 Impression : Books on Demand GmbH, Norderstedt, Allemagne\\
-ISBN: 9782322182015\\
-Dépôt légal : 3/2022\\
+ISBN: XXXXXXXXXXXXXXX\\
+Dépôt légal : Month/YEAR\\
 Layout and typography based on the \textcode{sbabook} \LaTeX{} class by Damien Pollet.
 }
 
@@ -94,10 +95,10 @@ Layout and typography based on the \textcode{sbabook} \LaTeX{} class by Damien P
 
 «& content»
 
-% lulu requires an empty page at the end. That's why I'm using
-% \backmatter here.
-\backmatter
-
 % Index would go here
+\bibliographystyle{abbrv}
+\bibliography{«& bibFile»}
+
+\backmatter
 
 \end{document}
