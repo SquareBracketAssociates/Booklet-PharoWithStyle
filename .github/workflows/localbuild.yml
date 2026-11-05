@@ -1,10 +1,12 @@
 name: Local Book generation
 
-on:
-  push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
+on: workflow_dispatch
+#on: 
+#  push:
+#    branches: [ master, main ]
+#  pull_request:
+#    branches: [ master, main ]
+    
 
     
 jobs:
